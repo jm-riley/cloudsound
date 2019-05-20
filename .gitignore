@@ -18,6 +18,8 @@
 !/storage/.keep
 
 /node_modules
+/.eslintrc.json
+/.prettierrc
 /yarn-error.log
 
 /public/assets
