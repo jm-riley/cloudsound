@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.signupButton {
+  background-color: rgb(255, 85, 0);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+}

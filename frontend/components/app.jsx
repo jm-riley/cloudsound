@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { AuthRoute } from '../util/route_util';
 import HeaderContainer from './header/header_container';
 import LoginForm from './forms/session/login_form_container';
 import SignupForm from './forms/session/signup_form_container';
@@ -9,7 +10,7 @@ export default () => (
     <header>
       <HeaderContainer />
     </header>
-    <Route path="/login" component={LoginForm} />
-    <Route path="/signup" component={SignupForm} />
+    <AuthRoute path="/login" component={LoginForm} />
+    <AuthRoute path="/signup" component={SignupForm} />
   </div>
 );
