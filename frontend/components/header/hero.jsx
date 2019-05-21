@@ -1,18 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { openModal } from '../../actions/modal_actions';
+import Modal from '../forms/modal';
 
-const Hero = () => {
+const Hero = ({ openModal }) => {
   return (
     <div className="hero">
       <div className="header">
         <h3>CLOUDSOUND</h3>
         <div>
-          <Link to="/login" className="loginButton">
+          <button className="loginButton" onClick={() => openModal('login')}>
             Sign In
-          </Link>
-          <Link to="/signup" className="signupButton">
+          </button>
+          <button className="signupButton" onClick={() => openModal('signup')}>
             Create Account
-          </Link>
+          </button>
+          {/* <Link to="/signup" className="signupButton">
+            Create Account
+          </Link> */}
         </div>
       </div>
       <div className="hero-text">
@@ -25,8 +31,16 @@ const Hero = () => {
           Start uploading today
         </Link>
       </div>
+      <Modal />
     </div>
   );
 };
 
-export default Hero;
+const mdtp = dispatch => ({
+  openModal: type => dispatch(openModal(type))
+});
+
+export default connect(
+  null,
+  mdtp
+)(Hero);
