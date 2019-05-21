@@ -1,0 +1,104 @@
+.header {
+  font-weight: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // width: 100%;
+  background-color: #333;
+  color: #ccc;
+  font-size: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.logo {
+  color: white;
+  padding: 0 15px;
+  background-color: rgb(255, 85, 0);
+  font-size: 44px;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-content: center;
+  height: 100%;
+}
+
+.header-link {
+  font-size: 18px;
+  padding-top: 15px;
+  padding-left: 30px;
+}
+
+.header-link a {
+  color: #ccc;
+}
+
+.header-dropdown {
+  font-size: 24px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.username {
+  color: white;
+  padding-left: 15px;
+}
+
+.user-artwork {
+}
+
+.user-artwork img {
+  padding-top: 10px;
+  height: 30px;
+  padding-right: 0px;
+  // border-radius: 50%;
+  // width: 30px;
+  padding-left: 30px;
+  background-size: auto;
+}
+
+.header-dropdown {
+  height: 52px;
+  width: 52px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding-left: 0;
+  margin-left: 20px;
+}
+
+.dropdown-list {
+  width: 150px;
+  font-size: 14px;
+  list-style: none;
+  position: absolute;
+  top: 37px;
+  left: -138px;
+  padding: 20px;
+  // left: 25px;
+  // background-color: #333;
+  background-color: black;
+}
+
+.dropdown-list li {
+  padding: 0 0 15px 0;
+  font-weight: 400;
+}
+
+.dropdown-list li:last-child {
+  padding-bottom: 5px;
+}
+
+.dropdown-list a {
+  color: white;
+}
+
+.dropdown-open {
+  background-color: black;
+}

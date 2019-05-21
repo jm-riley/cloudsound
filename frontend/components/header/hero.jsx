@@ -7,9 +7,12 @@ import Modal from '../forms/modal';
 const Hero = ({ openModal }) => {
   return (
     <div className="hero">
-      <div className="header">
-        <h3>CLOUDSOUND</h3>
-        <div>
+      <div className="hero-header">
+        <div className="hero-logo">
+          <i className="fab fa-mixcloud" />
+          <h3>CLOUDSOUND</h3>
+        </div>
+        <div className="hero-buttons">
           <button className="loginButton" onClick={() => openModal('login')}>
             Sign in
           </button>

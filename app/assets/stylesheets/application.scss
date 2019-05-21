@@ -14,20 +14,17 @@
  *= require_self
  */
 
+body {
+  margin: 0;
+}
+
 .main {
-  margin-left: 30px;
-  margin-right: 30px;
+  // margin-left: 30px;
+  // margin-right: 30px;
   font-family: 'Roboto';
   // box-sizing: border-box;
   // font-weight: 300;
-}
-
-.header {
-  font-weight: 300;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  // margin: 0;
 }
 
 button:hover {
@@ -68,9 +65,31 @@ a {
   color: white;
 }
 
-.hero .header {
+.hero-header {
   width: 90%;
   padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hero-logo {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.hero-logo h3 {
+  font-size: 18px;
+}
+
+.hero-logo i {
+  font-size: 32px;
+  padding-right: 15px;
+}
+
+.hero-buttons {
+  display: flex;
+  align-items: center;
 }
 
 .hero-text {
