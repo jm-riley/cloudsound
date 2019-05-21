@@ -11,10 +11,10 @@ const Hero = ({ openModal }) => {
         <h3>CLOUDSOUND</h3>
         <div>
           <button className="loginButton" onClick={() => openModal('login')}>
-            Sign In
+            Sign in
           </button>
           <button className="signupButton" onClick={() => openModal('signup')}>
-            Create Account
+            Create account
           </button>
           {/* <Link to="/signup" className="signupButton">
             Create Account
@@ -27,9 +27,9 @@ const Hero = ({ openModal }) => {
           Upload your first track and begin your journey. Cloudsound gives you space to create, find
           your fans, and connect with other artists.
         </p>
-        <Link to="/signup" className="signupButton">
+        <button className="signupButton" onClick={() => openModal('signup')}>
           Start uploading today
-        </Link>
+        </button>
       </div>
       <Modal />
     </div>

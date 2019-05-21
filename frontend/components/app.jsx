@@ -9,9 +9,9 @@ import SignupForm from './forms/session/signup_form_container';
 export default () => (
   <div className="main">
     <header>
-      <Route exact path="/" component={Hero} />
       <Route path="/discover" component={HeaderContainer} />
     </header>
+    <Route exact path="/" component={Hero} />
     <AuthRoute path="/login" component={LoginForm} />
     <AuthRoute path="/signup" component={SignupForm} />
   </div>

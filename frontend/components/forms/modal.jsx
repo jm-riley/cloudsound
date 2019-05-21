@@ -4,16 +4,45 @@ import { closeModal } from '../../actions/modal_actions';
 import LoginForm from './session/login_form_container';
 import SignupForm from './session/signup_form_container';
 
-const Modal = ({ type, closeModal }) => {
-  if (!type) return null;
-  const form = type === 'signup' ? <SignupForm /> : <LoginForm />;
-  return (
-    <div className="modal-container">
-      <button onClick={closeModal}>X</button>
-      <div className="modal-content">{form}</div>
-    </div>
-  );
-};
+class Modal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { closing: false };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    e.stopPropagation();
+    this.setState({ closing: true });
+    setTimeout(() => {
+      this.props.closeModal();
+      this.setState({ closing: false });
+    }, 300);
+  }
+
+  render() {
+    const { type } = this.props;
+    let fadeout;
+    let slideup;
+
+    if (!type) return null;
+
+    if (this.state.closing) {
+      fadeout = 'fadeout';
+      slideup = 'slideup';
+    }
+
+    const form = type === 'signup' ? <SignupForm /> : <LoginForm />;
+    return (
+      <div className={`modal-container ${fadeout}`}>
+        <button onClick={this.handleClick} className={`modal-close ${fadeout}`}>
+          <i className="far fa-times-circle" />
+        </button>
+        <div className={`modal-content ${slideup}`}>{form}</div>
+      </div>
+    );
+  }
+}
 
 const mstp = state => ({
   type: state.ui.modal

@@ -19,7 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     store = configureStore(preloadedState);
     delete window.currentUser;
   } else {
-    store = configureStore();
+    const preloadedState = {
+      ui: {
+        modal: null
+      }
+    };
+    store = configureStore(preloadedState);
   }
   ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 });

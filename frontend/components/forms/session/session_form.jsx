@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class SessionForm extends React.Component {
 
   handleSumbit(e) {
     e.preventDefault();
-    this.props.action(this.state).then(user => this.props.history.push('/'));
+    this.props.closeModal();
+    this.props.action(this.state).then(user => this.props.history.push('/discover'));
   }
 
   update(field) {
@@ -18,24 +20,48 @@ class SessionForm extends React.Component {
 
   render() {
     const { formType, errors } = this.props;
-    const submitText = formType === 'login' ? 'login' : 'signup';
+    const submitText = formType === 'login' ? 'Sign in' : 'Create account';
     return (
-      <div>
+      <div className="form-container">
         {errors && (
-          <ul>
+          <ul className="form-errors">
             {errors.map((error, i) => (
               <li key={i}>{error}</li>
             ))}
           </ul>
         )}
-        <form>
-          <input type="text" value={this.state.username} onChange={this.update('username')} />
-          <input type="password" value={this.state.password} onChange={this.update('password')} />
-          <button onClick={this.handleSumbit}>{submitText}</button>
+        <form className="session-form">
+          <div className="input-container">
+            <input
+              className="form-input"
+              type="text"
+              value={this.state.username}
+              onChange={this.update('username')}
+              placeholder="Your username"
+            />
+          </div>
+          <div className="input-container">
+            <input
+              className="form-input"
+              type="password"
+              value={this.state.password}
+              onChange={this.update('password')}
+              placeholder="Your password"
+            />
+          </div>
+          <button onClick={this.handleSumbit} className="signupButton">
+            {submitText}
+          </button>
         </form>
+        <div>
+          <p>
+            We may use your information for updates and tips on CloudSound's products and services,
+            and for activities notifications. You can unsubscribe for free at any time.
+          </p>
+        </div>
       </div>
     );
   }
 }
 
-export default SessionForm;
+export default withRouter(SessionForm);
