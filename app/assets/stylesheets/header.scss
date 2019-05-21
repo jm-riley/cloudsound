@@ -35,10 +35,6 @@
   color: #ccc;
 }
 
-.header-dropdown {
-  font-size: 24px;
-}
-
 .header-content {
   display: flex;
   align-items: center;
@@ -64,6 +60,7 @@
 }
 
 .header-dropdown {
+  font-size: 24px;
   height: 52px;
   width: 52px;
   display: flex;
@@ -101,4 +98,8 @@
 
 .dropdown-open {
   background-color: black;
+}
+
+.dropdown-toggle {
+  padding-top: 5px;
 }

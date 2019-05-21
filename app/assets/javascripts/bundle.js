@@ -472,7 +472,12 @@ function (_React$Component) {
       var _this2 = this;
 
       e.preventDefault();
-      this.props.closeModal();
+      debugger;
+
+      if (!this.props.errors) {
+        this.props.closeModal();
+      }
+
       this.props.action(this.state).then(function (user) {
         return _this2.props.history.push('/discover');
       });
