@@ -11,8 +11,8 @@ export default () => (
     <header>
       <Route path="/discover" component={HeaderContainer} />
     </header>
-    <Route exact path="/" component={Hero} />
-    <AuthRoute path="/login" component={LoginForm} />
-    <AuthRoute path="/signup" component={SignupForm} />
+    <AuthRoute exact path="/" component={Hero} />
+    {/* <AuthRoute path="/login" component={LoginForm} />
+    <AuthRoute path="/signup" component={SignupForm} /> */}
   </div>
 );
