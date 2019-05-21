@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { logout, login, signup } from '../../actions/user_actions';
+import { logout } from '../../actions/user_actions';
 import Header from './header';
 
 const mstp = state => ({
