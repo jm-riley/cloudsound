@@ -18,10 +18,19 @@
 
 .logo {
   color: white;
-  padding: 0 15px;
-  background-color: rgb(255, 85, 0);
-  font-size: 40px;
+  padding: 0 10px;
+  background: rgb(255, 83, 0);
+  background: linear-gradient(0deg, rgba(255, 83, 0, 1) 29%, rgba(255, 126, 0, 1) 100%);
+  font-size: 36px;
   height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo p {
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 10px;
 }
 
 .header-left,

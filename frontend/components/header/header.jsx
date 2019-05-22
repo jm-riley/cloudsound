@@ -43,6 +43,7 @@ class Header extends React.Component {
           <div className="header-left">
             <div className="logo">
               <i className="fab fa-mixcloud" />
+              <p>CLOUDSOUND</p>
             </div>
             <div className="header-link">
               <Link to="/discover">Home</Link>

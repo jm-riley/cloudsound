@@ -796,7 +796,7 @@ function (_React$Component) {
         className: "logo"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fab fa-mixcloud"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "CLOUDSOUND")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-link"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/discover"
