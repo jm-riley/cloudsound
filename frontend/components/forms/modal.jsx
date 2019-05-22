@@ -12,12 +12,15 @@ class Modal extends React.Component {
   }
 
   handleClick(e) {
-    e.stopPropagation();
-    this.setState({ closing: true });
-    setTimeout(() => {
-      this.props.closeModal();
-      this.setState({ closing: false });
-    }, 300);
+    // debugger;
+    if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
+      e.stopPropagation();
+      this.setState({ closing: true });
+      setTimeout(() => {
+        this.props.closeModal();
+        this.setState({ closing: false });
+      }, 300);
+    }
   }
 
   render() {
@@ -34,7 +37,7 @@ class Modal extends React.Component {
 
     const form = type === 'signup' ? <SignupForm /> : <LoginForm />;
     return (
-      <div className={`modal-container ${fadeout}`}>
+      <div className={`modal-container ${fadeout}`} onClick={this.handleClick}>
         <button onClick={this.handleClick} className={`modal-close ${fadeout}`}>
           <i className="far fa-times-circle" />
         </button>

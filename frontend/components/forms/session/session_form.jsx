@@ -1,11 +1,12 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class SessionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { username: '', password: '' };
     this.handleSumbit = this.handleSumbit.bind(this);
+    this.loginDemoUser = this.loginDemoUser.bind(this);
   }
 
   handleSumbit(e) {
@@ -16,6 +17,12 @@ class SessionForm extends React.Component {
       this.props.closeModal();
     }
     this.props.action(this.state).then(user => this.props.history.push('/discover'));
+  }
+
+  loginDemoUser(e) {
+    e.preventDefault();
+    this.props.closeModal();
+    this.props.demoLogin();
   }
 
   update(field) {
@@ -56,6 +63,7 @@ class SessionForm extends React.Component {
           <button onClick={this.handleSumbit} className="signupButton">
             {submitText}
           </button>
+          <button onClick={this.loginDemoUser} className="demoButton">Demo</button>
         </form>
         <div>
           <p>

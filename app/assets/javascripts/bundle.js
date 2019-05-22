@@ -311,17 +311,20 @@ function (_React$Component) {
     value: function handleClick(e) {
       var _this2 = this;
 
-      e.stopPropagation();
-      this.setState({
-        closing: true
-      });
-      setTimeout(function () {
-        _this2.props.closeModal();
-
-        _this2.setState({
-          closing: false
+      // debugger;
+      if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
+        e.stopPropagation();
+        this.setState({
+          closing: true
         });
-      }, 300);
+        setTimeout(function () {
+          _this2.props.closeModal();
+
+          _this2.setState({
+            closing: false
+          });
+        }, 300);
+      }
     }
   }, {
     key: "render",
@@ -338,7 +341,8 @@ function (_React$Component) {
 
       var form = type === 'signup' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "modal-container ".concat(fadeout)
+        className: "modal-container ".concat(fadeout),
+        onClick: this.handleClick
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleClick,
         className: "modal-close ".concat(fadeout)
@@ -401,6 +405,12 @@ var mdtp = function mdtp(dispatch, ownProps) {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])(user));
     },
+    demoLogin: function demoLogin() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])({
+        username: 'jmwr',
+        password: 'password'
+      }));
+    },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
@@ -462,6 +472,7 @@ function (_React$Component) {
       password: ''
     };
     _this.handleSumbit = _this.handleSumbit.bind(_assertThisInitialized(_this));
+    _this.loginDemoUser = _this.loginDemoUser.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -480,6 +491,13 @@ function (_React$Component) {
       this.props.action(this.state).then(function (user) {
         return _this2.props.history.push('/discover');
       });
+    }
+  }, {
+    key: "loginDemoUser",
+    value: function loginDemoUser(e) {
+      e.preventDefault();
+      this.props.closeModal();
+      this.props.demoLogin();
     }
   }, {
     key: "update",
@@ -526,7 +544,10 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSumbit,
         className: "signupButton"
-      }, submitText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We may use your information for updates and tips on CloudSound's products and services, and for activities notifications. You can unsubscribe for free at any time.")));
+      }, submitText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.loginDemoUser,
+        className: "demoButton"
+      }, "Demo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We may use your information for updates and tips on CloudSound's products and services, and for activities notifications. You can unsubscribe for free at any time.")));
     }
   }]);
 
@@ -569,6 +590,12 @@ var mdtp = function mdtp(dispatch, ownProps) {
     },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+    },
+    demoLogin: function demoLogin() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])({
+        username: 'jmwr',
+        password: 'password'
+      }));
     }
   };
 };
@@ -776,10 +803,9 @@ function (_React$Component) {
           openModal = _this$props.openModal;
       var dropdownList = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dropdown-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "About us"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Legal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Copyright"), !!currentUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "About us"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Legal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Copyright"), !!currentUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         onClick: this.handleLogout
-      }, "Logout")));
+      }, "Logout"));
       var dropdownBG;
 
       if (this.state.dropdownOpen) {
@@ -832,7 +858,10 @@ function (_React$Component) {
         className: "dropdown-toggle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h"
-      })), this.state.dropdownOpen && dropdownList))));
+      })), this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-modal",
+        onClick: this.toggleDropdown
+      }, dropdownList)))));
     }
   }]);
 
@@ -1083,7 +1112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
 
@@ -30595,7 +30624,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

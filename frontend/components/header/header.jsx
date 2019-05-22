@@ -24,13 +24,7 @@ class Header extends React.Component {
         <li>About us</li>
         <li>Legal</li>
         <li>Copyright</li>
-        {!!currentUser && (
-          <li>
-            <Link to="/" onClick={this.handleLogout}>
-              Logout
-            </Link>
-          </li>
-        )}
+        {!!currentUser && <li onClick={this.handleLogout}>Logout</li>}
       </ul>
     );
     let dropdownBG;
@@ -80,7 +74,11 @@ class Header extends React.Component {
               <div className="dropdown-toggle">
                 <i className="fas fa-ellipsis-h" />
               </div>
-              {this.state.dropdownOpen && dropdownList}
+              {this.state.dropdownOpen && (
+                <div className="dropdown-modal" onClick={this.toggleDropdown}>
+                  {dropdownList}
+                </div>
+              )}
             </div>
             {/* <Link to="/">
           <button onClick={logout}>Logout</button>

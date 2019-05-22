@@ -10,6 +10,7 @@ const mstp = (state, ownProps) => ({
 
 const mdtp = (dispatch, ownProps) => ({
   action: user => dispatch(login(user)),
+  demoLogin: () => dispatch(login({ username: 'jmwr', password: 'password' })),
   closeModal: () => dispatch(closeModal())
 });
 
