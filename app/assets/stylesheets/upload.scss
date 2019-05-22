@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .new-user-upload-hero {
   background-image: image-url('yannis-papanastasopoulos-327476-unsplash.jpg');
   color: white;
@@ -50,4 +51,49 @@
 }
 .upload-info-second {
   margin-top: 25px;
+=======
+.upload-main-container {
+  height: 900px;
+  // background-image: image-url('nainoa-shizuru-80385-unsplash.jpg');
+  // background-size: cover;
+  padding-top: 100px;
+}
+
+.song-upload-container {
+  width: 60%;
+  height: 400px;
+  // background-color: white;
+  margin: 0 auto;
+>>>>>>> added basic styling to upload form
+}
+
+.song-file-upload {
+  background-color: white;
+  border: 2px dashed rgb(184, 183, 183);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  font-size: 16px;
+  font-weight: 200;
+  color: white;
+  background-color: rgb(255, 85, 0);
+  padding: 5px 25px;
+  // display: inline-block;
+}
+
+.inputfile + label:hover {
+  cursor: pointer;
 }

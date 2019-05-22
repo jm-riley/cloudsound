@@ -139,7 +139,6 @@ var receiveSong = function receiveSong(song) {
 
 var uploadSong = function uploadSong(song) {
   return function (dispatch) {
-    debugger;
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["uploadSong"](song).then(function (song) {
       return dispatch(receiveSong(song));
     });
@@ -694,7 +693,9 @@ function (_React$Component) {
       title: '',
       description: '',
       songFile: null,
-      songPhoto: null
+      songPhoto: null,
+      photoURL: null,
+      songPicked: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -706,6 +707,31 @@ function (_React$Component) {
       this.setState({
         songFile: e.currentTarget.files[0]
       });
+      this.setState({
+        songPicked: true
+      });
+    }
+  }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this2 = this;
+
+      e.persist();
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader(); // debugger;
+
+      fileReader.onloadend = function () {
+        // debugger;
+        _this2.setState({
+          songPhoto: file,
+          photoURL: fileReader.result
+        });
+      };
+
+      if (file) {
+        // debugger;
+        fileReader.readAsDataURL(file);
+      }
     }
   }, {
     key: "handleSubmit",
@@ -716,40 +742,60 @@ function (_React$Component) {
       debugger;
       formData.append('song[description]', this.state.description);
       formData.append('song[song_file]', this.state.songFile);
-      debugger;
+      formData.append('song[song_photo]', this.state.songPhoto); // debugger;
+
       this.props.uploadSong(formData);
     }
   }, {
     key: "update",
     value: function update(field) {
-      var _this2 = this;
+      var _this3 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.target.value));
+        return _this3.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {
     key: "render",
     value: function render() {
+      var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: this.state.photoURL
+      }) : null;
+      var additionalForm;
+
+      if (this.state.songPicked) {
+        additionalForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          value: this.state.title,
+          onChange: this.update('title')
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          value: this.state.description,
+          onChange: this.update('description')
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "file",
+          onChange: this.handlePhoto.bind(this)
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, imagePreview), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "submit"
+        }));
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-upload-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "song-upload-form",
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.title,
-        onChange: this.update('title')
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.description,
-        onChange: this.update('description')
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-file-upload"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Upload your song"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "file",
-        onChange: this.handleFile.bind(this)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit"
-      })));
+        onChange: this.handleFile.bind(this),
+        className: "inputfile"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "file"
+      }, "choose a file")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "additional-form"
+      }, additionalForm)));
     }
   }]);
 

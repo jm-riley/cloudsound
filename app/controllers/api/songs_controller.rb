@@ -11,7 +11,6 @@ end
 def create
   @song = Song.new(song_params)
   @song.user_id = current_user.id
-  debugger
   if @song.save
     render :show
   else

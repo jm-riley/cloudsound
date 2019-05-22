@@ -8,6 +8,5 @@ const receiveSong = song => ({
 });
 
 export const uploadSong = song => dispatch => {
-  debugger;
   return SongApiUtil.uploadSong(song).then(song => dispatch(receiveSong(song)));
 };
