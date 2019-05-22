@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { openModal } from '../../actions/modal_actions';
-import Modal from '../forms/modal';
+// import Modal from '../forms/modal';
 
 const Hero = ({ openModal }) => {
   return (
@@ -34,7 +34,7 @@ const Hero = ({ openModal }) => {
           Start uploading today
         </button>
       </div>
-      <Modal />
+      {/* <Modal /> */}
     </div>
   );
 };

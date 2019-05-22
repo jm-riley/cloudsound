@@ -1,3 +1,7 @@
+// .header-container {
+//   height: 30px;
+// }
+
 .header {
   font-weight: 300;
   display: flex;
@@ -6,16 +10,18 @@
   // width: 100%;
   background-color: #333;
   color: #ccc;
-  font-size: 16px;
+  font-size: 14px;
   padding-left: 40px;
   padding-right: 40px;
+  height: 45px;
 }
 
 .logo {
   color: white;
   padding: 0 15px;
   background-color: rgb(255, 85, 0);
-  font-size: 44px;
+  font-size: 40px;
+  height: 100%;
 }
 
 .header-left,
@@ -26,13 +32,37 @@
 }
 
 .header-link {
-  font-size: 18px;
+  font-size: 14px;
   padding-top: 15px;
   padding-left: 30px;
 }
 
 .header-link a {
   color: #ccc;
+}
+
+.upload-link a {
+  color: #ccc;
+}
+
+.hero-buttons-header {
+  display: flex;
+  align-items: center;
+}
+
+.hero-buttons-header .signupButton {
+  padding: 3px 8px;
+}
+
+.hero-buttons-header .loginButton {
+  padding: 3px 8px;
+  border: 1px solid grey;
+}
+
+.upload-link {
+  font-size: 14px;
+  padding-top: 15px;
+  padding-left: 30px;
 }
 
 .header-content {
@@ -43,31 +73,31 @@
 
 .username {
   color: white;
-  padding-left: 15px;
+  padding: 10px 15px;
 }
 
-.user-artwork {
-}
+// .user-artwork {
+// }
 
 .user-artwork img {
-  padding-top: 10px;
+  padding-top: 7px;
   height: 30px;
+  width: 30px;
   padding-right: 0px;
-  // border-radius: 50%;
   // width: 30px;
   padding-left: 30px;
-  background-size: auto;
+  // background-size: auto;
 }
 
 .header-dropdown {
   font-size: 24px;
-  height: 52px;
-  width: 52px;
+  height: 44px;
+  width: 44px;
   display: flex;
   justify-content: center;
   position: relative;
   padding-left: 0;
-  margin-left: 20px;
+  // margin-left: 20px;
 }
 
 .header-dropdown:hover {
@@ -79,8 +109,8 @@
   font-size: 14px;
   list-style: none;
   position: absolute;
-  top: 37px;
-  left: -138px;
+  top: 30px;
+  left: -146px;
   padding: 20px;
   // left: 25px;
   // background-color: #333;

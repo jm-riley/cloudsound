@@ -10,8 +10,9 @@ class SessionForm extends React.Component {
 
   handleSumbit(e) {
     e.preventDefault();
-    debugger
-    if (!this.props.errors) {
+    // debugger;
+    if (!this.props.errors.length) {
+      // debugger;
       this.props.closeModal();
     }
     this.props.action(this.state).then(user => this.props.history.push('/discover'));

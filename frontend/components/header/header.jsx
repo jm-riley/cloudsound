@@ -18,17 +18,19 @@ class Header extends React.Component {
   }
 
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, openModal } = this.props;
     const dropdownList = (
       <ul className="dropdown-list">
         <li>About us</li>
         <li>Legal</li>
         <li>Copyright</li>
-        <li>
-          <Link to="/" onClick={this.handleLogout}>
-            Logout
-          </Link>
-        </li>
+        {!!currentUser && (
+          <li>
+            <Link to="/" onClick={this.handleLogout}>
+              Logout
+            </Link>
+          </li>
+        )}
       </ul>
     );
     let dropdownBG;
@@ -47,10 +49,27 @@ class Header extends React.Component {
             </div>
           </div>
           <div className="header-right">
-            <div className="header-content">Upload</div>
-            <div className="user-artwork">
-              <img src={window.userArtworkURL} alt="" />
+            {!currentUser && (
+              <div className="hero-buttons-header">
+                <button className="loginButton" onClick={() => openModal('login')}>
+                  Sign in
+                </button>
+                <button className="signupButton" onClick={() => openModal('signup')}>
+                  Create account
+                </button>
+                {/* <Link to="/signup" className="signupButton">
+            Create Account
+          </Link> */}
+              </div>
+            )}
+            <div className="upload-link">
+              <Link to="/upload">Upload</Link>
             </div>
+            {!!currentUser && (
+              <div className="user-artwork">
+                <img src={window.userArtworkURL} alt="" />
+              </div>
+            )}
             <div className="header-content username">{currentUser && currentUser.username}</div>
 
             <div
