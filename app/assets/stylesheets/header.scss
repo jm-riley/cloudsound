@@ -70,6 +70,10 @@
   margin-left: 20px;
 }
 
+.header-dropdown:hover {
+  cursor: pointer;
+}
+
 .dropdown-list {
   width: 150px;
   font-size: 14px;
@@ -86,6 +90,10 @@
 .dropdown-list li {
   padding: 0 0 15px 0;
   font-weight: 400;
+}
+
+.dropdown-list li:hover {
+  cursor: pointer;
 }
 
 .dropdown-list li:last-child {

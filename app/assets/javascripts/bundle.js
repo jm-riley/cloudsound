@@ -620,6 +620,7 @@ function (_React$Component) {
       dropdownOpen: false
     };
     _this.toggleDropdown = _this.toggleDropdown.bind(_assertThisInitialized(_this));
+    _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -631,16 +632,23 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "handleLogout",
+    value: function handleLogout() {
+      var _this2 = this;
+
+      this.props.logout().then(function () {
+        return _this2.props.history.push('/');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          logout = _this$props.logout;
+      var currentUser = this.props.currentUser;
       var dropdownList = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dropdown-list"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "About us"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Legal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Copyright"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/",
-        onClick: logout
+        onClick: this.handleLogout
       }, "Logout")));
       var dropdownBG;
 
@@ -687,7 +695,7 @@ function (_React$Component) {
   return Header;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Header); // export default ({ currentUser, logout }) => (
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Header)); // export default ({ currentUser, logout }) => (
 // );
 
 /***/ }),

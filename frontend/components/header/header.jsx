@@ -1,26 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = { dropdownOpen: false };
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   toggleDropdown() {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
+  handleLogout() {
+    this.props.logout().then(() => this.props.history.push('/'));
+  }
+
   render() {
-    const { currentUser, logout } = this.props;
+    const { currentUser } = this.props;
     const dropdownList = (
       <ul className="dropdown-list">
         <li>About us</li>
         <li>Legal</li>
         <li>Copyright</li>
         <li>
-          <Link to="/" onClick={logout}>
+          <Link to="/" onClick={this.handleLogout}>
             Logout
           </Link>
         </li>
@@ -48,7 +53,10 @@ class Header extends React.Component {
             </div>
             <div className="header-content username">{currentUser && currentUser.username}</div>
 
-            <div className={`header-content header-dropdown ${dropdownBG}`} onClick={this.toggleDropdown}>
+            <div
+              className={`header-content header-dropdown ${dropdownBG}`}
+              onClick={this.toggleDropdown}
+            >
               <div className="dropdown-toggle">
                 <i className="fas fa-ellipsis-h" />
               </div>
@@ -64,7 +72,7 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
 
 // export default ({ currentUser, logout }) => (
 
