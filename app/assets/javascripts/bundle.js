@@ -589,8 +589,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
-/* harmony default export */ __webpack_exports__["default"] = (function () {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "New User");
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var openModal = _ref.openModal;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "new-user-upload-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "new-user-upload-hero"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "First upload to first album"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Share your tracks and access the tools you need to break through and build your legacy."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "signupButton",
+    onClick: function onClick() {
+      return openModal('signup');
+    }
+  }, "Upload your first track")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "new-user-upload-info"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "upload-info-first"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Real-time state"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "See which fans are listening to your tracks the most and where your top fans are, all in real-time.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "upload-info-second"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Find your community"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Share your work with millions of daily active listeners or share a private link with a few very special people.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "upload-info-third"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Connect directly with fans"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "With direct messaging and in-track comments, you can always be in touch with your fans, whether they are on your block or on the other side of the world."))));
 });
 
 /***/ }),
@@ -608,6 +626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new_user_upload_page */ "./frontend/components/forms/upload/new_user_upload_page.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -630,6 +649,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var UploadPage =
 /*#__PURE__*/
 function (_React$Component) {
@@ -644,10 +664,14 @@ function (_React$Component) {
   _createClass(UploadPage, [{
     key: "render",
     value: function render() {
-      var currentUser = this.props.currentUser;
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          openModal = _this$props.openModal;
 
       if (!currentUser) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          openModal: openModal
+        });
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "upload");
@@ -658,12 +682,21 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mstp = function mstp(state) {
+  // debugger;
   return {
-    currenUser: state.users[state.session.id]
+    currentUser: state.entities.users[state.session.id]
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(UploadPage));
+var mdtp = function mdtp(dispatch) {
+  return {
+    openModal: function openModal(type) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])(type));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp, mdtp)(UploadPage));
 
 /***/ }),
 

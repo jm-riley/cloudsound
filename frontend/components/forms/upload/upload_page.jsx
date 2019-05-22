@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NewUserUploadPage from './new_user_upload_page';
+import { openModal } from '../../../actions/modal_actions';
 
 class UploadPage extends React.Component {
   constructor(props) {
@@ -8,16 +9,26 @@ class UploadPage extends React.Component {
   }
 
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, openModal } = this.props;
     if (!currentUser) {
-      return <NewUserUploadPage />;
+      return <NewUserUploadPage openModal={openModal} />;
     }
     return <div>upload</div>;
   }
 }
 
-const mstp = state => ({
-  currenUser: state.users[state.session.id]
+const mstp = state => {
+  // debugger;
+  return {
+    currentUser: state.entities.users[state.session.id]
+  };
+};
+
+const mdtp = dispatch => ({
+  openModal: type => dispatch(openModal(type))
 });
 
-export default connect(mstp)(UploadPage);
+export default connect(
+  mstp,
+  mdtp
+)(UploadPage);
