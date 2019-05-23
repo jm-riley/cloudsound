@@ -1,8 +1,8 @@
 .upload-main-container {
   height: 900px;
-  background-image: image-url('yannis-papanastasopoulos-327476-unsplash.jpg');
+  background-image: image-url('vishnu-r-nair-639172-unsplash.jpg');
   background-size: cover;
-  padding-top: 100px;
+  padding-top: 70px;
 }
 
 .song-upload-container {
@@ -10,7 +10,6 @@
   height: 400px;
   // background-color: white;
   margin: 0 auto;
-  padding-top: 50px;
 }
 
 .song-file-upload {
@@ -60,7 +59,8 @@
 .additional-form-container {
   background-color: white;
   height: 450px;
-  margin-top: 30px;
+  top: 30px;
+  position: relative;
 }
 
 .additional-form {
@@ -136,8 +136,55 @@
 }
 
 .additional-form-container .signupButton {
-  padding: 5px 10px;
+  padding: 3px 10px;
   position: relative;
-  bottom: 15px;
-  right: -710px;
+  bottom: 10px;
+  right: -645px;
+}
+
+.signupButton:hover {
+  cursor: pointer;
+}
+
+.additional-form-container .loginButton {
+  color: black;
+  border: none;
+  font-weight: 200;
+  position: relative;
+  left: 640px;
+  bottom: 10px;
+  padding: 10px;
+  margin: 0;
+}
+
+@keyframes form-slidedown {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(0, 500%);
+  }
+}
+
+@keyframes form-slideup {
+  from {
+    // transform: opacity(0);
+    transform: translate(0, 500%);
+  }
+
+  to {
+    // transform: translateY(0%);
+    transform: translate(0, 0);
+  }
+}
+
+.form-slideup {
+  animation-duration: 1s;
+  animation-name: form-slideup;
+}
+
+.form-slidedown {
+  animation-duration: 1s;
+  animation-name: form-slidedown;
 }

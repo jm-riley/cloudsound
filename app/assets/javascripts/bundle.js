@@ -695,9 +695,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -719,24 +719,23 @@ function (_React$Component) {
     _this.state = {
       title: '',
       description: '',
-      songFile: null,
-      songPhoto: null,
+      songFile: '',
+      songPhoto: '',
       photoURL: null,
       songPicked: false
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SongUploadForm, [{
     key: "handleFile",
     value: function handleFile(e) {
-      this.setState({
-        songFile: e.currentTarget.files[0]
-      });
-      this.setState({
-        songPicked: true
-      });
+      if (e.currentTarget.files.length) {
+        this.setState({
+          songFile: e.currentTarget.files[0],
+          songPicked: true
+        });
+      }
     }
   }, {
     key: "handlePhoto",
@@ -745,10 +744,9 @@ function (_React$Component) {
 
       e.persist();
       var file = e.currentTarget.files[0];
-      var fileReader = new FileReader(); // debugger;
+      var fileReader = new FileReader();
 
       fileReader.onloadend = function () {
-        // debugger;
         _this2.setState({
           songPhoto: file,
           photoURL: fileReader.result
@@ -756,7 +754,6 @@ function (_React$Component) {
       };
 
       if (file) {
-        // debugger;
         fileReader.readAsDataURL(file);
       }
     }
@@ -766,27 +763,45 @@ function (_React$Component) {
       e.preventDefault();
       var formData = new FormData();
       formData.append('song[title]', this.state.title);
-      debugger;
       formData.append('song[description]', this.state.description);
       formData.append('song[song_file]', this.state.songFile);
-      formData.append('song[song_photo]', this.state.songPhoto); // debugger;
-
+      formData.append('song[song_photo]', this.state.songPhoto);
       this.props.uploadSong(formData);
+    }
+  }, {
+    key: "handleCancel",
+    value: function handleCancel(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      $('.additional-form-container').addClass('form-slidedown');
+      debugger;
+      setTimeout(function () {
+        _this3.setState({
+          songPicked: false,
+          title: '',
+          description: '',
+          songFile: '',
+          songPhoto: '',
+          photoURL: null
+        });
+      }, 200);
     }
   }, {
     key: "update",
     value: function update(field) {
-      var _this3 = this;
+      var _this4 = this;
 
       return function (e) {
-        return _this3.setState(_defineProperty({}, field, e.target.value));
+        return _this4.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {
     key: "render",
     value: function render() {
       var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: this.state.photoURL
+        src: this.state.photoURL,
+        alt: "song"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "empty-photo"
       });
@@ -794,7 +809,7 @@ function (_React$Component) {
 
       if (this.state.songPicked) {
         additionalForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "additional-form-container"
+          className: "additional-form-container form-slideup"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "additional-form"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -805,7 +820,8 @@ function (_React$Component) {
           id: "photo",
           type: "file",
           onChange: this.handlePhoto.bind(this),
-          className: "inputfile"
+          className: "inputfile",
+          value: ""
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
           htmlFor: "photo",
           className: "photo-button"
@@ -826,7 +842,10 @@ function (_React$Component) {
           placeholder: "Describe your track",
           value: this.state.description,
           onChange: this.update('description')
-        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.handleCancel.bind(this),
+          className: "loginButton"
+        }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "submit",
           className: "signupButton",
           value: "Save"
@@ -837,14 +856,15 @@ function (_React$Component) {
         className: "song-upload-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "song-upload-form",
-        onSubmit: this.handleSubmit
+        onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-file-upload"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Upload your song"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "file",
         type: "file",
         onChange: this.handleFile.bind(this),
-        className: "inputfile"
+        className: "inputfile",
+        value: ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "file"
       }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm));
@@ -901,62 +921,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./new_user_upload_page */ "./frontend/components/forms/upload/new_user_upload_page.jsx");
 /* harmony import */ var _song_upload_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./song_upload_form_container */ "./frontend/components/forms/upload/song_upload_form_container.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
 
 
+var UploadPage = function UploadPage(_ref) {
+  var currentUser = _ref.currentUser,
+      openModal = _ref.openModal;
 
-var UploadPage =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(UploadPage, _React$Component);
-
-  function UploadPage(props) {
-    _classCallCheck(this, UploadPage);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(UploadPage).call(this, props));
+  if (!currentUser) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      openModal: openModal
+    });
   }
 
-  _createClass(UploadPage, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          openModal = _this$props.openModal;
-
-      if (!currentUser) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_new_user_upload_page__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          openModal: openModal
-        });
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "upload-main-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_upload_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
-    }
-  }]);
-
-  return UploadPage;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "upload-main-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_upload_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+};
 
 var mstp = function mstp(state) {
   // debugger;
