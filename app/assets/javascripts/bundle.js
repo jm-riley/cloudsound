@@ -343,17 +343,20 @@ function (_React$Component) {
     value: function handleClick(e) {
       var _this2 = this;
 
-      e.stopPropagation();
-      this.setState({
-        closing: true
-      });
-      setTimeout(function () {
-        _this2.props.closeModal();
-
-        _this2.setState({
-          closing: false
+      // debugger;
+      if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
+        e.stopPropagation();
+        this.setState({
+          closing: true
         });
-      }, 300);
+        setTimeout(function () {
+          _this2.props.closeModal();
+
+          _this2.setState({
+            closing: false
+          });
+        }, 300);
+      }
     }
   }, {
     key: "render",
@@ -370,7 +373,8 @@ function (_React$Component) {
 
       var form = type === 'signup' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "modal-container ".concat(fadeout)
+        className: "modal-container ".concat(fadeout),
+        onClick: this.handleClick
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleClick,
         className: "modal-close ".concat(fadeout)
@@ -433,6 +437,12 @@ var mdtp = function mdtp(dispatch, ownProps) {
     action: function action(user) {
       return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])(user));
     },
+    demoLogin: function demoLogin() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])({
+        username: 'jmwr',
+        password: 'password'
+      }));
+    },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
@@ -494,6 +504,7 @@ function (_React$Component) {
       password: ''
     };
     _this.handleSumbit = _this.handleSumbit.bind(_assertThisInitialized(_this));
+    _this.loginDemoUser = _this.loginDemoUser.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -512,6 +523,13 @@ function (_React$Component) {
       this.props.action(this.state).then(function (user) {
         return _this2.props.history.push('/discover');
       });
+    }
+  }, {
+    key: "loginDemoUser",
+    value: function loginDemoUser(e) {
+      e.preventDefault();
+      this.props.closeModal();
+      this.props.demoLogin();
     }
   }, {
     key: "update",
@@ -558,7 +576,10 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleSumbit,
         className: "signupButton"
-      }, submitText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We may use your information for updates and tips on CloudSound's products and services, and for activities notifications. You can unsubscribe for free at any time.")));
+      }, submitText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.loginDemoUser,
+        className: "demoButton"
+      }, "Demo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We may use your information for updates and tips on CloudSound's products and services, and for activities notifications. You can unsubscribe for free at any time.")));
     }
   }]);
 
@@ -601,6 +622,12 @@ var mdtp = function mdtp(dispatch, ownProps) {
     },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+    },
+    demoLogin: function demoLogin() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__["login"])({
+        username: 'jmwr',
+        password: 'password'
+      }));
     }
   };
 };
@@ -760,23 +787,49 @@ function (_React$Component) {
     value: function render() {
       var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: this.state.photoURL
-      }) : null;
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "empty-photo"
+      });
       var additionalForm;
 
       if (this.state.songPicked) {
-        additionalForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        additionalForm = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "additional-form-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "additional-form"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "song-photo-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "photo-container"
+        }, imagePreview, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          id: "photo",
+          type: "file",
+          onChange: this.handlePhoto.bind(this),
+          className: "inputfile"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "photo",
+          className: "photo-button"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-camera"
+        }), "Upload an image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "song-info-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "song-info"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           value: this.state.title,
-          onChange: this.update('title')
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
+          onChange: this.update('title'),
+          placeholder: this.state.songFile.name
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "song-info"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          placeholder: "Describe your track",
           value: this.state.description,
           onChange: this.update('description')
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "file",
-          onChange: this.handlePhoto.bind(this)
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, imagePreview), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "submit"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "submit",
+          className: "signupButton",
+          value: "Save"
         }));
       }
 
@@ -788,14 +841,13 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-file-upload"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Upload your song"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "file",
         type: "file",
         onChange: this.handleFile.bind(this),
         className: "inputfile"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "file"
-      }, "choose a file")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "additional-form"
-      }, additionalForm)));
+      }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm));
     }
   }]);
 
@@ -1001,10 +1053,9 @@ function (_React$Component) {
           openModal = _this$props.openModal;
       var dropdownList = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dropdown-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "About us"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Legal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Copyright"), !!currentUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "About us"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Legal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Copyright"), !!currentUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         onClick: this.handleLogout
-      }, "Logout")));
+      }, "Logout"));
       var dropdownBG;
 
       if (this.state.dropdownOpen) {
@@ -1057,7 +1108,10 @@ function (_React$Component) {
         className: "dropdown-toggle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h"
-      })), this.state.dropdownOpen && dropdownList))));
+      })), this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown-modal",
+        onClick: this.toggleDropdown
+      }, dropdownList)))));
     }
   }]);
 

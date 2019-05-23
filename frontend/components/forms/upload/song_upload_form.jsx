@@ -51,16 +51,54 @@ class SongUploadForm extends React.Component {
   }
 
   render() {
-    const imagePreview = this.state.photoURL ? <img src={this.state.photoURL} /> : null;
+    const imagePreview = this.state.photoURL ? (
+      <img src={this.state.photoURL} />
+    ) : (
+      <div className="empty-photo" />
+    );
     let additionalForm;
     if (this.state.songPicked) {
       additionalForm = (
-        <div>
-          <input type="text" value={this.state.title} onChange={this.update('title')} />
-          <input type="text" value={this.state.description} onChange={this.update('description')} />
-          <input type="file" onChange={this.handlePhoto.bind(this)} />
-          <div>{imagePreview}</div>
-          <input type="submit" />
+        <div className="additional-form-container">
+          <div className="additional-form">
+            <div className="song-photo-container">
+              <div className="photo-container">
+                {imagePreview}
+                <input
+                  id="photo"
+                  type="file"
+                  onChange={this.handlePhoto.bind(this)}
+                  className="inputfile"
+                />
+                <label htmlFor="photo" className="photo-button">
+                  <i className="fas fa-camera" />
+                  Upload an image
+                </label>
+              </div>
+            </div>
+            <div className="song-info-container">
+              <div className="song-info">
+                <label>Title</label>
+                <br />
+                <input
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.update('title')}
+                  placeholder={this.state.songFile.name}
+                />
+              </div>
+              <div className="song-info">
+                <label>Description</label>
+                <br />
+                <textarea
+                  placeholder="Describe your track"
+                  value={this.state.description}
+                  onChange={this.update('description')}
+                />
+              </div>
+            </div>
+          </div>
+          <input type="submit" className="signupButton" value="Save" />
         </div>
       );
     }
@@ -69,10 +107,16 @@ class SongUploadForm extends React.Component {
         <form className="song-upload-form" onSubmit={this.handleSubmit}>
           <div className="song-file-upload">
             <h2>Upload your song</h2>
-            <input type="file" onChange={this.handleFile.bind(this)} className="inputfile" />
+            <input
+              id="file"
+              type="file"
+              onChange={this.handleFile.bind(this)}
+              className="inputfile"
+            />
             <label htmlFor="file">choose a file</label>
+            <p>Provide FLAC, WAV, ALAC or AIFF for best audio quality.</p>
           </div>
-          <div className="additional-form">{additionalForm}</div>
+          {additionalForm}
         </form>
       </div>
     );
