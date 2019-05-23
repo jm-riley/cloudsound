@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class SongUploadForm extends React.Component {
   constructor(props) {
@@ -32,19 +33,23 @@ class SongUploadForm extends React.Component {
   }
 
   handleSubmit(e) {
+    const { currentUser } = this.props;
+    const { title, description, songFile, songPhoto } = this.state;
+    debugger;
     e.preventDefault();
     const formData = new FormData();
-    formData.append('song[title]', this.state.title);
-    formData.append('song[description]', this.state.description);
-    formData.append('song[song_file]', this.state.songFile);
-    formData.append('song[song_photo]', this.state.songPhoto);
-    this.props.uploadSong(formData);
+    formData.append('song[title]', title);
+    formData.append('song[description]', description);
+    formData.append('song[song_file]', songFile);
+    formData.append('song[song_photo]', songPhoto);
+    this.props
+      .uploadSong(formData)
+      .then(song => this.props.history.push(`/${currentUser}/${song.id}`));
   }
 
   handleCancel(e) {
     e.preventDefault();
     $('.additional-form-container').addClass('form-slidedown');
-    debugger
     setTimeout(() => {
       this.setState({
         songPicked: false,
@@ -139,4 +144,4 @@ class SongUploadForm extends React.Component {
   }
 }
 
-export default SongUploadForm;
+export default withRouter(SongUploadForm);

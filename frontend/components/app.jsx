@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { AuthRoute } from '../util/route_util';
 import HeaderContainer from './header/header_container';
 import Hero from './header/hero';
+import SongShow from './songs/song_show';
 import Modal from './forms/modal';
 
 import UploadPage from './forms/upload/upload_page';
@@ -16,6 +17,7 @@ export default () => (
       <Route path="/" component={HeaderContainer} />
     </Switch>
     <Route path="/upload" component={UploadPage} />
+    <Route path="/:userId/:songId" component={SongShow} />
     {/* <AuthRoute path="/login" component={LoginForm} />
     <AuthRoute path="/signup" component={SignupForm} /> */}
     <Modal />
