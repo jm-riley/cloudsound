@@ -869,6 +869,7 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      this.props.clearErrors();
       this.setState({
         loading: true
       });
@@ -1000,7 +1001,7 @@ function (_React$Component) {
         value: ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "file"
-      }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm), this.state.loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_loading_modal__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm), this.state.loading && !this.props.errors.length && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_loading_modal__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 

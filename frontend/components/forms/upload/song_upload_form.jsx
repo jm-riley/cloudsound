@@ -35,6 +35,7 @@ class SongUploadForm extends React.Component {
   }
 
   handleSubmit(e) {
+    this.props.clearErrors();
     this.setState({ loading: true });
     const { currentUser } = this.props;
     const { title, description, songFile, songPhoto } = this.state;
@@ -155,7 +156,7 @@ class SongUploadForm extends React.Component {
           </div>
           {additionalForm}
         </form>
-        {this.state.loading && <LoadingModal />}
+        {this.state.loading && !this.props.errors.length && <LoadingModal />}
       </div>
     );
   }
