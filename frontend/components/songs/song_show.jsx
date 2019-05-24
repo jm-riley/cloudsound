@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { fetchSong, deleteSong } from '../../actions/song_actions';
 import { openModal } from '../../actions/modal_actions';
 import SongUpdateModal from './song_update_modal';
+import PlayButton from './play_button';
 
 class SongShow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false };
-    this.togglePlay = this.togglePlay.bind(this);
+    this.state = {};
   }
 
   componentDidMount() {
@@ -17,39 +17,19 @@ class SongShow extends React.Component {
       .then(() => this.setState({ song: new Audio(this.props.song.songUrl) }));
   }
 
-  togglePlay() {
-    const { playing, song } = this.state;
-    // playing ? audio.pause() : audio.play();
-    this.setState({ playing: !playing }, () => {
-      // playing ? audio.pause() : audio.play();
-      if (playing) {
-        song.pause();
-      } else song.play();
-    });
-  }
-
   handleDelete() {
     const { deleteSong, song } = this.props;
     deleteSong(song.id).then(() => this.props.history.push('/discover'));
   }
   render() {
     const { song, user, currentUser, openModal } = this.props;
-    const { playing } = this.state;
-    let playbackIcon = playing ? (
-      <i className="fas fa-pause-circle" />
-    ) : (
-      <i className="fas fa-play-circle" />
-    );
-    if (!song) return null;
-    const { description, photoUrl, songUrl, title } = song;
-    if (this.state.song) {
-      this.state.song.onended = e => {
-        this.setState({ playing: false });
-      };
-    }
-    let photo = song.photoUrl
-      ? song.photoUrl
+    if (!this.state.song) return null;
+    const { description, photoUrl, title } = song;
+
+    let photo = photoUrl
+      ? photoUrl
       : 'http://www.ieeeaustsb.org/files/2017/05/placeholder-female-square-300x300.png';
+
     let editButtons;
     if (song.user_id === currentUser) {
       editButtons = (
@@ -70,9 +50,7 @@ class SongShow extends React.Component {
         <div className="song-page-content">
           <div className="song-page-hero">
             <div className="play-section">
-              <div className="play-button" onClick={this.togglePlay}>
-                {playbackIcon}
-              </div>
+              <PlayButton song={this.state.song} />
               <div className="song-page-song-info">
                 <span className="song-username">{user.username}</span>
                 <p className="song-title">{title}</p>
