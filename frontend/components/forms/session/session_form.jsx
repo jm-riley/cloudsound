@@ -11,9 +11,7 @@ class SessionForm extends React.Component {
 
   handleSumbit(e) {
     e.preventDefault();
-    // debugger;
     if (!this.props.errors.length) {
-      // debugger;
       this.props.closeModal();
     }
     this.props.action(this.state).then(user => this.props.history.push('/discover'));
@@ -63,7 +61,9 @@ class SessionForm extends React.Component {
           <button onClick={this.handleSumbit} className="signupButton">
             {submitText}
           </button>
-          <button onClick={this.loginDemoUser} className="demoButton">Demo</button>
+          <button onClick={this.loginDemoUser} className="demoButton">
+            Demo
+          </button>
         </form>
         <div>
           <p>

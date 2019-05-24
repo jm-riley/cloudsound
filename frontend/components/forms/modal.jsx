@@ -13,7 +13,6 @@ class Modal extends React.Component {
   }
 
   handleClick(e) {
-    // debugger;
     if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
       e.stopPropagation();
       this.setState({ closing: true });
@@ -47,7 +46,6 @@ class Modal extends React.Component {
         return null;
     }
 
-    // debugger;
     return (
       <div className={`modal-container ${fadeout}`} onClick={this.handleClick}>
         <button onClick={this.handleClick} className={`modal-close ${fadeout}`}>

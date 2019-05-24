@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import SongUpdateForm from './song_update_form';
 import { updateSong } from '../../actions/song_actions';
+import { closeModal } from '../../actions/modal_actions';
 
 const mstp = (state, ownProps) => {
   return {
@@ -9,7 +10,8 @@ const mstp = (state, ownProps) => {
 };
 
 const mdtp = dispatch => ({
-  update: song => dispatch(updateSong(song))
+  update: song => dispatch(updateSong(song)),
+  closeModal: () => dispatch(closeModal())
 });
 
 export default connect(

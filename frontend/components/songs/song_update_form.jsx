@@ -5,9 +5,8 @@ class SongUpdateForm extends React.Component {
   constructor(props) {
     super(props);
     const { song } = this.props;
-    // const { song } = this.props;
-    debugger;
     this.state = { title: song.title, description: song.description };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handlePhoto(e) {
@@ -32,14 +31,18 @@ class SongUpdateForm extends React.Component {
     if (songPhoto) {
       formData.append('song[song_photo]', songPhoto);
     }
-    debugger;
-    this.props
-      .update({ song: formData, id: song.id })
-      .then(song => this.props.history.push(`/${currentUser}/${song.song.id}`));
+    this.props.update({ song: formData, id: song.id }).then(() => this.handleClose());
   }
 
   update(field) {
     return e => this.setState({ [field]: e.target.value });
+  }
+
+  handleClose() {
+    $('.song-upload-form-modal').addClass('form-slidedown');
+    setTimeout(() => {
+      this.props.closeModal();
+    }, 500);
   }
 
   render() {
@@ -93,7 +96,7 @@ class SongUpdateForm extends React.Component {
           {/* <button onClick={this.handleCancel.bind(this)} className="loginButton">
             Cancel
           </button> */}
-          <input type="submit" className="signupButton updateModalButton" value="Save" />
+          <input type="submit" className="updateModalButton" value="Save" />
         </div>
       </form>
     );

@@ -369,7 +369,6 @@ function (_React$Component) {
     value: function handleClick(e) {
       var _this2 = this;
 
-      // debugger;
       if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
         e.stopPropagation();
         this.setState({
@@ -410,8 +409,7 @@ function (_React$Component) {
 
         default:
           return null;
-      } // debugger;
-
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-container ".concat(fadeout),
@@ -554,10 +552,9 @@ function (_React$Component) {
     value: function handleSumbit(e) {
       var _this2 = this;
 
-      e.preventDefault(); // debugger;
+      e.preventDefault();
 
       if (!this.props.errors.length) {
-        // debugger;
         this.props.closeModal();
       }
 
@@ -1001,7 +998,6 @@ var UploadPage = function UploadPage(_ref) {
 };
 
 var mstp = function mstp(state) {
-  // debugger;
   return {
     currentUser: state.entities.users[state.session.id]
   };
@@ -1363,9 +1359,7 @@ function (_React$Component) {
         return _this2.setState({
           song: new Audio(_this2.props.song.songUrl)
         });
-      }); // setTimeout(() => {
-      //   this.setState({ song: new Audio(this.props.song.songUrl) });
-      // }, 400);
+      });
     }
   }, {
     key: "togglePlay",
@@ -1414,6 +1408,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-page-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-hero"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-section"
@@ -1446,7 +1442,7 @@ function (_React$Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-pencil-alt"
-      }), "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }), "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
         song: song
       }));
     }
@@ -1501,9 +1497,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1523,13 +1519,12 @@ function (_React$Component) {
     _classCallCheck(this, SongUpdateForm);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SongUpdateForm).call(this, props));
-    var song = _this.props.song; // const { song } = this.props;
-
-    debugger;
+    var song = _this.props.song;
     _this.state = {
       title: song.title,
       description: song.description
     };
+    _this.handleClose = _this.handleClose.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1574,12 +1569,11 @@ function (_React$Component) {
         formData.append('song[song_photo]', songPhoto);
       }
 
-      debugger;
       this.props.update({
         song: formData,
         id: song.id
-      }).then(function (song) {
-        return _this3.props.history.push("/".concat(currentUser, "/").concat(song.song.id));
+      }).then(function () {
+        return _this3.handleClose();
       });
     }
   }, {
@@ -1590,6 +1584,16 @@ function (_React$Component) {
       return function (e) {
         return _this4.setState(_defineProperty({}, field, e.target.value));
       };
+    }
+  }, {
+    key: "handleClose",
+    value: function handleClose() {
+      var _this5 = this;
+
+      $('.song-upload-form-modal').addClass('form-slidedown');
+      setTimeout(function () {
+        _this5.props.closeModal();
+      }, 500);
     }
   }, {
     key: "render",
@@ -1639,7 +1643,7 @@ function (_React$Component) {
         onChange: this.update('description')
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        className: "signupButton updateModalButton",
+        className: "updateModalButton",
         value: "Save"
       })));
     }
@@ -1664,6 +1668,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _song_update_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./song_update_form */ "./frontend/components/songs/song_update_form.jsx");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -1678,6 +1684,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     update: function update(song) {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["updateSong"])(song));
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     }
   };
 };
@@ -1710,9 +1719,18 @@ var SongUpdateModal = function SongUpdateModal(_ref) {
       closeModal = _ref.closeModal,
       modal = _ref.modal;
   if (!modal) return null;
+
+  var handleClick = function handleClick() {
+    $('.update-form-content').addClass('form-slidedown');
+    $('.modal-container').addClass('fadeout');
+    setTimeout(function () {
+      closeModal();
+    }, 400);
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "modal-container",
-    onClick: closeModal
+    onClick: handleClick
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "modal-close"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2165,7 +2183,6 @@ var fetchSong = function fetchSong(id) {
 var updateSong = function updateSong(_ref) {
   var song = _ref.song,
       id = _ref.id;
-  debugger;
   return $.ajax({
     method: 'PATCH',
     url: "/api/songs/".concat(id),

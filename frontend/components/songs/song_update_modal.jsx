@@ -5,8 +5,16 @@ import { connect } from 'react-redux';
 
 const SongUpdateModal = ({ song, closeModal, modal }) => {
   if (!modal) return null;
+
+  const handleClick = () => {
+    $('.update-form-content').addClass('form-slidedown');
+    $('.modal-container').addClass('fadeout');
+    setTimeout(() => {
+      closeModal();
+    }, 400);
+  };
   return (
-    <div className="modal-container" onClick={closeModal}>
+    <div className="modal-container" onClick={handleClick}>
       <button className="modal-close">
         <i className="far fa-times-circle" />
       </button>

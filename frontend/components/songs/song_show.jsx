@@ -15,9 +15,6 @@ class SongShow extends React.Component {
     this.props
       .fetchSong(this.props.match.params.songId)
       .then(() => this.setState({ song: new Audio(this.props.song.songUrl) }));
-    // setTimeout(() => {
-    //   this.setState({ song: new Audio(this.props.song.songUrl) });
-    // }, 400);
   }
 
   togglePlay() {
@@ -47,28 +44,30 @@ class SongShow extends React.Component {
     }
     return (
       <div className="song-page-container">
-        <div className="song-page-hero">
-          <div className="play-section">
-            <div className="play-button" onClick={this.togglePlay}>
-              {playbackIcon}
+        <div className="song-page-content">
+          <div className="song-page-hero">
+            <div className="play-section">
+              <div className="play-button" onClick={this.togglePlay}>
+                {playbackIcon}
+              </div>
+              <div className="song-page-song-info">
+                <span className="song-username">{user.username}</span>
+                <p className="song-title">{title}</p>
+              </div>
             </div>
-            <div className="song-page-song-info">
-              <span className="song-username">{user.username}</span>
-              <p className="song-title">{title}</p>
+            <div className="song-artwork">
+              <img src={photoUrl} alt="song-artwork" />
             </div>
+            <div className="waveform" />
           </div>
-          <div className="song-artwork">
-            <img src={photoUrl} alt="song-artwork" />
+          <div className="comment-form">
+            <input type="text" className="comment-input" placeholder="Write a comment" />
           </div>
-          <div className="waveform" />
+          <button className="edit-button" onClick={() => this.props.openModal('update')}>
+            <i className="fas fa-pencil-alt" />
+            Edit
+          </button>
         </div>
-        <div className="comment-form">
-          <input type="text" className="comment-input" placeholder="Write a comment" />
-        </div>
-        <button className="edit-button" onClick={() => this.props.openModal('update')}>
-          <i className="fas fa-pencil-alt" />
-          Edit
-        </button>
         <SongUpdateModal song={song} />
       </div>
     );

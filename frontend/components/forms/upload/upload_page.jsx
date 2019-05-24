@@ -16,7 +16,6 @@ const UploadPage = ({ currentUser, openModal }) => {
 };
 
 const mstp = state => {
-  // debugger;
   return {
     currentUser: state.entities.users[state.session.id]
   };

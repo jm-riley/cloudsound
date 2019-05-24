@@ -14,7 +14,6 @@ export const fetchSong = id =>
   });
 
 export const updateSong = ({ song, id }) => {
-  debugger;
   return $.ajax({
     method: 'PATCH',
     url: `/api/songs/${id}`,
