@@ -716,6 +716,28 @@ var mdtp = function mdtp(dispatch, ownProps) {
 
 /***/ }),
 
+/***/ "./frontend/components/forms/upload/loading_modal.jsx":
+/*!************************************************************!*\
+  !*** ./frontend/components/forms/upload/loading_modal.jsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: 'modal-container loading'
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "loader"
+  }));
+});
+
+/***/ }),
+
 /***/ "./frontend/components/forms/upload/new_user_upload_page.jsx":
 /*!*******************************************************************!*\
   !*** ./frontend/components/forms/upload/new_user_upload_page.jsx ***!
@@ -764,6 +786,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _loading_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading_modal */ "./frontend/components/forms/upload/loading_modal.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -787,6 +810,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var SongUploadForm =
 /*#__PURE__*/
 function (_React$Component) {
@@ -804,7 +828,8 @@ function (_React$Component) {
       songFile: '',
       songPhoto: null,
       photoURL: null,
-      songPicked: false
+      songPicked: false,
+      loading: false
     };
     return _this;
   }
@@ -844,6 +869,9 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
+      this.setState({
+        loading: true
+      });
       var currentUser = this.props.currentUser;
       var _this$state = this.state,
           title = _this$state.title,
@@ -972,7 +1000,7 @@ function (_React$Component) {
         value: ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "file"
-      }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm));
+      }, "choose a file"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Provide FLAC, WAV, ALAC or AIFF for best audio quality.")), additionalForm), this.state.loading && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_loading_modal__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 
@@ -1459,7 +1487,6 @@ function (_React$Component) {
           song = _this$props2.song,
           user = _this$props2.user,
           currentUser = _this$props2.currentUser,
-          deleteSong = _this$props2.deleteSong,
           openModal = _this$props2.openModal;
       var playing = this.state.playing;
       var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1481,6 +1508,7 @@ function (_React$Component) {
         };
       }
 
+      var photo = song.photoUrl ? song.photoUrl : 'http://www.ieeeaustsb.org/files/2017/05/placeholder-female-square-300x300.png';
       var editButtons;
 
       if (song.user_id === currentUser) {
@@ -1521,7 +1549,7 @@ function (_React$Component) {
       }, title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-artwork"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: photoUrl,
+        src: photo,
         alt: "song-artwork"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "waveform"
@@ -1816,7 +1844,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _song_update_form_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./song_update_form_container */ "./frontend/components/songs/song_update_form_container.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var _this = undefined;
+
+
 
 
 
@@ -1829,6 +1861,8 @@ var SongUpdateModal = function SongUpdateModal(_ref) {
   if (!modal) return null;
 
   var handleClick = function handleClick() {
+    _this.props.clearErrors();
+
     $('.update-form-content').addClass('form-slidedown');
     $('.modal-container').addClass('fadeout');
     setTimeout(function () {
@@ -1863,11 +1897,14 @@ var mdtp = function mdtp(dispatch) {
   return {
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_3__["clearSongErrors"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mstp, mdtp)(SongUpdateModal));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mstp, mdtp)(SongUpdateModal));
 
 /***/ }),
 

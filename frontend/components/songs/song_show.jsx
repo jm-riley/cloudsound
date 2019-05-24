@@ -33,7 +33,7 @@ class SongShow extends React.Component {
     deleteSong(song.id).then(() => this.props.history.push('/discover'));
   }
   render() {
-    const { song, user, currentUser, deleteSong, openModal } = this.props;
+    const { song, user, currentUser, openModal } = this.props;
     const { playing } = this.state;
     let playbackIcon = playing ? (
       <i className="fas fa-pause-circle" />
@@ -47,6 +47,9 @@ class SongShow extends React.Component {
         this.setState({ playing: false });
       };
     }
+    let photo = song.photoUrl
+      ? song.photoUrl
+      : 'http://www.ieeeaustsb.org/files/2017/05/placeholder-female-square-300x300.png';
     let editButtons;
     if (song.user_id === currentUser) {
       editButtons = (
@@ -76,7 +79,7 @@ class SongShow extends React.Component {
               </div>
             </div>
             <div className="song-artwork">
-              <img src={photoUrl} alt="song-artwork" />
+              <img src={photo} alt="song-artwork" />
             </div>
             <div className="waveform" />
           </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import LoadingModal from './loading_modal';
 
 class SongUploadForm extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class SongUploadForm extends React.Component {
       songFile: '',
       songPhoto: null,
       photoURL: null,
-      songPicked: false
+      songPicked: false,
+      loading: false
     };
   }
 
@@ -33,6 +35,7 @@ class SongUploadForm extends React.Component {
   }
 
   handleSubmit(e) {
+    this.setState({ loading: true });
     const { currentUser } = this.props;
     const { title, description, songFile, songPhoto } = this.state;
     e.preventDefault();
@@ -119,6 +122,7 @@ class SongUploadForm extends React.Component {
               </div>
             </div>
           </div>
+
           <button onClick={this.handleCancel.bind(this)} className="loginButton">
             Cancel
           </button>
@@ -151,6 +155,7 @@ class SongUploadForm extends React.Component {
           </div>
           {additionalForm}
         </form>
+        {this.state.loading && <LoadingModal />}
       </div>
     );
   }

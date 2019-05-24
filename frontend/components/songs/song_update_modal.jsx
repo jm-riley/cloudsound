@@ -1,12 +1,14 @@
 import React from 'react';
 import SongUpdateForm from './song_update_form_container';
 import { closeModal } from '../../actions/modal_actions';
+import { clearSongErrors } from '../../actions/song_actions';
 import { connect } from 'react-redux';
 
 const SongUpdateModal = ({ song, closeModal, modal }) => {
   if (!modal) return null;
 
   const handleClick = () => {
+    this.props.clearErrors();
     $('.update-form-content').addClass('form-slidedown');
     $('.modal-container').addClass('fadeout');
     setTimeout(() => {
@@ -30,7 +32,8 @@ const mstp = state => ({
 });
 
 const mdtp = dispatch => ({
-  closeModal: () => dispatch(closeModal())
+  closeModal: () => dispatch(closeModal()),
+  clearErrors: () => dispatch(clearSongErrors())
 });
 
 export default connect(
