@@ -8,7 +8,7 @@ class SongUploadForm extends React.Component {
       title: '',
       description: '',
       songFile: '',
-      songPhoto: '',
+      songPhoto: null,
       photoURL: null,
       songPicked: false
     };
@@ -39,8 +39,10 @@ class SongUploadForm extends React.Component {
     const formData = new FormData();
     formData.append('song[title]', title);
     formData.append('song[description]', description);
+    if (songPhoto) {
+      formData.append('song[song_photo]', songPhoto);
+    }
     formData.append('song[song_file]', songFile);
-    formData.append('song[song_photo]', songPhoto);
     this.props.upload(formData).then(song => {
       this.props.history.push(`/${currentUser}/${song.song.id}`);
     });
@@ -48,6 +50,7 @@ class SongUploadForm extends React.Component {
 
   handleCancel(e) {
     e.preventDefault();
+    this.props.clearErrors();
     $('.additional-form-container').addClass('form-slidedown');
     setTimeout(() => {
       this.setState({
@@ -66,6 +69,7 @@ class SongUploadForm extends React.Component {
   }
 
   render() {
+    const { errors } = this.props;
     const imagePreview = this.state.photoURL ? (
       <img src={this.state.photoURL} alt="song" />
     ) : (
@@ -85,6 +89,7 @@ class SongUploadForm extends React.Component {
                   onChange={this.handlePhoto.bind(this)}
                   className="inputfile"
                   value=""
+                  accept="image/jpg, image/jpeg, image/png, image/tiff"
                 />
                 <label htmlFor="photo" className="photo-button">
                   <i className="fas fa-camera" />
@@ -123,6 +128,13 @@ class SongUploadForm extends React.Component {
     }
     return (
       <div className="song-upload-container">
+        {errors && (
+          <ul className="form-errors">
+            {errors.map((error, i) => (
+              <li key={i}>{error}</li>
+            ))}
+          </ul>
+        )}
         <form className="song-upload-form" onSubmit={this.handleSubmit.bind(this)}>
           <div className="song-file-upload">
             <h2>Upload your song</h2>
@@ -131,6 +143,7 @@ class SongUploadForm extends React.Component {
               type="file"
               onChange={this.handleFile.bind(this)}
               className="inputfile"
+              accept="audio/wav, audio/aiff, audio/flac, audio/mp3, audio/alac"
               value=""
             />
             <label htmlFor="file">choose a file</label>

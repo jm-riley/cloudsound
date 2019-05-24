@@ -39,13 +39,17 @@ class SongUpdateForm extends React.Component {
   }
 
   handleClose() {
-    $('.song-upload-form-modal').addClass('form-slidedown');
-    setTimeout(() => {
-      this.props.closeModal();
-    }, 500);
+    if (!this.props.errors) {
+      $('.song-upload-form-modal').addClass('form-slidedown');
+      setTimeout(() => {
+        this.props.clearErrors();
+        this.props.closeModal();
+      }, 500);
+    }
   }
 
   render() {
+    const { errors } = this.props;
     const imagePreview = this.state.photoURL ? (
       <img src={this.state.photoURL} alt="song" />
     ) : (
@@ -54,6 +58,13 @@ class SongUpdateForm extends React.Component {
     return (
       <form className="song-upload-form-modal" onSubmit={this.handleSubmit.bind(this)}>
         <div className="update-form-container">
+          {errors && (
+            <ul className="update-form-errors">
+              {errors.map((error, i) => (
+                <li key={i}>{error}</li>
+              ))}
+            </ul>
+          )}
           <div className="additional-form">
             <div className="song-photo-container">
               <div className="photo-container">

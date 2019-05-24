@@ -48,10 +48,23 @@
 .update-form-content {
   position: relative;
   width: 800px;
-  left: 25%;
+  left: 20%;
   top: 100px;
   // box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
   background-color: transparent;
+}
+
+.update-form-errors {
+  color: #8e8a8a;
+  position: relative;
+  top: 118px;
+  right: -55%;
+  z-index: 105;
+  font-size: 14px;
+}
+
+.update-form-errors li {
+  list-style: none;
 }
 
 .song-upload-form-modal {

@@ -10,7 +10,6 @@ export default (state = {}, action) => {
       return newState;
     case REMOVE_SONG:
       newState = merge({}, state);
-      debugger;
       delete newState[action.id];
       return newState;
     default:

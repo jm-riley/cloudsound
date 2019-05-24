@@ -119,13 +119,16 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/song_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_SONG, REMOVE_SONG, uploadSong, updateSong, fetchSong, deleteSong */
+/*! exports provided: RECEIVE_SONG, REMOVE_SONG, RECEIVE_SONG_ERRORS, REMOVE_SONG_ERRORS, clearSongErrors, uploadSong, updateSong, fetchSong, deleteSong */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SONG", function() { return RECEIVE_SONG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_SONG", function() { return REMOVE_SONG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SONG_ERRORS", function() { return RECEIVE_SONG_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_SONG_ERRORS", function() { return REMOVE_SONG_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearSongErrors", function() { return clearSongErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadSong", function() { return uploadSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSong", function() { return updateSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSong", function() { return fetchSong; });
@@ -134,6 +137,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_SONG = 'RECEIVE_SONG';
 var REMOVE_SONG = 'REMOVE_SONG';
+var RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
+var REMOVE_SONG_ERRORS = 'REMOVE_SONG_ERRORS';
 
 var receiveSong = function receiveSong(payload) {
   return {
@@ -150,11 +155,25 @@ var removeSong = function removeSong(id) {
   };
 };
 
+var receiveSongErrors = function receiveSongErrors(errs) {
+  return {
+    type: RECEIVE_SONG_ERRORS,
+    errs: errs.responseJSON
+  };
+};
+
+var clearSongErrors = function clearSongErrors() {
+  return {
+    type: REMOVE_SONG_ERRORS
+  };
+};
 var uploadSong = function uploadSong(song) {
   return function (dispatch) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["uploadSong"](song).then(function (song) {
       dispatch(receiveSong(song));
       return song;
+    }, function (errs) {
+      return dispatch(receiveSongErrors(errs));
     });
   };
 };
@@ -163,6 +182,8 @@ var updateSong = function updateSong(song) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["updateSong"](song).then(function (song) {
       dispatch(receiveSong(song));
       return song;
+    }, function (errs) {
+      return dispatch(receiveSongErrors(errs));
     });
   };
 };
@@ -170,6 +191,8 @@ var fetchSong = function fetchSong(id) {
   return function (dispatch) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSong"](id).then(function (song) {
       return dispatch(receiveSong(song));
+    }, function (errs) {
+      return dispatch(receiveSongErrors(errs));
     });
   };
 };
@@ -177,6 +200,8 @@ var deleteSong = function deleteSong(id) {
   return function (dispatch) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteSong"](id).then(function () {
       return dispatch(removeSong(id));
+    }, function (errs) {
+      return dispatch(receiveSongErrors(errs));
     });
   };
 };
@@ -777,7 +802,7 @@ function (_React$Component) {
       title: '',
       description: '',
       songFile: '',
-      songPhoto: '',
+      songPhoto: null,
       photoURL: null,
       songPicked: false
     };
@@ -829,8 +854,12 @@ function (_React$Component) {
       var formData = new FormData();
       formData.append('song[title]', title);
       formData.append('song[description]', description);
+
+      if (songPhoto) {
+        formData.append('song[song_photo]', songPhoto);
+      }
+
       formData.append('song[song_file]', songFile);
-      formData.append('song[song_photo]', songPhoto);
       this.props.upload(formData).then(function (song) {
         _this3.props.history.push("/".concat(currentUser, "/").concat(song.song.id));
       });
@@ -841,6 +870,7 @@ function (_React$Component) {
       var _this4 = this;
 
       e.preventDefault();
+      this.props.clearErrors();
       $('.additional-form-container').addClass('form-slidedown');
       setTimeout(function () {
         _this4.setState({
@@ -865,6 +895,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var errors = this.props.errors;
       var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: this.state.photoURL,
         alt: "song"
@@ -887,7 +918,8 @@ function (_React$Component) {
           type: "file",
           onChange: this.handlePhoto.bind(this),
           className: "inputfile",
-          value: ""
+          value: "",
+          accept: "image/jpg, image/jpeg, image/png, image/tiff"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
           htmlFor: "photo",
           className: "photo-button"
@@ -920,7 +952,13 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-upload-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, errors && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "form-errors"
+      }, errors.map(function (error, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: i
+        }, error);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "song-upload-form",
         onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -930,6 +968,7 @@ function (_React$Component) {
         type: "file",
         onChange: this.handleFile.bind(this),
         className: "inputfile",
+        accept: "audio/wav, audio/aiff, audio/flac, audio/mp3, audio/alac",
         value: ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "file"
@@ -960,9 +999,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var mstp = function mstp(state) {
   return {
-    currentUser: state.session.id
+    currentUser: state.session.id,
+    errors: state.ui.errors.song
   };
 };
 
@@ -970,6 +1011,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     upload: function upload(song) {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["uploadSong"])(song));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["clearSongErrors"])());
     }
   };
 };
@@ -1639,14 +1683,19 @@ function (_React$Component) {
     value: function handleClose() {
       var _this5 = this;
 
-      $('.song-upload-form-modal').addClass('form-slidedown');
-      setTimeout(function () {
-        _this5.props.closeModal();
-      }, 500);
+      if (!this.props.errors) {
+        $('.song-upload-form-modal').addClass('form-slidedown');
+        setTimeout(function () {
+          _this5.props.clearErrors();
+
+          _this5.props.closeModal();
+        }, 500);
+      }
     }
   }, {
     key: "render",
     value: function render() {
+      var errors = this.props.errors;
       var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: this.state.photoURL,
         alt: "song"
@@ -1658,7 +1707,13 @@ function (_React$Component) {
         onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "update-form-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, errors && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "update-form-errors"
+      }, errors.map(function (error, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: i
+        }, error);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "additional-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-photo-container"
@@ -1725,7 +1780,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var mstp = function mstp(state, ownProps) {
   return {
-    currentUser: state.session.id
+    currentUser: state.session.id,
+    errors: state.ui.errors.song
   };
 };
 
@@ -1736,6 +1792,9 @@ var mdtp = function mdtp(dispatch) {
     },
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["clearSongErrors"])());
     }
   };
 };
@@ -1902,10 +1961,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _user_errors_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_errors_reducer */ "./frontend/reducers/user_errors_reducer.js");
+/* harmony import */ var _song_errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./song_errors_reducer */ "./frontend/reducers/song_errors_reducer.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  user: _user_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  user: _user_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  song: _song_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 }));
 
 /***/ }),
@@ -1999,6 +2061,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./frontend/reducers/song_errors_reducer.js":
+/*!**************************************************!*\
+  !*** ./frontend/reducers/song_errors_reducer.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/song_actions */ "./frontend/actions/song_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SONG_ERRORS"]:
+      return action.errs;
+
+    case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_SONG_ERRORS"]:
+      return [];
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
 /***/ "./frontend/reducers/songs_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/songs_reducer.js ***!
@@ -2028,7 +2120,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_SONG"]:
       newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state);
-      debugger;
       delete newState[action.id];
       return newState;
 
@@ -31527,7 +31618,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

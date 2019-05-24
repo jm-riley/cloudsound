@@ -157,6 +157,19 @@
   margin: 0;
 }
 
+.form-errors {
+  color: #8e8a8a;
+  position: relative;
+  top: 87%;
+  left: 55%;
+  z-index: 105;
+  font-size: 14px;
+}
+
+.form-errors li {
+  list-style: none;
+}
+
 @keyframes form-slidedown {
   from {
     transform: translate(0, 0);
