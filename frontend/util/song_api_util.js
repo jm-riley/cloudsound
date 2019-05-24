@@ -22,3 +22,9 @@ export const updateSong = ({ song, id }) => {
     processData: false
   });
 };
+
+export const deleteSong = id =>
+  $.ajax({
+    method: 'DELETE',
+    url: `/api/songs/${id}`
+  });

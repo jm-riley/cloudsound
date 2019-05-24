@@ -119,24 +119,34 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/song_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_SONG, uploadSong, updateSong, fetchSong */
+/*! exports provided: RECEIVE_SONG, REMOVE_SONG, uploadSong, updateSong, fetchSong, deleteSong */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SONG", function() { return RECEIVE_SONG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_SONG", function() { return REMOVE_SONG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadSong", function() { return uploadSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSong", function() { return updateSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSong", function() { return fetchSong; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSong", function() { return deleteSong; });
 /* harmony import */ var _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/song_api_util */ "./frontend/util/song_api_util.js");
 
 var RECEIVE_SONG = 'RECEIVE_SONG';
+var REMOVE_SONG = 'REMOVE_SONG';
 
 var receiveSong = function receiveSong(payload) {
   return {
     type: RECEIVE_SONG,
     song: payload.song,
     user: payload.user
+  };
+};
+
+var removeSong = function removeSong(id) {
+  return {
+    type: REMOVE_SONG,
+    id: id
   };
 };
 
@@ -160,6 +170,13 @@ var fetchSong = function fetchSong(id) {
   return function (dispatch) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSong"](id).then(function (song) {
       return dispatch(receiveSong(song));
+    });
+  };
+};
+var deleteSong = function deleteSong(id) {
+  return function (dispatch) {
+    return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteSong"](id).then(function () {
+      return dispatch(removeSong(id));
     });
   };
 };
@@ -1378,13 +1395,28 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "handleDelete",
+    value: function handleDelete() {
       var _this3 = this;
 
       var _this$props = this.props,
-          song = _this$props.song,
-          user = _this$props.user;
+          deleteSong = _this$props.deleteSong,
+          song = _this$props.song;
+      deleteSong(song.id).then(function () {
+        return _this3.props.history.push('/discover');
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var _this$props2 = this.props,
+          song = _this$props2.song,
+          user = _this$props2.user,
+          currentUser = _this$props2.currentUser,
+          deleteSong = _this$props2.deleteSong,
+          openModal = _this$props2.openModal;
       var playing = this.state.playing;
       var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-pause-circle"
@@ -1399,10 +1431,30 @@ function (_React$Component) {
 
       if (this.state.song) {
         this.state.song.onended = function (e) {
-          _this3.setState({
+          _this4.setState({
             playing: false
           });
         };
+      }
+
+      var editButtons;
+
+      if (song.user_id === currentUser) {
+        editButtons = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "edit-buttons"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "edit-button",
+          onClick: function onClick() {
+            return openModal('update');
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-pencil-alt"
+        }), "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "edit-button",
+          onClick: this.handleDelete.bind(this)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-trash-alt"
+        }), "Delete"));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1435,14 +1487,7 @@ function (_React$Component) {
         type: "text",
         className: "comment-input",
         placeholder: "Write a comment"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "edit-button",
-        onClick: function onClick() {
-          return _this3.props.openModal('update');
-        }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-pencil-alt"
-      }), "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      })), editButtons), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
         song: song
       }));
     }
@@ -1454,7 +1499,8 @@ function (_React$Component) {
 var mstp = function mstp(state, ownProps) {
   return {
     song: state.entities.songs[ownProps.match.params.songId],
-    user: state.entities.users[ownProps.match.params.userId]
+    user: state.entities.users[ownProps.match.params.userId],
+    currentUser: state.session.id
   };
 };
 
@@ -1465,6 +1511,9 @@ var mdtp = function mdtp(dispatch) {
     },
     openModal: function openModal(type) {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])(type));
+    },
+    deleteSong: function deleteSong(id) {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["deleteSong"])(id));
     }
   };
 };
@@ -1970,10 +2019,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
+  var newState;
 
   switch (action.type) {
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_SONG"]:
-      var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, _defineProperty({}, action.song.id, action.song));
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, _defineProperty({}, action.song.id, action.song));
+      return newState;
+
+    case _actions_song_actions__WEBPACK_IMPORTED_MODULE_1__["REMOVE_SONG"]:
+      newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state);
+      debugger;
+      delete newState[action.id];
       return newState;
 
     default:
@@ -2157,7 +2213,7 @@ var AuthRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter
 /*!****************************************!*\
   !*** ./frontend/util/song_api_util.js ***!
   \****************************************/
-/*! exports provided: uploadSong, fetchSong, updateSong */
+/*! exports provided: uploadSong, fetchSong, updateSong, deleteSong */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2165,6 +2221,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadSong", function() { return uploadSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSong", function() { return fetchSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSong", function() { return updateSong; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSong", function() { return deleteSong; });
 var uploadSong = function uploadSong(song) {
   return $.ajax({
     method: 'POST',
@@ -2189,6 +2246,12 @@ var updateSong = function updateSong(_ref) {
     data: song,
     contentType: false,
     processData: false
+  });
+};
+var deleteSong = function deleteSong(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "/api/songs/".concat(id)
   });
 };
 

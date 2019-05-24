@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchSong } from '../../actions/song_actions';
+import { fetchSong, deleteSong } from '../../actions/song_actions';
 import { openModal } from '../../actions/modal_actions';
 import SongUpdateModal from './song_update_modal';
 
@@ -27,8 +27,13 @@ class SongShow extends React.Component {
       } else song.play();
     });
   }
+
+  handleDelete() {
+    const { deleteSong, song } = this.props;
+    deleteSong(song.id).then(() => this.props.history.push('/discover'));
+  }
   render() {
-    const { song, user } = this.props;
+    const { song, user, currentUser, deleteSong, openModal } = this.props;
     const { playing } = this.state;
     let playbackIcon = playing ? (
       <i className="fas fa-pause-circle" />
@@ -41,6 +46,21 @@ class SongShow extends React.Component {
       this.state.song.onended = e => {
         this.setState({ playing: false });
       };
+    }
+    let editButtons;
+    if (song.user_id === currentUser) {
+      editButtons = (
+        <div className="edit-buttons">
+          <button className="edit-button" onClick={() => openModal('update')}>
+            <i className="fas fa-pencil-alt" />
+            Edit
+          </button>
+          <button className="edit-button" onClick={this.handleDelete.bind(this)}>
+            <i className="fas fa-trash-alt" />
+            Delete
+          </button>
+        </div>
+      );
     }
     return (
       <div className="song-page-container">
@@ -63,10 +83,7 @@ class SongShow extends React.Component {
           <div className="comment-form">
             <input type="text" className="comment-input" placeholder="Write a comment" />
           </div>
-          <button className="edit-button" onClick={() => this.props.openModal('update')}>
-            <i className="fas fa-pencil-alt" />
-            Edit
-          </button>
+          {editButtons}
         </div>
         <SongUpdateModal song={song} />
       </div>
@@ -76,12 +93,14 @@ class SongShow extends React.Component {
 
 const mstp = (state, ownProps) => ({
   song: state.entities.songs[ownProps.match.params.songId],
-  user: state.entities.users[ownProps.match.params.userId]
+  user: state.entities.users[ownProps.match.params.userId],
+  currentUser: state.session.id
 });
 
 const mdtp = dispatch => ({
   fetchSong: id => dispatch(fetchSong(id)),
-  openModal: type => dispatch(openModal(type))
+  openModal: type => dispatch(openModal(type)),
+  deleteSong: id => dispatch(deleteSong(id))
 });
 
 export default connect(

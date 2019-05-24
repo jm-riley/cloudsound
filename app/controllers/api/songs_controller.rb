@@ -34,7 +34,7 @@ end
 def destroy
   @song = current_user.songs.find(params[:id])
   @song.delete
-  render :index
+  # render :index
 end
 
 private
