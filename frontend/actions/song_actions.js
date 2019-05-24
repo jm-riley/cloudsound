@@ -15,6 +15,13 @@ export const uploadSong = song => dispatch => {
   });
 };
 
+export const updateSong = song => dispatch => {
+  return SongApiUtil.updateSong(song).then(song => {
+    dispatch(receiveSong(song));
+    return song;
+  });
+};
+
 export const fetchSong = id => dispatch => {
   return SongApiUtil.fetchSong(id).then(song => dispatch(receiveSong(song)));
 };

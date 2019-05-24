@@ -7,7 +7,7 @@ const mstp = state => ({
 });
 
 const mdtp = dispatch => ({
-  uploadSong: song => dispatch(uploadSong(song))
+  upload: song => dispatch(uploadSong(song))
 });
 
 export default connect(

@@ -1,23 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-class SongUploadForm extends React.Component {
+class SongUpdateForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      description: '',
-      songFile: '',
-      songPhoto: '',
-      photoURL: null,
-      songPicked: false
-    };
-  }
-
-  handleFile(e) {
-    if (e.currentTarget.files.length) {
-      this.setState({ songFile: e.currentTarget.files[0], songPicked: true });
-    }
+    const { song } = this.props;
+    // const { song } = this.props;
+    debugger;
+    this.state = { title: song.title, description: song.description };
   }
 
   handlePhoto(e) {
@@ -33,32 +23,19 @@ class SongUploadForm extends React.Component {
   }
 
   handleSubmit(e) {
-    const { currentUser } = this.props;
-    const { title, description, songFile, songPhoto } = this.state;
+    const { currentUser, song } = this.props;
+    const { title, description, songPhoto } = this.state;
     e.preventDefault();
     const formData = new FormData();
     formData.append('song[title]', title);
     formData.append('song[description]', description);
-    formData.append('song[song_file]', songFile);
-    formData.append('song[song_photo]', songPhoto);
-    this.props.upload(formData).then(song => {
-      this.props.history.push(`/${currentUser}/${song.song.id}`);
-    });
-  }
-
-  handleCancel(e) {
-    e.preventDefault();
-    $('.additional-form-container').addClass('form-slidedown');
-    setTimeout(() => {
-      this.setState({
-        songPicked: false,
-        title: '',
-        description: '',
-        songFile: '',
-        songPhoto: '',
-        photoURL: null
-      });
-    }, 200);
+    if (songPhoto) {
+      formData.append('song[song_photo]', songPhoto);
+    }
+    debugger;
+    this.props
+      .update({ song: formData, id: song.id })
+      .then(song => this.props.history.push(`/${currentUser}/${song.song.id}`));
   }
 
   update(field) {
@@ -71,9 +48,8 @@ class SongUploadForm extends React.Component {
     ) : (
       <div className="empty-photo" />
     );
-    let additionalForm;
-    if (this.state.songPicked) {
-      additionalForm = (
+    return (
+      <form className="song-upload-form" onSubmit={this.handleSubmit.bind(this)}>
         <div className="additional-form-container form-slideup">
           <div className="additional-form">
             <div className="song-photo-container">
@@ -100,7 +76,7 @@ class SongUploadForm extends React.Component {
                   type="text"
                   value={this.state.title}
                   onChange={this.update('title')}
-                  placeholder={this.state.songFile.name}
+                  placeholder={this.props.song.name}
                 />
               </div>
               <div className="song-info">
@@ -114,33 +90,14 @@ class SongUploadForm extends React.Component {
               </div>
             </div>
           </div>
-          <button onClick={this.handleCancel.bind(this)} className="loginButton">
+          {/* <button onClick={this.handleCancel.bind(this)} className="loginButton">
             Cancel
-          </button>
+          </button> */}
           <input type="submit" className="signupButton" value="Save" />
         </div>
-      );
-    }
-    return (
-      <div className="song-upload-container">
-        <form className="song-upload-form" onSubmit={this.handleSubmit.bind(this)}>
-          <div className="song-file-upload">
-            <h2>Upload your song</h2>
-            <input
-              id="file"
-              type="file"
-              onChange={this.handleFile.bind(this)}
-              className="inputfile"
-              value=""
-            />
-            <label htmlFor="file">choose a file</label>
-            <p>Provide FLAC, WAV, ALAC or AIFF for best audio quality.</p>
-          </div>
-          {additionalForm}
-        </form>
-      </div>
+      </form>
     );
   }
 }
 
-export default withRouter(SongUploadForm);
+export default withRouter(SongUpdateForm);

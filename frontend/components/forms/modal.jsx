@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import LoginForm from './session/login_form_container';
 import SignupForm from './session/signup_form_container';
+import SongUpdateForm from '../songs/song_update_form_container';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -27,15 +28,26 @@ class Modal extends React.Component {
     const { type } = this.props;
     let fadeout;
     let slideup;
-
     if (!type) return null;
 
     if (this.state.closing) {
       fadeout = 'fadeout';
       slideup = 'slideup';
     }
+    let form;
+    // form = type === 'signup' ? <SignupForm /> : <LoginForm />;
+    switch (type) {
+      case 'signup':
+        form = <SignupForm />;
+        break;
+      case 'login':
+        form = <LoginForm />;
+        break;
+      default:
+        return null;
+    }
 
-    const form = type === 'signup' ? <SignupForm /> : <LoginForm />;
+    // debugger;
     return (
       <div className={`modal-container ${fadeout}`} onClick={this.handleClick}>
         <button onClick={this.handleClick} className={`modal-close ${fadeout}`}>

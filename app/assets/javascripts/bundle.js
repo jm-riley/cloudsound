@@ -119,13 +119,14 @@ var closeModal = function closeModal() {
 /*!******************************************!*\
   !*** ./frontend/actions/song_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_SONG, uploadSong, fetchSong */
+/*! exports provided: RECEIVE_SONG, uploadSong, updateSong, fetchSong */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SONG", function() { return RECEIVE_SONG; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadSong", function() { return uploadSong; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSong", function() { return updateSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSong", function() { return fetchSong; });
 /* harmony import */ var _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/song_api_util */ "./frontend/util/song_api_util.js");
 
@@ -142,6 +143,14 @@ var receiveSong = function receiveSong(payload) {
 var uploadSong = function uploadSong(song) {
   return function (dispatch) {
     return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["uploadSong"](song).then(function (song) {
+      dispatch(receiveSong(song));
+      return song;
+    });
+  };
+};
+var updateSong = function updateSong(song) {
+  return function (dispatch) {
+    return _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__["updateSong"](song).then(function (song) {
       dispatch(receiveSong(song));
       return song;
     });
@@ -311,6 +320,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/login_form_container */ "./frontend/components/forms/session/login_form_container.js");
 /* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session/signup_form_container */ "./frontend/components/forms/session/signup_form_container.js");
+/* harmony import */ var _songs_song_update_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../songs/song_update_form_container */ "./frontend/components/songs/song_update_form_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -328,6 +338,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -386,7 +397,22 @@ function (_React$Component) {
         slideup = 'slideup';
       }
 
-      var form = type === 'signup' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      var form; // form = type === 'signup' ? <SignupForm /> : <LoginForm />;
+
+      switch (type) {
+        case 'signup':
+          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+          break;
+
+        case 'login':
+          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+          break;
+
+        default:
+          return null;
+      } // debugger;
+
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-container ".concat(fadeout),
         onClick: this.handleClick
@@ -785,15 +811,14 @@ function (_React$Component) {
           description = _this$state.description,
           songFile = _this$state.songFile,
           songPhoto = _this$state.songPhoto;
-      debugger;
       e.preventDefault();
       var formData = new FormData();
       formData.append('song[title]', title);
       formData.append('song[description]', description);
       formData.append('song[song_file]', songFile);
       formData.append('song[song_photo]', songPhoto);
-      this.props.uploadSong(formData).then(function (song) {
-        return _this3.props.history.push("/".concat(currentUser, "/").concat(song.id));
+      this.props.upload(formData).then(function (song) {
+        _this3.props.history.push("/".concat(currentUser, "/").concat(song.song.id));
       });
     }
   }, {
@@ -929,7 +954,7 @@ var mstp = function mstp(state) {
 
 var mdtp = function mdtp(dispatch) {
   return {
-    uploadSong: function uploadSong(song) {
+    upload: function upload(song) {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["uploadSong"])(song));
     }
   };
@@ -1285,6 +1310,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _song_update_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./song_update_modal */ "./frontend/components/songs/song_update_modal.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1302,6 +1329,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -1328,60 +1357,98 @@ function (_React$Component) {
   _createClass(SongShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchSong(this.props.match.params.songId);
+      var _this2 = this;
+
+      this.props.fetchSong(this.props.match.params.songId).then(function () {
+        return _this2.setState({
+          song: new Audio(_this2.props.song.songUrl)
+        });
+      }); // setTimeout(() => {
+      //   this.setState({ song: new Audio(this.props.song.songUrl) });
+      // }, 400);
     }
   }, {
     key: "togglePlay",
-    value: function togglePlay(audio) {
-      var playing = this.state.playing; // playing ? audio.pause() : audio.play();
+    value: function togglePlay() {
+      var _this$state = this.state,
+          playing = _this$state.playing,
+          song = _this$state.song; // playing ? audio.pause() : audio.play();
 
       this.setState({
         playing: !playing
       }, function () {
-        playing ? audio.pause() : audio.play();
+        // playing ? audio.pause() : audio.play();
+        if (playing) {
+          song.pause();
+        } else song.play();
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props = this.props,
           song = _this$props.song,
           user = _this$props.user;
       var playing = this.state.playing;
       var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        "class": "fas fa-pause-circle"
+        className: "fas fa-pause-circle"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        "class": "fas fa-play-circle"
+        className: "fas fa-play-circle"
       });
       if (!song) return null;
       var description = song.description,
           photoUrl = song.photoUrl,
           songUrl = song.songUrl,
           title = song.title;
-      var audio = new Audio(songUrl);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+
+      if (this.state.song) {
+        this.state.song.onended = function (e) {
+          _this3.setState({
+            playing: false
+          });
+        };
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-page-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-hero"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-section"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-button",
-        onClick: function onClick() {
-          return _this2.togglePlay(audio);
-        }
+        onClick: this.togglePlay
       }, playbackIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-song-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        "class": "song-username"
+        className: "song-username"
       }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        "class": "song-title"
+        className: "song-title"
       }, title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-artwork"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: photoUrl,
         alt: "song-artwork"
-      }))));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "waveform"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "comment-input",
+        placeholder: "Write a comment"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "edit-button",
+        onClick: function onClick() {
+          return _this3.props.openModal('update');
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pencil-alt"
+      }), "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        song: song
+      }));
     }
   }]);
 
@@ -1399,11 +1466,282 @@ var mdtp = function mdtp(dispatch) {
   return {
     fetchSong: function fetchSong(id) {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["fetchSong"])(id));
+    },
+    openModal: function openModal(type) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])(type));
     }
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp, mdtp)(SongShow));
+
+/***/ }),
+
+/***/ "./frontend/components/songs/song_update_form.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/songs/song_update_form.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var SongUpdateForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(SongUpdateForm, _React$Component);
+
+  function SongUpdateForm(props) {
+    var _this;
+
+    _classCallCheck(this, SongUpdateForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SongUpdateForm).call(this, props));
+    var song = _this.props.song; // const { song } = this.props;
+
+    debugger;
+    _this.state = {
+      title: song.title,
+      description: song.description
+    };
+    return _this;
+  }
+
+  _createClass(SongUpdateForm, [{
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this2 = this;
+
+      e.persist();
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function () {
+        _this2.setState({
+          songPhoto: file,
+          photoURL: fileReader.result
+        });
+      };
+
+      if (file) {
+        fileReader.readAsDataURL(file);
+      }
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          song = _this$props.song;
+      var _this$state = this.state,
+          title = _this$state.title,
+          description = _this$state.description,
+          songPhoto = _this$state.songPhoto;
+      e.preventDefault();
+      var formData = new FormData();
+      formData.append('song[title]', title);
+      formData.append('song[description]', description);
+
+      if (songPhoto) {
+        formData.append('song[song_photo]', songPhoto);
+      }
+
+      debugger;
+      this.props.update({
+        song: formData,
+        id: song.id
+      }).then(function (song) {
+        return _this3.props.history.push("/".concat(currentUser, "/").concat(song.song.id));
+      });
+    }
+  }, {
+    key: "update",
+    value: function update(field) {
+      var _this4 = this;
+
+      return function (e) {
+        return _this4.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var imagePreview = this.state.photoURL ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: this.state.photoURL,
+        alt: "song"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "empty-photo"
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "song-upload-form",
+        onSubmit: this.handleSubmit.bind(this)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "additional-form-container form-slideup"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "additional-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-photo-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "photo-container"
+      }, imagePreview, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "photo",
+        type: "file",
+        onChange: this.handlePhoto.bind(this),
+        className: "inputfile",
+        value: ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "photo",
+        className: "photo-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-camera"
+      }), "Upload an image"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-info-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.title,
+        onChange: this.update('title'),
+        placeholder: this.props.song.name
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        placeholder: "Describe your track",
+        value: this.state.description,
+        onChange: this.update('description')
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        className: "signupButton",
+        value: "Save"
+      })));
+    }
+  }]);
+
+  return SongUpdateForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SongUpdateForm));
+
+/***/ }),
+
+/***/ "./frontend/components/songs/song_update_form_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/songs/song_update_form_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _song_update_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./song_update_form */ "./frontend/components/songs/song_update_form.jsx");
+/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+
+
+
+
+var mstp = function mstp(state, ownProps) {
+  return {
+    currentUser: state.session.id
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    update: function update(song) {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["updateSong"])(song));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mstp, mdtp)(_song_update_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/songs/song_update_modal.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/songs/song_update_modal.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _song_update_form_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./song_update_form_container */ "./frontend/components/songs/song_update_form_container.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+
+
+var SongUpdateModal = function SongUpdateModal(_ref) {
+  var song = _ref.song,
+      closeModal = _ref.closeModal,
+      modal = _ref.modal;
+  if (!modal) return null;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-container",
+    onClick: closeModal
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "modal-close"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-times-circle"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "additional-form-container",
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_form_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    song: song
+  })));
+};
+
+var mstp = function mstp(state) {
+  return {
+    modal: state.ui.modal
+  };
+};
+
+var mdtp = function mdtp(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mstp, mdtp)(SongUpdateModal));
 
 /***/ }),
 
@@ -1801,13 +2139,14 @@ var AuthRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter
 /*!****************************************!*\
   !*** ./frontend/util/song_api_util.js ***!
   \****************************************/
-/*! exports provided: uploadSong, fetchSong */
+/*! exports provided: uploadSong, fetchSong, updateSong */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadSong", function() { return uploadSong; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSong", function() { return fetchSong; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSong", function() { return updateSong; });
 var uploadSong = function uploadSong(song) {
   return $.ajax({
     method: 'POST',
@@ -1821,6 +2160,18 @@ var fetchSong = function fetchSong(id) {
   return $.ajax({
     method: 'GET',
     url: "/api/songs/".concat(id)
+  });
+};
+var updateSong = function updateSong(_ref) {
+  var song = _ref.song,
+      id = _ref.id;
+  debugger;
+  return $.ajax({
+    method: 'PATCH',
+    url: "/api/songs/".concat(id),
+    data: song,
+    contentType: false,
+    processData: false
   });
 };
 

@@ -7,11 +7,13 @@ end
 def show
   @song = Song.find(params[:id])
   @user = @song.user
+  render :show
 end
 
 def create
   @song = Song.new(song_params)
   @song.user_id = current_user.id
+  @user = @song.user
   if @song.save
     render :show
   else
@@ -21,7 +23,8 @@ end
 
 def update
   @song = current_user.songs.find(params[:id])
-  if @song.update(song_params)
+  @user = @song.user
+  if @song.update_attributes(song_params)
     render :show
   else
     render json: @song.errors.full_messages, status: 422
