@@ -1847,8 +1847,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var _this = undefined;
-
 
 
 
@@ -1858,12 +1856,12 @@ var _this = undefined;
 var SongUpdateModal = function SongUpdateModal(_ref) {
   var song = _ref.song,
       closeModal = _ref.closeModal,
-      modal = _ref.modal;
+      modal = _ref.modal,
+      clearErrors = _ref.clearErrors;
   if (!modal) return null;
 
   var handleClick = function handleClick() {
-    _this.props.clearErrors();
-
+    clearErrors();
     $('.update-form-content').addClass('form-slidedown');
     $('.modal-container').addClass('fadeout');
     setTimeout(function () {
@@ -31656,7 +31654,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

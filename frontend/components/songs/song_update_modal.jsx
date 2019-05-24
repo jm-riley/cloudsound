@@ -4,11 +4,11 @@ import { closeModal } from '../../actions/modal_actions';
 import { clearSongErrors } from '../../actions/song_actions';
 import { connect } from 'react-redux';
 
-const SongUpdateModal = ({ song, closeModal, modal }) => {
+const SongUpdateModal = ({ song, closeModal, modal, clearErrors }) => {
   if (!modal) return null;
 
   const handleClick = () => {
-    this.props.clearErrors();
+    clearErrors();
     $('.update-form-content').addClass('form-slidedown');
     $('.modal-container').addClass('fadeout');
     setTimeout(() => {
