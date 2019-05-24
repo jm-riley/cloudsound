@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 const SongUpdateModal = ({ song, closeModal, modal }) => {
   if (!modal) return null;
   return (
-    <div className={`modal-container`} onClick={closeModal}>
-      <button className={`modal-close`}>
+    <div className="modal-container" onClick={closeModal}>
+      <button className="modal-close">
         <i className="far fa-times-circle" />
       </button>
-      <div className={`additional-form-container`} onClick={e => e.stopPropagation()}>
+      <div className="update-form-content form-slideup" onClick={e => e.stopPropagation()}>
         <SongUpdateForm song={song} />
       </div>
     </div>

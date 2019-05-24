@@ -49,8 +49,8 @@ class SongUpdateForm extends React.Component {
       <div className="empty-photo" />
     );
     return (
-      <form className="song-upload-form" onSubmit={this.handleSubmit.bind(this)}>
-        <div className="additional-form-container form-slideup">
+      <form className="song-upload-form-modal" onSubmit={this.handleSubmit.bind(this)}>
+        <div className="update-form-container">
           <div className="additional-form">
             <div className="song-photo-container">
               <div className="photo-container">
@@ -93,7 +93,7 @@ class SongUpdateForm extends React.Component {
           {/* <button onClick={this.handleCancel.bind(this)} className="loginButton">
             Cancel
           </button> */}
-          <input type="submit" className="signupButton" value="Save" />
+          <input type="submit" className="signupButton updateModalButton" value="Save" />
         </div>
       </form>
     );

@@ -45,6 +45,30 @@
   animation-name: slideup;
 }
 
+.update-form-content {
+  position: relative;
+  width: 800px;
+  left: 15%;
+  top: 100px;
+  box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
+  background-color: white;
+}
+
+// .update-form-container {
+//   position: relative;
+//   width: 800px;
+//   left: 15%;
+//   top: 100px;
+//   box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
+//   background-color: white;
+// }
+
+.updateModalButton {
+  position: relative;
+  top: -20px;
+  left: 690px;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;

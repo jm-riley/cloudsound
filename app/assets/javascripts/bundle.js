@@ -1601,10 +1601,10 @@ function (_React$Component) {
         className: "empty-photo"
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "song-upload-form",
+        className: "song-upload-form-modal",
         onSubmit: this.handleSubmit.bind(this)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "additional-form-container form-slideup"
+        className: "update-form-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "additional-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1639,7 +1639,7 @@ function (_React$Component) {
         onChange: this.update('description')
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        className: "signupButton",
+        className: "signupButton updateModalButton",
         value: "Save"
       })));
     }
@@ -1718,7 +1718,7 @@ var SongUpdateModal = function SongUpdateModal(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "far fa-times-circle"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "additional-form-container",
+    className: "update-form-content form-slideup",
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
