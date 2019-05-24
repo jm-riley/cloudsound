@@ -22,6 +22,7 @@ class SongUpdateForm extends React.Component {
   }
 
   handleSubmit(e) {
+    this.props.clearErrors();
     const { currentUser, song } = this.props;
     const { title, description, songPhoto } = this.state;
     e.preventDefault();
@@ -31,7 +32,7 @@ class SongUpdateForm extends React.Component {
     if (songPhoto) {
       formData.append('song[song_photo]', songPhoto);
     }
-    this.props.update({ song: formData, id: song.id }).then(() => this.handleClose());
+    this.props.update({ song: formData, id: song.id }).then(this.handleClose);
   }
 
   update(field) {
@@ -39,10 +40,10 @@ class SongUpdateForm extends React.Component {
   }
 
   handleClose() {
-    if (!this.props.errors) {
+    if (!this.props.errors.length) {
+      this.props.clearErrors();
       $('.song-upload-form-modal').addClass('form-slidedown');
       setTimeout(() => {
-        this.props.clearErrors();
         this.props.closeModal();
       }, 500);
     }

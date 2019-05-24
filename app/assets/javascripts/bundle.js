@@ -1673,8 +1673,7 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this3 = this;
-
+      this.props.clearErrors();
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           song = _this$props.song;
@@ -1694,30 +1693,27 @@ function (_React$Component) {
       this.props.update({
         song: formData,
         id: song.id
-      }).then(function () {
-        return _this3.handleClose();
-      });
+      }).then(this.handleClose);
     }
   }, {
     key: "update",
     value: function update(field) {
-      var _this4 = this;
+      var _this3 = this;
 
       return function (e) {
-        return _this4.setState(_defineProperty({}, field, e.target.value));
+        return _this3.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {
     key: "handleClose",
     value: function handleClose() {
-      var _this5 = this;
+      var _this4 = this;
 
-      if (!this.props.errors) {
+      if (!this.props.errors.length) {
+        this.props.clearErrors();
         $('.song-upload-form-modal').addClass('form-slidedown');
         setTimeout(function () {
-          _this5.props.clearErrors();
-
-          _this5.props.closeModal();
+          _this4.props.closeModal();
         }, 500);
       }
     }
@@ -31654,7 +31650,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
