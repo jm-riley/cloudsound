@@ -75,6 +75,7 @@ class SongUpdateForm extends React.Component {
                   type="file"
                   onChange={this.handlePhoto.bind(this)}
                   className="inputfile"
+                  accept="image/jpg, image/jpeg, image/png, image/tiff"
                   value=""
                 />
                 <label htmlFor="photo" className="photo-button">

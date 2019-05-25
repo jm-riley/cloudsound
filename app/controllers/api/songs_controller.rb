@@ -1,7 +1,13 @@
 class Api::SongsController < ApplicationController
 
 def index
-  @songs = current_user.songs
+  @user = User.find(params[:user_id])
+  @songs = @user.songs
+  render :index
+  rescue ActiveRecord::RecordNotFound => e
+    render json: {
+      error: e.to_s 
+    }, status: 404
 end
 
 def show

@@ -1,0 +1,42 @@
+.user-detail-main {
+  margin: 0 auto;
+  width: 95%;
+  max-width: 1240px;
+  min-width: 800px;
+}
+
+.user-detail-header {
+  height: 210px;
+  background: linear-gradient(315deg, rgb(112, 146, 156) 0%, rgb(230, 132, 110) 100%);
+  display: flex;
+  padding: 25px;
+  margin: 0 auto;
+  .user-avatar-container {
+    .user-avatar {
+      width: 200px;
+      height: 200px;
+      background-image: linear-gradient(135deg, #70929c, #e6846e);
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+      }
+    }
+    label {
+      padding: 3px 8px;
+      bottom: 30px;
+      left: 40px;
+      border-radius: 3px;
+    }
+  }
+  .user-detail-username {
+    color: white;
+    font-size: 28px;
+    padding: 15px 45px;
+    span {
+      background-color: black;
+      padding: 5px 8px;
+    }
+  }
+}

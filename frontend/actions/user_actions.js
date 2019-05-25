@@ -51,3 +51,9 @@ export const fetchUser = id => dispatch =>
     user => dispatch(receiveUser(user)),
     err => dispatch(receiveUserErrors(err))
   );
+
+export const updateUser = user => dispatch =>
+  UsersApiUtil.updateUser(user).then(
+    user => dispatch(receiveUser(user)),
+    err => dispatch(receiveUserErrors(err))
+  );

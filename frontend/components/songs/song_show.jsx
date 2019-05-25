@@ -24,11 +24,10 @@ class SongShow extends React.Component {
   render() {
     const { song, user, currentUser, openModal } = this.props;
     if (!this.state.song) return null;
-    const { description, photoUrl, title } = song;
+    if (!this.props.song) return null;
+    const { photoUrl, title } = song;
 
-    let photo = photoUrl
-      ? photoUrl
-      : 'http://www.ieeeaustsb.org/files/2017/05/placeholder-female-square-300x300.png';
+    let photo = photoUrl ? photoUrl : window.songPlaceholderPhoto;
 
     let editButtons;
     if (song.user_id === currentUser) {

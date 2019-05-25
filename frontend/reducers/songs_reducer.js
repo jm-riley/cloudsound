@@ -1,5 +1,5 @@
 import merge from 'lodash/merge';
-import { RECEIVE_SONG, REMOVE_SONG } from '../actions/song_actions';
+import { RECEIVE_SONG, REMOVE_SONG, RECEIVE_SONGS } from '../actions/song_actions';
 
 export default (state = {}, action) => {
   Object.freeze(state);
@@ -8,6 +8,10 @@ export default (state = {}, action) => {
     case RECEIVE_SONG:
       newState = merge({}, state, { [action.song.id]: action.song });
       return newState;
+    case RECEIVE_SONGS:
+      if (action.songs) {
+        return action.songs;
+      } else return {};
     case REMOVE_SONG:
       newState = merge({}, state);
       delete newState[action.id];

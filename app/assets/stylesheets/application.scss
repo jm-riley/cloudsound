@@ -18,6 +18,10 @@ body {
   margin: 0;
 }
 
+.root {
+  width: 100%;
+}
+
 .main {
   box-sizing: border-box;
   // margin-left: 30px;
@@ -25,6 +29,7 @@ body {
   font-family: 'Roboto';
   // font-weight: 300;
   // margin: 0;
+  width: 100%;
 }
 
 button:hover {
