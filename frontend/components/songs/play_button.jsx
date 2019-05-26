@@ -12,15 +12,16 @@ class PlayButton extends React.Component {
   togglePlay() {
     const { playing } = this.state;
     const { song, setSong, activeSong } = this.props;
-    // playing ? audio.pause() : audio.play();
-    setSong(song);
+    if (activeSong) activeSong.pause();
 
-    this.setState({ playing: !playing }, () => {
-      if (playing) {
-        activeSong.pause();
-      } else {
-        song.play();
-      }
+    setSong(song).then(() => {
+      this.setState({ playing: !playing }, () => {
+        if (playing) {
+          this.props.activeSong.pause();
+        } else {
+          this.props.activeSong.play();
+        }
+      });
     });
   }
 
@@ -28,11 +29,15 @@ class PlayButton extends React.Component {
 
   render() {
     const { playing } = this.state;
+    const { activeSong, song } = this.props;
     let playbackIcon = playing ? (
       <i className="fas fa-pause-circle" />
     ) : (
       <i className="fas fa-play-circle" />
     );
+    if (song !== activeSong) {
+      playbackIcon = <i className="fas fa-play-circle" />;
+    }
 
     this.state.song.onended = e => {
       this.setState({ playing: false });
@@ -46,11 +51,9 @@ class PlayButton extends React.Component {
   }
 }
 
-const mstp = state => {
-  return {
-    activeSong: state.ui.activeSong
-  };
-};
+const mstp = state => ({
+  activeSong: state.ui.activeSong
+});
 
 const mdtp = dispatch => ({
   setSong: song => dispatch(setActiveSong(song))

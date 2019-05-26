@@ -19,8 +19,8 @@ class SongShow extends React.Component {
   }
 
   handleDelete() {
-    const { deleteSong, song } = this.props;
-    deleteSong(song.id).then(() => this.props.history.push('/discover'));
+    const { deleteSong, song, user } = this.props;
+    deleteSong(song.id).then(() => this.props.history.push(`/users/${user.id}`));
   }
   render() {
     const { song, user, currentUser, openModal } = this.props;

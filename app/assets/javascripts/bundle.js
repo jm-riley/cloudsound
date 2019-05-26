@@ -235,9 +235,12 @@ var deleteSong = function deleteSong(id) {
   };
 };
 var setActiveSong = function setActiveSong(song) {
-  return {
-    type: SET_ACTIVE_SONG,
-    song: song
+  return function (dispatch) {
+    dispatch({
+      type: SET_ACTIVE_SONG,
+      song: song
+    });
+    return Promise.resolve();
   };
 };
 
@@ -1490,21 +1493,24 @@ function (_React$Component) {
   _createClass(PlayButton, [{
     key: "togglePlay",
     value: function togglePlay() {
+      var _this2 = this;
+
       var playing = this.state.playing;
       var _this$props = this.props,
           song = _this$props.song,
           setSong = _this$props.setSong,
-          activeSong = _this$props.activeSong; // playing ? audio.pause() : audio.play();
-
-      setSong(song);
-      this.setState({
-        playing: !playing
-      }, function () {
-        if (playing) {
-          activeSong.pause();
-        } else {
-          song.play();
-        }
+          activeSong = _this$props.activeSong;
+      if (activeSong) activeSong.pause();
+      setSong(song).then(function () {
+        _this2.setState({
+          playing: !playing
+        }, function () {
+          if (playing) {
+            _this2.props.activeSong.pause();
+          } else {
+            _this2.props.activeSong.play();
+          }
+        });
       });
     }
   }, {
@@ -1513,17 +1519,26 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var playing = this.state.playing;
+      var _this$props2 = this.props,
+          activeSong = _this$props2.activeSong,
+          song = _this$props2.song;
       var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-pause-circle"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play-circle"
       });
 
+      if (song !== activeSong) {
+        playbackIcon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-play-circle"
+        });
+      }
+
       this.state.song.onended = function (e) {
-        _this2.setState({
+        _this3.setState({
           playing: false
         });
       };
@@ -1725,9 +1740,10 @@ function (_React$Component) {
 
       var _this$props = this.props,
           deleteSong = _this$props.deleteSong,
-          song = _this$props.song;
+          song = _this$props.song,
+          user = _this$props.user;
       deleteSong(song.id).then(function () {
-        return _this3.props.history.push('/discover');
+        return _this3.props.history.push("/users/".concat(user.id));
       });
     }
   }, {

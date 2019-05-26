@@ -82,7 +82,10 @@ export const deleteSong = id => dispatch => {
   );
 };
 
-export const setActiveSong = song => ({
-  type: SET_ACTIVE_SONG,
-  song
-});
+export const setActiveSong = song => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_SONG,
+    song
+  });
+  return Promise.resolve();
+};
