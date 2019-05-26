@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setActiveSong } from '../../actions/song_actions';
 
 class PlayButton extends React.Component {
   constructor(props) {
@@ -8,15 +10,21 @@ class PlayButton extends React.Component {
   }
 
   togglePlay() {
-    const { playing, song } = this.state;
+    const { playing } = this.state;
+    const { song, setSong, activeSong } = this.props;
     // playing ? audio.pause() : audio.play();
+    setSong(song);
+
     this.setState({ playing: !playing }, () => {
-      // playing ? audio.pause() : audio.play();
       if (playing) {
-        song.pause();
-      } else song.play();
+        activeSong.pause();
+      } else {
+        song.play();
+      }
     });
   }
+
+  componentDidUpdate() {}
 
   render() {
     const { playing } = this.state;
@@ -38,4 +46,17 @@ class PlayButton extends React.Component {
   }
 }
 
-export default PlayButton;
+const mstp = state => {
+  return {
+    activeSong: state.ui.activeSong
+  };
+};
+
+const mdtp = dispatch => ({
+  setSong: song => dispatch(setActiveSong(song))
+});
+
+export default connect(
+  mstp,
+  mdtp
+)(PlayButton);

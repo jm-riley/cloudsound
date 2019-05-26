@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchSongs } from '../../actions/song_actions';
 import UserHeader from './user_header';
+import UserSongs from './user_songs';
 
 class UserDetail extends React.Component {
   constructor(props) {
@@ -13,18 +14,24 @@ class UserDetail extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, songs } = this.props;
     if (!this.props.user) return null;
     return (
       <div className="user-detail-main">
         <UserHeader user={user} />
+        <div className="user-detail-content">
+          <div className="user-detail-left">
+            <UserSongs songs={songs} username={user.username} />
+          </div>
+          <div className="user-detail-right" />
+        </div>
       </div>
     );
   }
 }
 
 const mstp = (state, ownProps) => ({
-  songs: state.entities.songs,
+  songs: Object.values(state.entities.songs),
   user: state.entities.users[ownProps.match.params.userId]
 });
 

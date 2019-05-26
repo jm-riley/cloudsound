@@ -4,6 +4,7 @@ import { fetchSong, deleteSong } from '../../actions/song_actions';
 import { openModal } from '../../actions/modal_actions';
 import SongUpdateModal from './song_update_modal';
 import PlayButton from './play_button';
+import { Link } from 'react-router-dom';
 
 class SongShow extends React.Component {
   constructor(props) {
@@ -51,7 +52,9 @@ class SongShow extends React.Component {
             <div className="play-section">
               <PlayButton song={this.state.song} />
               <div className="song-page-song-info">
-                <span className="song-username">{user.username}</span>
+                <span className="song-username">
+                  <Link to={`/users/${user.id}`}>{user.username}</Link>
+                </span>
                 <p className="song-title">{title}</p>
               </div>
             </div>

@@ -49,7 +49,9 @@
 .song-username {
   padding: 2px 8px;
   background-color: black;
-  color: #ccc;
+  a {
+    color: #ccc;
+  }
 }
 
 .song-title {

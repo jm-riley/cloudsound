@@ -5,6 +5,9 @@ export const RECEIVE_SONGS = 'RECEIVE_SONGS';
 export const REMOVE_SONG = 'REMOVE_SONG';
 export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
 export const REMOVE_SONG_ERRORS = 'REMOVE_SONG_ERRORS';
+export const PLAY = 'PLAY';
+export const PAUSE = 'PAUSE';
+export const SET_ACTIVE_SONG = 'SET_ACTIVE_SONG';
 
 const receiveSong = payload => ({
   type: RECEIVE_SONG,
@@ -78,3 +81,8 @@ export const deleteSong = id => dispatch => {
     errs => dispatch(receiveSongErrors(errs))
   );
 };
+
+export const setActiveSong = song => ({
+  type: SET_ACTIVE_SONG,
+  song
+});

@@ -1,8 +1,10 @@
 .user-detail-main {
   margin: 0 auto;
   width: 95%;
+  height: 100%;
   max-width: 1240px;
   min-width: 800px;
+  background-color: white;
 }
 
 .user-detail-header {
@@ -39,4 +41,49 @@
       padding: 5px 8px;
     }
   }
+}
+
+.song-item-container {
+  display: flex;
+  padding: 0 25px 40px 25px;
+  .song-item-artwork {
+    height: 160px;
+    width: 160px;
+    background-image: linear-gradient(135deg, #70929c, #846170);
+    img {
+      width: 100%;
+    }
+  }
+  .song-waveform {
+    background-image: image-url('audio-waveform-icon-17.jpg');
+    background-position: center;
+    width: 400px;
+    height: 50px;
+    margin-left: 20px;
+  }
+}
+
+.song-item-header {
+  display: flex;
+  align-items: center;
+  .play-button {
+    font-size: 34px;
+  }
+  .song-item-artist {
+    color: #999;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .song-item-title {
+    line-height: 1.8;
+    a {
+      color: black;
+    }
+  }
+}
+
+.user-detail-left {
+  width: 70%;
+  border-right: 1px solid rgba(201, 200, 200, 0.6);
+  margin: 30px 0;
 }
