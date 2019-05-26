@@ -71,20 +71,19 @@ class Header extends React.Component {
               className={`header-content header-dropdown ${dropdownBG}`}
               onClick={this.toggleDropdown}
             >
+              {this.state.dropdownOpen && <div>{dropdownList}</div>}
               <div className="dropdown-toggle">
                 <i className="fas fa-ellipsis-h" />
               </div>
-              {this.state.dropdownOpen && (
-                <div className="dropdown-modal" onClick={this.toggleDropdown}>
-                  {dropdownList}
-                </div>
-              )}
             </div>
             {/* <Link to="/">
           <button onClick={logout}>Logout</button>
         </Link> */}
           </div>
         </div>
+        {this.state.dropdownOpen && (
+          <div className="dropdown-modal" onClick={this.toggleDropdown} />
+        )}
       </div>
     );
   }

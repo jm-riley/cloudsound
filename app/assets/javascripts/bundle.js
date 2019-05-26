@@ -1285,14 +1285,14 @@ function (_React$Component) {
       }, currentUser && currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-content header-dropdown ".concat(dropdownBG),
         onClick: this.toggleDropdown
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, dropdownList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-toggle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h"
-      })), this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))))), this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-modal",
         onClick: this.toggleDropdown
-      }, dropdownList)))));
+      }));
     }
   }]);
 

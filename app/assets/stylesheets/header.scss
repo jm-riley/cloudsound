@@ -108,6 +108,9 @@
   justify-content: center;
   position: relative;
   padding-left: 0;
+  .fa-ellipsis-h {
+    margin: 0 auto;
+  }
   // margin-left: 20px;
 }
 
@@ -153,8 +156,7 @@
   list-style: none;
   position: absolute;
   top: 31px;
-  // left: -146px;
-  right: 40px;
+  right: 0px;
   padding: 20px 0;
   // left: 25px;
   // background-color: #333;
