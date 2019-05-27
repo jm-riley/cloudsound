@@ -5,4 +5,76 @@
   max-width: 1240px;
   min-width: 800px;
   background-color: white;
+  padding: 30px 0;
+
+  h3 {
+    margin: 0;
+    font-weight: 200;
+    font-size: 1.4em;
+  }
+
+  p {
+    font-weight: 100;
+    color: #999;
+    margin: 0;
+    padding: 6px 0;
+  }
+}
+
+.discover-left {
+  padding: 0 25px;
+  width: 70%;
+  border-right: 1px solid rgba(143, 143, 143, 0.4);
+}
+
+.discover-group-container {
+  padding-top: 25px;
+  border-bottom: 1px solid rgba(143, 143, 143, 0.4);
+}
+
+.discover-songs-container {
+  display: flex;
+  padding-bottom: 15px;
+}
+
+.discover-song-item-container {
+  padding: 20px 20px 15px 0;
+  a:first-of-type {
+    color: #333;
+  }
+  a:last-of-type {
+    color: #999;
+    font-size: 14px;
+  }
+}
+
+.discover-song-item-artwork {
+  width: 180px;
+  height: 180px;
+  padding: 10px 0;
+  img {
+    height: 180px;
+    width: 180px;
+  }
+  .play-button {
+    display: none;
+  }
+
+  .hidden:hover {
+    background-color: rgba(253, 253, 253, 0.712);
+    .play-button {
+      display: block;
+      position: relative;
+      font-size: 72px;
+      top: 25px;
+      left: 25px;
+    }
+  }
+}
+
+.hidden {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  top: -184px;
 }

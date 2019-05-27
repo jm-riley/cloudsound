@@ -27,7 +27,13 @@ class PlayButton extends React.Component {
     });
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps) {
+    const { activeSong, song } = this.props;
+    if (prevProps === this.props) return;
+    if (activeSong && song.id !== activeSong.id) {
+      this.setState({ playing: false });
+    }
+  }
 
   render() {
     const { playing } = this.state;
@@ -37,10 +43,10 @@ class PlayButton extends React.Component {
     ) : (
       <i className="fas fa-play-circle" />
     );
-    if (activeSong && song.id !== activeSong.id) {
-      playbackIcon = <i className="fas fa-play-circle" />;
-      // this.setState({ playing: false });
-    }
+    // if (activeSong && song.id !== activeSong.id) {
+    //   playbackIcon = <i className="fas fa-play-circle" />;
+    //   // this.setState({ playing: false });
+    // }
     if (activeSongFile) {
       activeSongFile.onended = e => {
         this.setState({ playing: false });

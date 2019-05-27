@@ -39,14 +39,12 @@ export const clearSongErrors = () => ({
 });
 
 export const uploadSong = song => dispatch => {
-  debugger;
   return SongApiUtil.uploadSong(song).then(
     song => {
       dispatch(receiveSong(song));
       return song;
     },
     errs => {
-      debugger;
       dispatch(receiveSongErrors(errs));
     }
   );
