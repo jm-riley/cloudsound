@@ -1,25 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setActiveSong } from '../../actions/song_actions';
+import { setActiveSongFile, setActiveSong } from '../../actions/song_actions';
 
 class PlayButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false, song: this.props.song };
+    this.state = { playing: false, song: new Audio(this.props.song.songUrl) };
     this.togglePlay = this.togglePlay.bind(this);
   }
 
   togglePlay() {
     const { playing } = this.state;
-    const { song, setSong, activeSong } = this.props;
-    if (activeSong) activeSong.pause();
-
-    setSong(song).then(() => {
+    const { setSongFile, setSong, activeSongFile, activeSong, song } = this.props;
+    if (activeSongFile) activeSongFile.pause();
+    if (song !== activeSong) {
+      setSong(song);
+    }
+    setSongFile(this.state.song).then(() => {
       this.setState({ playing: !playing }, () => {
         if (playing) {
-          this.props.activeSong.pause();
+          this.props.activeSongFile.pause();
         } else {
-          this.props.activeSong.play();
+          this.props.activeSongFile.play();
         }
       });
     });
@@ -29,19 +31,21 @@ class PlayButton extends React.Component {
 
   render() {
     const { playing } = this.state;
-    const { activeSong, song } = this.props;
+    const { activeSong, song, activeSongFile } = this.props;
     let playbackIcon = playing ? (
       <i className="fas fa-pause-circle" />
     ) : (
       <i className="fas fa-play-circle" />
     );
-    if (song !== activeSong) {
+    if (activeSong && song.id !== activeSong.id) {
       playbackIcon = <i className="fas fa-play-circle" />;
+      // this.setState({ playing: false });
     }
-
-    this.state.song.onended = e => {
-      this.setState({ playing: false });
-    };
+    if (activeSongFile) {
+      activeSongFile.onended = e => {
+        this.setState({ playing: false });
+      };
+    }
 
     return (
       <div className="play-button" onClick={this.togglePlay}>
@@ -52,10 +56,12 @@ class PlayButton extends React.Component {
 }
 
 const mstp = state => ({
-  activeSong: state.ui.activeSong
+  activeSongFile: state.ui.activeSong.songFile,
+  activeSong: state.ui.activeSong.song
 });
 
 const mdtp = dispatch => ({
+  setSongFile: song => dispatch(setActiveSongFile(song)),
   setSong: song => dispatch(setActiveSong(song))
 });
 

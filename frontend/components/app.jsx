@@ -5,6 +5,7 @@ import HeaderContainer from './header/header_container';
 import Hero from './header/hero';
 import SongShow from './songs/song_show';
 import UserDetail from './users/user_detail';
+import Discover from './discover/discover';
 import Modal from './forms/modal';
 
 import UploadPage from './forms/upload/upload_page';
@@ -19,6 +20,7 @@ export default () => (
     </Switch>
     <Route path="/upload" component={UploadPage} />
     <Switch>
+      <Route path="/discover" component={Discover} />
       <Route path="/users/:userId" component={UserDetail} />
       <Route path="/:userId/:songId" component={SongShow} />
     </Switch>

@@ -13,9 +13,8 @@ class SongShow extends React.Component {
   }
 
   componentDidMount() {
-    this.props
-      .fetchSong(this.props.match.params.songId)
-      .then(() => this.setState({ song: new Audio(this.props.song.songUrl) }));
+    this.props.fetchSong(this.props.match.params.songId);
+    // .then(() => this.setState({ song: new Audio(this.props.song.songUrl) }));
   }
 
   handleDelete() {
@@ -24,7 +23,7 @@ class SongShow extends React.Component {
   }
   render() {
     const { song, user, currentUser, openModal } = this.props;
-    if (!this.state.song) return null;
+    // if (!this.state.song) return null;
     if (!this.props.song) return null;
     const { photoUrl, title } = song;
 
@@ -50,7 +49,7 @@ class SongShow extends React.Component {
         <div className="song-page-content">
           <div className="song-page-hero">
             <div className="play-section">
-              <PlayButton song={this.state.song} />
+              <PlayButton song={this.props.song} />
               <div className="song-page-song-info">
                 <span className="song-username">
                   <Link to={`/users/${user.id}`}>{user.username}</Link>

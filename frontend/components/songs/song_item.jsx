@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 class SongItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { song: new Audio(this.props.song.songUrl) };
+    // this.state = { song: new Audio(this.props.song.songUrl) };
   }
 
   render() {
@@ -18,7 +18,7 @@ class SongItem extends React.Component {
         <div className="song-content">
           <div className="song-item-header">
             <div className="song-item-play">
-              <PlayButton song={this.state.song} />
+              <PlayButton song={song} />
             </div>
             <div className="song-item-info">
               <span className="song-item-artist">{username}</span>

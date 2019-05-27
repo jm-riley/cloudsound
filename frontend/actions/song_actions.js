@@ -7,6 +7,7 @@ export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
 export const REMOVE_SONG_ERRORS = 'REMOVE_SONG_ERRORS';
 export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
+export const SET_ACTIVE_SONG_FILE = 'SET_ACTIVE_SONG_FILE';
 export const SET_ACTIVE_SONG = 'SET_ACTIVE_SONG';
 
 const receiveSong = payload => ({
@@ -82,10 +83,17 @@ export const deleteSong = id => dispatch => {
   );
 };
 
+export const setActiveSongFile = song => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_SONG_FILE,
+    song
+  });
+  return Promise.resolve();
+};
+
 export const setActiveSong = song => dispatch => {
   dispatch({
     type: SET_ACTIVE_SONG,
     song
   });
-  return Promise.resolve();
 };
