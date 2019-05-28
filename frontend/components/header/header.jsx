@@ -31,7 +31,10 @@ class Header extends React.Component {
     if (this.state.dropdownOpen) {
       dropdownBG = 'dropdown-open';
     }
-    let photoUrl = currentUser.avatarUrl ? currentUser.avatarUrl : window.userArtworkURL;
+    let photoUrl;
+    if (currentUser) {
+      photoUrl = currentUser.avatarUrl ? currentUser.avatarUrl : window.userArtworkURL;
+    }
     return (
       <div className="header-container">
         <div className="header">
@@ -66,7 +69,9 @@ class Header extends React.Component {
                 <img src={photoUrl} alt="" />
               </div>
             )}
-            <div className="header-content username">{currentUser && currentUser.username}</div>
+            <div className="header-content username">
+              {currentUser && <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link>}
+            </div>
 
             <div
               className={`header-content header-dropdown ${dropdownBG}`}

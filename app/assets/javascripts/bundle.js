@@ -441,6 +441,10 @@ __webpack_require__.r(__webpack_exports__);
     header: "CloudSound Charts",
     description: "The most played tracks on CloudSound this week",
     songs: [52, 39, 57, 54]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_discover_group__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    header: "Club Bangers",
+    description: "The best dance and electronic",
+    songs: [58, 61, 59, 62]
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "discover-right"
   }));
@@ -1430,7 +1434,12 @@ function (_React$Component) {
         dropdownBG = 'dropdown-open';
       }
 
-      var photoUrl = currentUser.avatarUrl ? currentUser.avatarUrl : window.userArtworkURL;
+      var photoUrl;
+
+      if (currentUser) {
+        photoUrl = currentUser.avatarUrl ? currentUser.avatarUrl : window.userArtworkURL;
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1470,7 +1479,9 @@ function (_React$Component) {
         alt: ""
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-content username"
-      }, currentUser && currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, currentUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/users/".concat(currentUser.id)
+      }, currentUser.username)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-content header-dropdown ".concat(dropdownBG),
         onClick: this.toggleDropdown
       }, this.state.dropdownOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, dropdownList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1672,7 +1683,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PlayButton).call(this, props));
     _this.state = {
       playing: false,
-      song: new Audio(_this.props.song.songUrl)
+      song: null
     };
     _this.togglePlay = _this.togglePlay.bind(_assertThisInitialized(_this));
     return _this;
@@ -1692,21 +1703,21 @@ function (_React$Component) {
           song = _this$props.song;
       if (activeSongFile) activeSongFile.pause();
 
-      if (song !== activeSong) {
+      if (!activeSong || song.id !== activeSong.id) {
         setSong(song);
-      }
+        setSongFile(new Audio(song.songUrl));
+      } // setSongFile(this.state.song).then(() => {
 
-      setSongFile(this.state.song).then(function () {
-        _this2.setState({
-          playing: !playing
-        }, function () {
-          if (playing) {
-            _this2.props.activeSongFile.pause();
-          } else {
-            _this2.props.activeSongFile.play();
-          }
-        });
-      });
+
+      this.setState({
+        playing: !playing
+      }, function () {
+        if (playing) {
+          _this2.props.activeSongFile.pause();
+        } else {
+          _this2.props.activeSongFile.play();
+        }
+      }); // });
     }
   }, {
     key: "componentDidUpdate",

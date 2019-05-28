@@ -15,6 +15,11 @@ export default () => {
           description="The most played tracks on CloudSound this week"
           songs={[52, 39, 57, 54]}
         />
+        <DiscoverGroup
+          header="Club Bangers"
+          description="The best dance and electronic"
+          songs={[58, 61, 59, 62]}
+        />
       </div>
       <div className="discover-right" />
     </div>

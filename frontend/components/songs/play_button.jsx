@@ -5,7 +5,7 @@ import { setActiveSongFile, setActiveSong } from '../../actions/song_actions';
 class PlayButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false, song: new Audio(this.props.song.songUrl) };
+    this.state = { playing: false, song: null };
     this.togglePlay = this.togglePlay.bind(this);
   }
 
@@ -13,18 +13,19 @@ class PlayButton extends React.Component {
     const { playing } = this.state;
     const { setSongFile, setSong, activeSongFile, activeSong, song } = this.props;
     if (activeSongFile) activeSongFile.pause();
-    if (song !== activeSong) {
+    if (!activeSong || song.id !== activeSong.id) {
       setSong(song);
+      setSongFile(new Audio(song.songUrl));
     }
-    setSongFile(this.state.song).then(() => {
-      this.setState({ playing: !playing }, () => {
-        if (playing) {
-          this.props.activeSongFile.pause();
-        } else {
-          this.props.activeSongFile.play();
-        }
-      });
+    // setSongFile(this.state.song).then(() => {
+    this.setState({ playing: !playing }, () => {
+      if (playing) {
+        this.props.activeSongFile.pause();
+      } else {
+        this.props.activeSongFile.play();
+      }
     });
+    // });
   }
 
   componentDidUpdate(prevProps) {
