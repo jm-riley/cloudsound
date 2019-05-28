@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchSongs } from '../../actions/song_actions';
+import { fetchUserSongs } from '../../actions/song_actions';
 import UserHeader from './user_header';
 import UserSongs from './user_songs';
 
@@ -10,7 +10,7 @@ class UserDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSongs(this.props.match.params.userId);
+    this.props.fetchUserSongs(this.props.match.params.userId);
   }
 
   render() {
@@ -36,7 +36,7 @@ const mstp = (state, ownProps) => ({
 });
 
 const mdtp = dispatch => ({
-  fetchSongs: userId => dispatch(fetchSongs(userId))
+  fetchUserSongs: userId => dispatch(fetchUserSongs(userId))
 });
 
 export default connect(

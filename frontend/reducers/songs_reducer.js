@@ -1,5 +1,10 @@
 import merge from 'lodash/merge';
-import { RECEIVE_SONG, REMOVE_SONG, RECEIVE_SONGS } from '../actions/song_actions';
+import {
+  RECEIVE_SONG,
+  RECEIVE_SONGS,
+  REMOVE_SONG,
+  RECEIVE_USER_SONGS
+} from '../actions/song_actions';
 
 export default (state = {}, action) => {
   Object.freeze(state);
@@ -9,6 +14,8 @@ export default (state = {}, action) => {
       newState = merge({}, state, { [action.song.id]: action.song });
       return newState;
     case RECEIVE_SONGS:
+      return action.songs.songs;
+    case RECEIVE_USER_SONGS:
       if (action.songs) {
         return action.songs;
       } else return {};

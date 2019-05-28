@@ -1,6 +1,7 @@
 import * as SongApiUtil from '../util/song_api_util';
 
 export const RECEIVE_SONG = 'RECEIVE_SONG';
+export const RECEIVE_USER_SONGS = 'RECEIVE_USER_SONGS';
 export const RECEIVE_SONGS = 'RECEIVE_SONGS';
 export const REMOVE_SONG = 'REMOVE_SONG';
 export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
@@ -16,10 +17,15 @@ const receiveSong = payload => ({
   user: payload.user
 });
 
-const receiveSongs = payload => ({
-  type: RECEIVE_SONGS,
+const receiveUserSongs = payload => ({
+  type: RECEIVE_USER_SONGS,
   songs: payload.songs,
   user: payload.user
+});
+
+const receiveSongs = songs => ({
+  type: RECEIVE_SONGS,
+  songs
 });
 
 const removeSong = id => ({
@@ -67,8 +73,15 @@ export const fetchSong = id => dispatch => {
   );
 };
 
-export const fetchSongs = userId => dispatch => {
-  return SongApiUtil.fetchSongs(userId).then(
+export const fetchUserSongs = userId => dispatch => {
+  return SongApiUtil.fetchUserSongs(userId).then(
+    songs => dispatch(receiveUserSongs(songs)),
+    errs => dispatch(receiveSongErrors(errs))
+  );
+};
+
+export const fetchSongs = () => dispatch => {
+  return SongApiUtil.fetchSongs().then(
     songs => dispatch(receiveSongs(songs)),
     errs => dispatch(receiveSongErrors(errs))
   );

@@ -1,9 +1,13 @@
 class Api::SongsController < ApplicationController
 
 def index
-  @user = User.find(params[:user_id])
-  @songs = @user.songs
-  render :index
+  if params[:user_id]
+    @user = User.find(params[:user_id])
+    @songs = @user.songs
+    render :index
+  else
+    @songs = Song.last(12)
+  end
   rescue ActiveRecord::RecordNotFound => e
     render json: {
       error: e.to_s 

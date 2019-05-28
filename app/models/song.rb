@@ -16,6 +16,10 @@ class Song < ApplicationRecord
   belongs_to :user
   has_many :comments
 
+  def username
+    self.user.username
+  end
+
   has_one_attached :song_file
   has_one_attached :song_photo
 end

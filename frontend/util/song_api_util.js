@@ -7,10 +7,16 @@ export const uploadSong = song =>
     processData: false
   });
 
-export const fetchSongs = userId =>
+export const fetchUserSongs = userId =>
   $.ajax({
     method: 'GET',
     url: `/api/users/${userId}/songs`
+  });
+
+export const fetchSongs = () =>
+  $.ajax({
+    method: 'GET',
+    url: '/api/songs'
   });
 
 export const fetchSong = id =>

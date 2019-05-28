@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show] do
       resources :songs, only: [:index]
     end
-    resources :songs, only: [:show, :update, :destroy, :create] do
+    resources :songs, only: [:show, :update, :destroy, :create, :index] do
       resources :comments, only: [:index, :create]
     end
     resources :comments, only: [:destroy]

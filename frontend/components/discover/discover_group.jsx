@@ -8,8 +8,8 @@ export default ({ header, description, songs }) => {
         <h3>{header}</h3>
         <p>{description}</p>
         <div className="discover-songs-container">
-          {songs.map(id => (
-            <DiscoverSongItem songId={id} key={id} />
+          {songs.map((song, i) => (
+            <DiscoverSongItem song={song} key={i} />
           ))}
         </div>
       </div>
