@@ -1653,6 +1653,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var _playbar_detail__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./playbar_detail */ "./frontend/components/playbar/playbar_detail.jsx");
+/* harmony import */ var _playbar_detail__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_playbar_detail__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1673,62 +1675,62 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import { createSelector } from 'redux';
+
+
 
 var Playbar =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(Playbar, _React$Component);
 
-  function Playbar() {
+  function Playbar(props) {
+    var _this;
+
     _classCallCheck(this, Playbar);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Playbar).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Playbar).call(this, props));
+    _this.state = {
+      song: null
+    };
+    return _this;
   }
 
   _createClass(Playbar, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this$props = this.props,
-          activeSong = _this$props.activeSong,
-          playing = _this$props.playing,
-          setSongFile = _this$props.setSongFile,
-          activeSongFile = _this$props.activeSongFile; // if (activeSong) {
-      //   const audio = new Audio(activeSong.songUrl);
-      //   setSongFile(audio);
-      // }
-      // if (playing) {
-      // }
-    }
-  }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var _this$props2 = this.props,
-          playing = _this$props2.playing,
-          activeSongFile = _this$props2.activeSongFile,
-          activeSong = _this$props2.activeSong,
-          setSongFile = _this$props2.setSongFile;
-      if (prevProps === this.props) return;
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _this$props = this.props,
+          playing = _this$props.playing,
+          activeSong = _this$props.activeSong;
 
-      if (activeSong) {
+      if (activeSong.id !== prevProps.activeSong.id) {
+        // debugger;
+        if (prevState.song) {
+          prevState.song.pause();
+        }
+
         var audio = new Audio(activeSong.songUrl);
-        setSongFile(audio);
-      }
-
-      if (!activeSongFile) return;
-
-      if (playing) {
-        activeSongFile.play();
+        audio.play();
+        this.setState({
+          song: audio
+        });
       } else {
-        activeSongFile.pause();
+        if (this.state.song) {
+          if (playing !== prevProps.playing || activeSong.id !== prevProps.activeSong.id) {
+            if (playing) {
+              this.state.song.play();
+            } else {
+              this.state.song.pause();
+            }
+          }
+        }
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var activeSong = this.props.activeSong; // if (!activeSong) return null;
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "uudfub");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "playbar-container"
+      });
     }
   }]);
 
@@ -1737,25 +1739,23 @@ function (_React$Component) {
 
 var mstp = function mstp(state) {
   return {
-    // activeSongFile: createSelector(state.ui.activeSong.songFile),
-    activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song,
+    activeSong: state.ui.activeSong.song || {},
     playing: state.ui.activeSong.playing
   };
 };
 
-var mdtp = function mdtp(dispatch) {
-  return {
-    setSongFile: function setSongFile(song) {
-      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["setActiveSongFile"])(song));
-    },
-    setSong: function setSong(song) {
-      return dispatch(setActiveSong(song));
-    }
-  };
-};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(Playbar));
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp, mdtp)(Playbar));
+/***/ }),
+
+/***/ "./frontend/components/playbar/playbar_detail.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/playbar/playbar_detail.jsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
@@ -1898,9 +1898,9 @@ function (_React$Component) {
       var _this$props2 = this.props,
           activeSong = _this$props2.activeSong,
           song = _this$props2.song;
-      if (prevProps === this.props || !activeSong) return;
+      if (!activeSong) return; // debugger;
 
-      if (activeSong && song.id !== activeSong.id) {
+      if (this.props.activeSong.id !== prevProps.activeSong.id && this.props.song.id !== this.props.activeSong.id) {
         this.setState({
           playing: false
         });
@@ -1946,7 +1946,7 @@ function (_React$Component) {
 var mstp = function mstp(state) {
   return {
     activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song
+    activeSong: state.ui.activeSong.song || {}
   };
 };
 
@@ -2888,7 +2888,8 @@ __webpack_require__.r(__webpack_exports__);
 
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__["SET_ACTIVE_SONG"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state, {
-        song: action.song
+        song: action.song,
+        playing: true
       });
 
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__["PLAY"]:

@@ -49,8 +49,12 @@ class PlayButton extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // debugger;
     const { activeSong, song } = this.props;
-    if (prevProps === this.props || !activeSong) return;
-    if (activeSong && song.id !== activeSong.id) {
+    if (!activeSong) return;
+    // debugger;
+    if (
+      this.props.activeSong.id !== prevProps.activeSong.id &&
+      this.props.song.id !== this.props.activeSong.id
+    ) {
       this.setState({ playing: false });
     }
   }
@@ -84,7 +88,7 @@ class PlayButton extends React.Component {
 const mstp = state => {
   return {
     activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song
+    activeSong: state.ui.activeSong.song || {}
   };
 };
 

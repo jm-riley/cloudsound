@@ -7,7 +7,7 @@ export default (state = {}, action) => {
     case SET_ACTIVE_SONG_FILE:
       return merge({}, state, { songFile: action.song });
     case SET_ACTIVE_SONG:
-      return merge({}, state, { song: action.song });
+      return merge({}, state, { song: action.song, playing: true });
     case PLAY:
       return merge({}, state, { playing: true });
     case PAUSE:

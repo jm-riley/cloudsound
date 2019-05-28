@@ -1,57 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setActiveSongFile } from '../../actions/song_actions';
-// import { createSelector } from 'redux';
+import PlayBarDetail from './playbar_detail';
 
 class Playbar extends React.Component {
-  componentDidMount() {
-    const { activeSong, playing, setSongFile, activeSongFile } = this.props;
-    // if (activeSong) {
-    //   const audio = new Audio(activeSong.songUrl);
-    //   setSongFile(audio);
-    // }
-    // if (playing) {
-
-    // }
+  constructor(props) {
+    super(props);
+    this.state = { song: null };
   }
 
-  componentDidUpdate(prevProps) {
-    const { playing, activeSongFile, activeSong, setSongFile } = this.props;
-    if (prevProps === this.props) return;
-    if (activeSong) {
+  componentDidUpdate(prevProps, prevState) {
+    const { playing, activeSong } = this.props;
+
+    if (activeSong.id !== prevProps.activeSong.id) {
+      // debugger;
+      if (prevState.song) {
+        prevState.song.pause();
+      }
       const audio = new Audio(activeSong.songUrl);
-      setSongFile(audio);
-    }
-    if (!activeSongFile) return;
-    if (playing) {
-      activeSongFile.play();
+      audio.play();
+      this.setState({ song: audio });
     } else {
-      activeSongFile.pause();
+      if (this.state.song) {
+        if (playing !== prevProps.playing || activeSong.id !== prevProps.activeSong.id) {
+          if (playing) {
+            this.state.song.play();
+          } else {
+            this.state.song.pause();
+          }
+        }
+      }
     }
   }
 
   render() {
-    const { activeSong } = this.props;
-    // if (!activeSong) return null;
-    return <div>uudfub</div>;
+    return <div className="playbar-container">{/* <PlayBarDetail /> */}</div>;
   }
 }
 
 const mstp = state => {
   return {
-    // activeSongFile: createSelector(state.ui.activeSong.songFile),
-    activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song,
+    activeSong: state.ui.activeSong.song || {},
     playing: state.ui.activeSong.playing
   };
 };
 
-const mdtp = dispatch => ({
-  setSongFile: song => dispatch(setActiveSongFile(song)),
-  setSong: song => dispatch(setActiveSong(song))
-});
-
-export default connect(
-  mstp,
-  mdtp
-)(Playbar);
+export default connect(mstp)(Playbar);
