@@ -1844,9 +1844,15 @@ function (_React$Component) {
   _inherits(SongItem, _React$Component);
 
   function SongItem(props) {
+    var _this;
+
     _classCallCheck(this, SongItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SongItem).call(this, props)); // this.state = { song: new Audio(this.props.song.songUrl) };
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SongItem).call(this, props));
+    _this.state = {
+      song: new Audio(_this.props.song.songUrl)
+    };
+    return _this;
   }
 
   _createClass(SongItem, [{

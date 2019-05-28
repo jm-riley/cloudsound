@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 class SongItem extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = { song: new Audio(this.props.song.songUrl) };
+    this.state = { song: new Audio(this.props.song.songUrl) };
   }
 
   render() {
