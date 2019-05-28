@@ -11,6 +11,14 @@ export const PAUSE = 'PAUSE';
 export const SET_ACTIVE_SONG_FILE = 'SET_ACTIVE_SONG_FILE';
 export const SET_ACTIVE_SONG = 'SET_ACTIVE_SONG';
 
+export const play = () => ({
+  type: PLAY
+});
+
+export const pause = () => ({
+  type: PAUSE
+});
+
 const receiveSong = payload => ({
   type: RECEIVE_SONG,
   song: payload.song,

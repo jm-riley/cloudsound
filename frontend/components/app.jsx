@@ -7,6 +7,7 @@ import SongShow from './songs/song_show';
 import UserDetail from './users/user_detail';
 import Discover from './discover/discover';
 import Modal from './forms/modal';
+import Playbar from './playbar/playbar';
 
 import UploadPage from './forms/upload/upload_page';
 // import LoginForm from './forms/session/login_form_container';
@@ -27,5 +28,6 @@ export default () => (
     {/* <AuthRoute path="/login" component={LoginForm} />
     <AuthRoute path="/signup" component={SignupForm} /> */}
     <Modal />
+    <Playbar />
   </div>
 );
