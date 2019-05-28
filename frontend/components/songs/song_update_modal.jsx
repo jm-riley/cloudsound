@@ -5,7 +5,7 @@ import { clearSongErrors } from '../../actions/song_actions';
 import { connect } from 'react-redux';
 
 const SongUpdateModal = ({ song, closeModal, modal, clearErrors }) => {
-  if (!modal) return null;
+  if (modal !== 'update') return null;
 
   const handleClick = () => {
     clearErrors();

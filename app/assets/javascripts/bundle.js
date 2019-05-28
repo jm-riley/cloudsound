@@ -2352,7 +2352,7 @@ var SongUpdateModal = function SongUpdateModal(_ref) {
       closeModal = _ref.closeModal,
       modal = _ref.modal,
       clearErrors = _ref.clearErrors;
-  if (!modal) return null;
+  if (modal !== 'update') return null;
 
   var handleClick = function handleClick() {
     clearErrors();
