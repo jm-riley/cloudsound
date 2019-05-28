@@ -17,20 +17,30 @@ class PlayButton extends React.Component {
       setSong(song);
       setSongFile(new Audio(song.songUrl));
     }
+    // debugger;
     // setSongFile(this.state.song).then(() => {
-    this.setState({ playing: !playing }, () => {
-      if (playing) {
-        this.props.activeSongFile.pause();
-      } else {
-        this.props.activeSongFile.play();
-      }
-    });
-    // });
+    // setTimeout(() => {
+    // if (playing) {
+    //   this.props.activeSongFile.pause();
+    // } else {
+    //   // debugger;
+    //   this.props.activeSongFile.play();
+    // }
+    setTimeout(() => {
+      this.setState({ playing: !playing }, () => {
+        if (playing) {
+          this.props.activeSongFile.pause();
+        } else {
+          this.props.activeSongFile.play();
+        }
+      });
+    }, 300);
   }
 
   componentDidUpdate(prevProps) {
+    // debugger;
     const { activeSong, song } = this.props;
-    if (prevProps === this.props) return;
+    if (prevProps === this.props || !activeSong) return;
     if (activeSong && song.id !== activeSong.id) {
       this.setState({ playing: false });
     }
@@ -62,10 +72,12 @@ class PlayButton extends React.Component {
   }
 }
 
-const mstp = state => ({
-  activeSongFile: state.ui.activeSong.songFile,
-  activeSong: state.ui.activeSong.song
-});
+const mstp = state => {
+  return {
+    activeSongFile: state.ui.activeSong.songFile,
+    activeSong: state.ui.activeSong.song
+  };
+};
 
 const mdtp = dispatch => ({
   setSongFile: song => dispatch(setActiveSongFile(song)),

@@ -1706,26 +1706,37 @@ function (_React$Component) {
       if (!activeSong || song.id !== activeSong.id) {
         setSong(song);
         setSongFile(new Audio(song.songUrl));
-      } // setSongFile(this.state.song).then(() => {
+      } // debugger;
+      // setSongFile(this.state.song).then(() => {
+      // setTimeout(() => {
+      // if (playing) {
+      //   this.props.activeSongFile.pause();
+      // } else {
+      //   // debugger;
+      //   this.props.activeSongFile.play();
+      // }
 
 
-      this.setState({
-        playing: !playing
-      }, function () {
-        if (playing) {
-          _this2.props.activeSongFile.pause();
-        } else {
-          _this2.props.activeSongFile.play();
-        }
-      }); // });
+      setTimeout(function () {
+        _this2.setState({
+          playing: !playing
+        }, function () {
+          if (playing) {
+            _this2.props.activeSongFile.pause();
+          } else {
+            _this2.props.activeSongFile.play();
+          }
+        });
+      }, 300);
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      // debugger;
       var _this$props2 = this.props,
           activeSong = _this$props2.activeSong,
           song = _this$props2.song;
-      if (prevProps === this.props) return;
+      if (prevProps === this.props || !activeSong) return;
 
       if (activeSong && song.id !== activeSong.id) {
         this.setState({
