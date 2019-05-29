@@ -1207,7 +1207,8 @@ function (_React$Component) {
           description: '',
           songFile: '',
           songPhoto: '',
-          photoURL: null
+          photoURL: null,
+          loading: false
         });
       }, 200);
     }

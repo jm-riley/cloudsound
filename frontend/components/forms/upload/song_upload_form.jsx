@@ -63,7 +63,8 @@ class SongUploadForm extends React.Component {
         description: '',
         songFile: '',
         songPhoto: '',
-        photoURL: null
+        photoURL: null,
+        loading: false
       });
     }, 200);
   }
