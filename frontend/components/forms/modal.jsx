@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
+import { clearUserErrors } from '../../actions/user_actions';
 import LoginForm from './session/login_form_container';
 import SignupForm from './session/signup_form_container';
 import SongUpdateForm from '../songs/song_update_form_container';
@@ -18,6 +19,7 @@ class Modal extends React.Component {
       this.setState({ closing: true });
       setTimeout(() => {
         this.props.closeModal();
+        this.props.clearErrors();
         this.setState({ closing: false });
       }, 300);
     }
@@ -62,7 +64,8 @@ const mstp = state => ({
 });
 
 const mdtp = dispatch => ({
-  closeModal: () => dispatch(closeModal())
+  closeModal: () => dispatch(closeModal()),
+  clearErrors: () => dispatch(clearUserErrors())
 });
 
 export default connect(

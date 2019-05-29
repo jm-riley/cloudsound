@@ -4,6 +4,7 @@ export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 export const RECEIVE_USER_ERRORS = 'RECEIVE_USER_ERRORS';
+export const CLEAR_USER_ERRORS = 'CLEAR_USER_ERRORS';
 
 const receiveCurrentUser = user => {
   return {
@@ -27,6 +28,10 @@ const receiveUserErrors = errs => {
     errs: errs.responseJSON
   };
 };
+
+export const clearUserErrors = () => ({
+  type: CLEAR_USER_ERRORS
+});
 
 export const login = user => dispatch =>
   UsersApiUtil.login(user).then(

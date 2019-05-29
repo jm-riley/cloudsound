@@ -291,7 +291,7 @@ var setActiveSong = function setActiveSong(song) {
 /*!******************************************!*\
   !*** ./frontend/actions/user_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, RECEIVE_USER, LOGOUT_CURRENT_USER, RECEIVE_USER_ERRORS, login, signup, logout, fetchUser, updateUser */
+/*! exports provided: RECEIVE_CURRENT_USER, RECEIVE_USER, LOGOUT_CURRENT_USER, RECEIVE_USER_ERRORS, CLEAR_USER_ERRORS, clearUserErrors, login, signup, logout, fetchUser, updateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -300,6 +300,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER", function() { return RECEIVE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_CURRENT_USER", function() { return LOGOUT_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER_ERRORS", function() { return RECEIVE_USER_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_USER_ERRORS", function() { return CLEAR_USER_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearUserErrors", function() { return clearUserErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
@@ -311,6 +313,7 @@ var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var RECEIVE_USER = 'RECEIVE_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 var RECEIVE_USER_ERRORS = 'RECEIVE_USER_ERRORS';
+var CLEAR_USER_ERRORS = 'CLEAR_USER_ERRORS';
 
 var receiveCurrentUser = function receiveCurrentUser(user) {
   return {
@@ -339,6 +342,11 @@ var receiveUserErrors = function receiveUserErrors(errs) {
   };
 };
 
+var clearUserErrors = function clearUserErrors() {
+  return {
+    type: CLEAR_USER_ERRORS
+  };
+};
 var login = function login(user) {
   return function (dispatch) {
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["login"](user).then(function (user) {
@@ -640,9 +648,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session/login_form_container */ "./frontend/components/forms/session/login_form_container.js");
-/* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session/signup_form_container */ "./frontend/components/forms/session/signup_form_container.js");
-/* harmony import */ var _songs_song_update_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../songs/song_update_form_container */ "./frontend/components/songs/song_update_form_container.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session/login_form_container */ "./frontend/components/forms/session/login_form_container.js");
+/* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./session/signup_form_container */ "./frontend/components/forms/session/signup_form_container.js");
+/* harmony import */ var _songs_song_update_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../songs/song_update_form_container */ "./frontend/components/songs/song_update_form_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -660,6 +669,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -699,6 +709,8 @@ function (_React$Component) {
         setTimeout(function () {
           _this2.props.closeModal();
 
+          _this2.props.clearErrors();
+
           _this2.setState({
             closing: false
           });
@@ -722,11 +734,11 @@ function (_React$Component) {
 
       switch (type) {
         case 'signup':
-          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
           break;
 
         case 'login':
-          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+          form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
           break;
 
         default:
@@ -760,6 +772,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["closeModal"])());
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["clearUserErrors"])());
     }
   };
 };
@@ -874,14 +889,18 @@ function (_React$Component) {
     value: function handleSumbit(e) {
       var _this2 = this;
 
-      e.preventDefault();
+      e.preventDefault(); // debugger;
+      // if (!this.props.errors.length) {
+      //   this.props.closeModal();
+      // }
+      // this.props.action(this.state).then(user => this.props.history.push('/discover'));
 
-      if (!this.props.errors.length) {
-        this.props.closeModal();
-      }
+      this.props.action(this.state).then(function () {
+        if (!_this2.props.errors.length) {
+          _this2.props.closeModal();
 
-      this.props.action(this.state).then(function (user) {
-        return _this2.props.history.push('/discover');
+          _this2.props.history.push('/discover');
+        }
       });
     }
   }, {
@@ -910,7 +929,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-container"
       }, errors && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "form-errors"
+        className: "session-form-errors"
       }, errors.map(function (error, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: i
@@ -3515,6 +3534,9 @@ __webpack_require__.r(__webpack_exports__);
   switch (action.type) {
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_USER_ERRORS"]:
       return action.errs;
+
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_USER_ERRORS"]:
+      return [];
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return [];

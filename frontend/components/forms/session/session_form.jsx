@@ -11,10 +11,17 @@ class SessionForm extends React.Component {
 
   handleSumbit(e) {
     e.preventDefault();
-    if (!this.props.errors.length) {
-      this.props.closeModal();
-    }
-    this.props.action(this.state).then(user => this.props.history.push('/discover'));
+    // debugger;
+    // if (!this.props.errors.length) {
+    //   this.props.closeModal();
+    // }
+    // this.props.action(this.state).then(user => this.props.history.push('/discover'));
+    this.props.action(this.state).then(() => {
+      if (!this.props.errors.length) {
+        this.props.closeModal();
+        this.props.history.push('/discover');
+      }
+    });
   }
 
   loginDemoUser(e) {
@@ -33,7 +40,7 @@ class SessionForm extends React.Component {
     return (
       <div className="form-container">
         {errors && (
-          <ul className="form-errors">
+          <ul className="session-form-errors">
             {errors.map((error, i) => (
               <li key={i}>{error}</li>
             ))}
