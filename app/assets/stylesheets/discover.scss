@@ -25,12 +25,17 @@
   width: 70%;
   border-right: 1px solid rgba(143, 143, 143, 0.4);
   min-width: 850px;
+  padding-bottom: 60px;
 }
 
 .discover-group-container {
   padding-top: 25px;
   border-bottom: 1px solid rgba(143, 143, 143, 0.4);
   margin-bottom: 15px;
+}
+
+.discover-group-container:last-of-type {
+  border: none;
 }
 
 .discover-songs-container {

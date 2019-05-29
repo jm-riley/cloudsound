@@ -4,8 +4,8 @@ import React from 'react';
 class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { song: null };
-    // this.changeTime = this.changeTime.bind(this);
+    this.state = { progress: { width: 0 } };
+    this.changeTime = this.changeTime.bind(this);
   }
 
   componentDidMount() {
@@ -14,10 +14,10 @@ class ProgressBar extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.playing !== this.props.playing) {
-      this.interval = setInterval(() => this.changeTime(), 1000);
       if (!this.props.playing) {
-        debugger;
         clearInterval(this.interval);
+      } else {
+        this.interval = setInterval(() => this.changeTime(), 1000);
       }
     }
     if (prevProps.song !== this.props.song) {
@@ -27,8 +27,14 @@ class ProgressBar extends React.Component {
 
   changeTime() {
     const { song } = this.state;
-    // debugger;
-    this.setState({ elapsedTime: song.currentTime });
+    let progress = (Math.floor(song.currentTime) / Math.floor(song.duration)) * 100;
+    let progressWidth;
+    if (progress) {
+      progressWidth = {
+        width: `${progress}%`
+      };
+    } else progressWidth = { width: 0 };
+    this.setState({ progress: progressWidth });
     console.log('time');
   }
 
@@ -41,11 +47,10 @@ class ProgressBar extends React.Component {
       if (!seconds) return '0:00';
       return `${minutes}:${seconds.toString()}`;
     }
-    // } else {
-    //   if (seconds < 10) {
-    //     return `${minutes}:0${seconds}`
-    //   }
-    // }
+  }
+
+  handleSeek(e) {
+    this.props.song.currentTime = e.target.value;
   }
 
   render() {
@@ -58,23 +63,26 @@ class ProgressBar extends React.Component {
 
     if (!song) return null;
     let elapsedTime = Math.floor(song.currentTime);
-    let remainingTime = Math.floor(song.duration) - elapsedTime;
+    let duration = Math.floor(song.duration);
+    let remainingTime = duration - elapsedTime;
     let elapsedTimeDisplay = this.getTime(elapsedTime);
     let remainingTimeDisplay = this.getTime(remainingTime);
-    let progress = Math.floor((elapsedTime / Math.floor(song.duration)) * 100);
-    let progressWidth;
-    if (progress) {
-      progressWidth = {
-        width: `${progress}%`
-        // 'url(' + imgUrl + ')'
-      };
-    } else progressWidth = { width: 0 };
+
     // debugger;
     return (
       <div className="progress-bar-container">
         <div className="elapsed-time">{elapsedTimeDisplay}</div>
         <div className="progress-container">
-          <div className="progress" style={progressWidth} />
+          <div className="progress" style={this.state.progress} />
+          <div className="slider">
+            <input
+              type="range"
+              min="0"
+              max={duration || 0}
+              value={elapsedTime}
+              onChange={this.handleSeek.bind(this)}
+            />
+          </div>
         </div>
         <div className="remaining-time">{remainingTimeDisplay}</div>
       </div>

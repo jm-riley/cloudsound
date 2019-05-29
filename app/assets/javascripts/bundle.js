@@ -1956,9 +1956,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1978,9 +1978,11 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ProgressBar).call(this, props));
     _this.state = {
-      song: null
-    }; // this.changeTime = this.changeTime.bind(this);
-
+      progress: {
+        width: 0
+      }
+    };
+    _this.changeTime = _this.changeTime.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1997,13 +1999,12 @@ function (_React$Component) {
       var _this2 = this;
 
       if (prevProps.playing !== this.props.playing) {
-        this.interval = setInterval(function () {
-          return _this2.changeTime();
-        }, 1000);
-
         if (!this.props.playing) {
-          debugger;
           clearInterval(this.interval);
+        } else {
+          this.interval = setInterval(function () {
+            return _this2.changeTime();
+          }, 1000);
         }
       }
 
@@ -2016,10 +2017,20 @@ function (_React$Component) {
   }, {
     key: "changeTime",
     value: function changeTime() {
-      var song = this.state.song; // debugger;
+      var song = this.state.song;
+      var progress = Math.floor(song.currentTime) / Math.floor(song.duration) * 100;
+      var progressWidth;
+
+      if (progress) {
+        progressWidth = {
+          width: "".concat(progress, "%")
+        };
+      } else progressWidth = {
+        width: 0
+      };
 
       this.setState({
-        elapsedTime: song.currentTime
+        progress: progressWidth
       });
       console.log('time');
     }
@@ -2034,12 +2045,12 @@ function (_React$Component) {
       } else {
         if (!seconds) return '0:00';
         return "".concat(minutes, ":").concat(seconds.toString());
-      } // } else {
-      //   if (seconds < 10) {
-      //     return `${minutes}:0${seconds}`
-      //   }
-      // }
-
+      }
+    }
+  }, {
+    key: "handleSeek",
+    value: function handleSeek(e) {
+      this.props.song.currentTime = e.target.value;
     }
   }, {
     key: "render",
@@ -2052,21 +2063,10 @@ function (_React$Component) {
 
       if (!song) return null;
       var elapsedTime = Math.floor(song.currentTime);
-      var remainingTime = Math.floor(song.duration) - elapsedTime;
+      var duration = Math.floor(song.duration);
+      var remainingTime = duration - elapsedTime;
       var elapsedTimeDisplay = this.getTime(elapsedTime);
-      var remainingTimeDisplay = this.getTime(remainingTime);
-      var progress = Math.floor(elapsedTime / Math.floor(song.duration) * 100);
-      var progressWidth;
-
-      if (progress) {
-        progressWidth = {
-          width: "".concat(progress, "%") // 'url(' + imgUrl + ')'
-
-        };
-      } else progressWidth = {
-        width: 0
-      }; // debugger;
-
+      var remainingTimeDisplay = this.getTime(remainingTime); // debugger;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "progress-bar-container"
@@ -2076,8 +2076,16 @@ function (_React$Component) {
         className: "progress-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "progress",
-        style: progressWidth
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: this.state.progress
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "slider"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "range",
+        min: "0",
+        max: duration || 0,
+        value: elapsedTime,
+        onChange: this.handleSeek.bind(this)
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "remaining-time"
       }, remainingTimeDisplay));
     }
