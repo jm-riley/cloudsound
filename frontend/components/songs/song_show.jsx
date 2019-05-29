@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchSong, deleteSong } from '../../actions/song_actions';
+import { fetchComments, createComment } from '../../actions/comment_actions';
 import { openModal } from '../../actions/modal_actions';
 import SongUpdateModal from './song_update_modal';
 import PlayButton from './play_button';
+import CommentForm from './comment_form';
+import CommentSection from './comment_section';
 import { Link } from 'react-router-dom';
 
 class SongShow extends React.Component {
@@ -13,8 +16,9 @@ class SongShow extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSong(this.props.match.params.songId);
-    // .then(() => this.setState({ song: new Audio(this.props.song.songUrl) }));
+    this.props
+      .fetchSong(this.props.match.params.songId)
+      .then(() => this.props.fetchComments(this.props.match.params.songId));
   }
 
   handleDelete() {
@@ -22,7 +26,7 @@ class SongShow extends React.Component {
     deleteSong(song.id).then(() => this.props.history.push(`/users/${user.id}`));
   }
   render() {
-    const { song, user, currentUser, openModal } = this.props;
+    const { song, user, currentUserId, currentUser, openModal, createComment } = this.props;
     // if (!this.state.song) return null;
     if (!this.props.song) return null;
     const { photoUrl, title } = song;
@@ -30,7 +34,7 @@ class SongShow extends React.Component {
     let photo = photoUrl ? photoUrl : window.songPlaceholderPhoto;
 
     let editButtons;
-    if (song.user_id === currentUser) {
+    if (song.user_id === currentUserId) {
       editButtons = (
         <div className="edit-buttons">
           <button className="edit-button" onClick={() => openModal('update')}>
@@ -44,6 +48,7 @@ class SongShow extends React.Component {
         </div>
       );
     }
+    let userAvatar = currentUser.avatarUrl ? <img src={currentUser.avatarUrl} /> : null;
     return (
       <div className="song-page-container">
         <div className="song-page-content">
@@ -62,10 +67,19 @@ class SongShow extends React.Component {
             </div>
             <div className="waveform" />
           </div>
-          <div className="comment-form">
-            <input type="text" className="comment-input" placeholder="Write a comment" />
+          <div className="song-page-left">
+            <div className="song-page-interaction">
+              {!!currentUserId && (
+                <div className="comment-form-container">
+                  <div className="user-avatar">{userAvatar}</div>
+                  <CommentForm createComment={createComment} songId={song.id} />
+                </div>
+              )}
+              {editButtons}
+            </div>
+            <CommentSection user={user} />
           </div>
-          {editButtons}
+          <div className="song-page-right" />
         </div>
         <SongUpdateModal song={song} />
       </div>
@@ -76,13 +90,16 @@ class SongShow extends React.Component {
 const mstp = (state, ownProps) => ({
   song: state.entities.songs[ownProps.match.params.songId],
   user: state.entities.users[ownProps.match.params.userId],
-  currentUser: state.session.id
+  currentUserId: state.session.id,
+  currentUser: state.entities.users[state.session.id]
 });
 
 const mdtp = dispatch => ({
   fetchSong: id => dispatch(fetchSong(id)),
   openModal: type => dispatch(openModal(type)),
-  deleteSong: id => dispatch(deleteSong(id))
+  deleteSong: id => dispatch(deleteSong(id)),
+  fetchComments: songId => dispatch(fetchComments(songId)),
+  createComment: comment => dispatch(createComment(comment))
 });
 
 export default connect(
