@@ -1738,7 +1738,10 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "playbar-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_detail__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_detail__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        song: this.state.song,
+        playing: this.props.playing
+      }));
     }
   }]);
 
@@ -1853,14 +1856,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _playbar_song_detail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playbar_song_detail */ "./frontend/components/playbar/playbar_song_detail.jsx");
 /* harmony import */ var _playbar_controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./playbar_controls */ "./frontend/components/playbar/playbar_controls.jsx");
+/* harmony import */ var _progress_bar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./progress_bar */ "./frontend/components/playbar/progress_bar.jsx");
 
 
 
 
-var PlaybarDetail = function PlaybarDetail() {
+
+var PlaybarDetail = function PlaybarDetail(_ref) {
+  var song = _ref.song,
+      playing = _ref.playing;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "playbar-inner"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_controls__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_song_detail__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_controls__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_progress_bar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    song: song,
+    playing: playing
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_song_detail__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (PlaybarDetail);
@@ -1922,6 +1932,163 @@ var mstp = function mstp(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(PlaybarSongDetail));
+
+/***/ }),
+
+/***/ "./frontend/components/playbar/progress_bar.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/playbar/progress_bar.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+ // import {connect} from 'react-redux';
+
+var ProgressBar =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ProgressBar, _React$Component);
+
+  function ProgressBar(props) {
+    var _this;
+
+    _classCallCheck(this, ProgressBar);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProgressBar).call(this, props));
+    _this.state = {
+      song: null
+    }; // this.changeTime = this.changeTime.bind(this);
+
+    return _this;
+  }
+
+  _createClass(ProgressBar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        song: this.props.song
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
+      if (prevProps.playing !== this.props.playing) {
+        this.interval = setInterval(function () {
+          return _this2.changeTime();
+        }, 1000);
+
+        if (!this.props.playing) {
+          debugger;
+          clearInterval(this.interval);
+        }
+      }
+
+      if (prevProps.song !== this.props.song) {
+        this.setState({
+          song: this.props.song
+        });
+      }
+    }
+  }, {
+    key: "changeTime",
+    value: function changeTime() {
+      var song = this.state.song; // debugger;
+
+      this.setState({
+        elapsedTime: song.currentTime
+      });
+      console.log('time');
+    }
+  }, {
+    key: "getTime",
+    value: function getTime(time) {
+      var seconds = time % 60;
+      var minutes = Math.floor(time / 60);
+
+      if (seconds < 10) {
+        return "".concat(minutes, ":0").concat(seconds.toString());
+      } else {
+        if (!seconds) return '0:00';
+        return "".concat(minutes, ":").concat(seconds.toString());
+      } // } else {
+      //   if (seconds < 10) {
+      //     return `${minutes}:0${seconds}`
+      //   }
+      // }
+
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var song = this.state.song;
+      var playing = this.props.playing; // debugger;
+      // if (playing) {
+      //   setInterval(this.changeTime, 1000);
+      // } else clearInterval();
+
+      if (!song) return null;
+      var elapsedTime = Math.floor(song.currentTime);
+      var remainingTime = Math.floor(song.duration) - elapsedTime;
+      var elapsedTimeDisplay = this.getTime(elapsedTime);
+      var remainingTimeDisplay = this.getTime(remainingTime);
+      var progress = Math.floor(elapsedTime / Math.floor(song.duration) * 100);
+      var progressWidth;
+
+      if (progress) {
+        progressWidth = {
+          width: "".concat(progress, "%") // 'url(' + imgUrl + ')'
+
+        };
+      } else progressWidth = {
+        width: 0
+      }; // debugger;
+
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "progress-bar-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "elapsed-time"
+      }, elapsedTimeDisplay), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "progress-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "progress",
+        style: progressWidth
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "remaining-time"
+      }, remainingTimeDisplay));
+    }
+  }]);
+
+  return ProgressBar;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (ProgressBar); // const mstp = state => ({
+//   song: state.ui.
+// })
 
 /***/ }),
 

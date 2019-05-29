@@ -40,7 +40,7 @@ class Playbar extends React.Component {
   render() {
     return (
       <div className="playbar-container">
-        <PlayBarDetail />
+        <PlayBarDetail song={this.state.song} playing={this.props.playing} />
       </div>
     );
   }
