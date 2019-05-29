@@ -9,11 +9,15 @@ class Playbar extends React.Component {
     this.state = { song: null };
   }
 
+  componentDidMount() {
+    const { activeSong } = this.props;
+    const audio = new Audio(activeSong.songUrl);
+    this.setState({ song: audio });
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { playing, activeSong } = this.props;
-
     if (activeSong.id !== prevProps.activeSong.id) {
-      // debugger;
       if (prevState.song) {
         prevState.song.pause();
       }
@@ -34,7 +38,11 @@ class Playbar extends React.Component {
   }
 
   render() {
-    return <div className="playbar-container">{/* <PlayBarDetail /> */}</div>;
+    return (
+      <div className="playbar-container">
+        <PlayBarDetail />
+      </div>
+    );
   }
 }
 
