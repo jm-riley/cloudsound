@@ -8,10 +8,12 @@ const Hero = ({ openModal }) => {
   return (
     <div className="hero">
       <div className="hero-header">
-        <div className="hero-logo">
-          <i className="fab fa-mixcloud" />
-          <h3>CLOUDSOUND</h3>
-        </div>
+        <Link to="/discover">
+          <div className="hero-logo">
+            <i className="fab fa-mixcloud" />
+            <h3>CLOUDSOUND</h3>
+          </div>
+        </Link>
         <div className="hero-buttons">
           <button className="loginButton" onClick={() => openModal('login')}>
             Sign in
@@ -19,9 +21,6 @@ const Hero = ({ openModal }) => {
           <button className="signupButton" onClick={() => openModal('signup')}>
             Create account
           </button>
-          {/* <Link to="/signup" className="signupButton">
-            Create Account
-          </Link> */}
         </div>
       </div>
       <div className="hero-text">

@@ -5,17 +5,20 @@ import { deleteComment } from '../../actions/comment_actions';
 
 const CommentSection = ({ user, users, comments, currentUser, deleteComment, song }) => {
   let artistAvatar = user.avatarUrl ? <img src={user.avatarUrl} alt="" /> : null;
+  // if (!comments.length) return null;
   let commentSection;
+  // debugger;
   if (comments)
     commentSection = (
       <div className="comment-section-comments">
         {comments.length > 1 && (
           <div className="comment-count">
-            <i class="fas fa-comment" />
+            <i className="fas fa-comment" />
             {comments.length} comments
           </div>
         )}
         {comments.map((comment, i) => {
+          // debugger;
           let user = users[comment.user_id];
           let userAvatar = user.avatarUrl ? <img src={user.avatarUrl} alt="" /> : null;
           return (

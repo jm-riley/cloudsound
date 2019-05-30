@@ -1708,11 +1708,13 @@ var Hero = function Hero(_ref) {
     className: "hero"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "hero-header"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: "/discover"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "hero-logo"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fab fa-mixcloud"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "CLOUDSOUND")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "CLOUDSOUND"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "hero-buttons"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "loginButton",
@@ -2369,15 +2371,18 @@ var CommentSection = function CommentSection(_ref) {
   var artistAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: user.avatarUrl,
     alt: ""
-  }) : null;
-  var commentSection;
+  }) : null; // if (!comments.length) return null;
+
+  var commentSection; // debugger;
+
   if (comments) commentSection = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "comment-section-comments"
   }, comments.length > 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "comment-count"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    "class": "fas fa-comment"
+    className: "fas fa-comment"
   }), comments.length, " comments"), comments.map(function (comment, i) {
+    // debugger;
     var user = users[comment.user_id];
     var userAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: user.avatarUrl,
@@ -3893,7 +3898,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/song_actions */ "./frontend/actions/song_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/comment_actions */ "./frontend/actions/comment_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3915,6 +3922,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_USER_SONGS"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, _defineProperty({}, action.user.id, action.user));
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_COMMENTS"]:
+      var users = Object.values(action.comments.users);
+      var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state);
+      users.forEach(function (user) {
+        return newState[user.id] = user;
+      });
+      return newState;
 
     default:
       return state;
