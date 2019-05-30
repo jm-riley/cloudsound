@@ -1,0 +1,62 @@
+.sidebar-container {
+  width: 100%;
+  min-width: 300px;
+  padding-top: 20px;
+  position: sticky;
+  top: 50px;
+}
+
+.no-user-sidebar {
+  width: 70%;
+  height: 170px;
+  padding: 20px;
+  padding-bottom: 30px;
+  margin: 0 auto;
+  background-color: #f2f2f2;
+}
+
+.no-user-flex {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  align-items: center;
+}
+
+.hey-hey {
+  font-size: 32px;
+  color: #ff5500;
+  padding-right: 10px;
+  font-weight: 600;
+}
+
+.no-user-sidebar-text {
+  height: 100px;
+  padding: 5px;
+  h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+  }
+  p {
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 200;
+    color: #999;
+  }
+}
+
+.upload-audio-link {
+  text-align: center;
+  margin: 0 auto;
+  padding: 5px 10px;
+  background-color: #ff5500;
+  border-radius: 5px;
+  color: white;
+  font-weight: 200;
+  font-size: 14px;
+  width: 120px;
+}
+
+.upload-audio-link:hover {
+  cursor: pointer;
+}

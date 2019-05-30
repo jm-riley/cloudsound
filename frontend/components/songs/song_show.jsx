@@ -4,6 +4,7 @@ import { fetchSong, deleteSong } from '../../actions/song_actions';
 import { fetchComments, createComment } from '../../actions/comment_actions';
 import { openModal } from '../../actions/modal_actions';
 import SongUpdateModal from './song_update_modal';
+import Sidebar from '../sidebar/sidebar';
 import PlayButton from './play_button';
 import CommentForm from './comment_form';
 import CommentSection from './comment_section';
@@ -54,24 +55,24 @@ class SongShow extends React.Component {
     }
     return (
       <div className="song-page-container">
-        <div className="song-page-content">
-          <div className="song-page-hero">
-            <div className="play-section">
-              <PlayButton song={this.props.song} />
-              <div className="song-page-song-info">
-                <span className="song-username">
-                  <Link to={`/users/${user.id}`}>{user.username}</Link>
-                </span>
-                <div className="song-title-wrapper">
-                  <span className="song-title">{title}</span>
-                </div>
+        <div className="song-page-hero">
+          <div className="play-section">
+            <PlayButton song={this.props.song} />
+            <div className="song-page-song-info">
+              <span className="song-username">
+                <Link to={`/users/${user.id}`}>{user.username}</Link>
+              </span>
+              <div className="song-title-wrapper">
+                <span className="song-title">{title}</span>
               </div>
             </div>
-            <div className="song-artwork">
-              <img src={photo} alt="song-artwork" />
-            </div>
-            <div className="waveform" />
           </div>
+          <div className="song-artwork">
+            <img src={photo} alt="song-artwork" />
+          </div>
+          <div className="waveform" />
+        </div>
+        <div className="song-page-content">
           <div className="song-page-left">
             <div className="song-page-interaction">
               {!!currentUserId && (
@@ -84,7 +85,9 @@ class SongShow extends React.Component {
             </div>
             <CommentSection user={user} song={song} />
           </div>
-          <div className="song-page-right" />
+          <div className="song-page-right">
+            <Sidebar />
+          </div>
         </div>
         <SongUpdateModal song={song} />
       </div>

@@ -3,8 +3,9 @@
   width: 95%;
   height: 100%;
   max-width: 1240px;
-  min-width: 800px;
+  min-width: 1150px;
   background-color: white;
+  display: flex;
 
   h3 {
     margin: 0;
@@ -24,8 +25,12 @@
   padding: 0 25px;
   width: 70%;
   border-right: 1px solid rgba(143, 143, 143, 0.4);
-  min-width: 850px;
+  min-width: 800px;
   padding-bottom: 60px;
+}
+
+.discover-right {
+  width: 30%;
 }
 
 .discover-group-container {

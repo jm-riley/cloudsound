@@ -1,5 +1,6 @@
 import React from 'react';
 import DiscoverGroup from './discover_group';
+import Sidebar from '../sidebar/sidebar';
 import { connect } from 'react-redux';
 import { fetchSongs } from '../../actions/song_actions';
 
@@ -33,7 +34,9 @@ class Discover extends React.Component {
             songs={staffPicks}
           />
         </div>
-        <div className="discover-right" />
+        <div className="discover-right">
+          <Sidebar />
+        </div>
       </div>
     );
   }
