@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { AuthRoute } from '../util/route_util';
 import HeaderContainer from './header/header_container';
 import Hero from './header/hero';
+import RootPageContent from './songs/root_page_content';
 import SongShow from './songs/song_show';
 import UserDetail from './users/user_detail';
 import Discover from './discover/discover';
@@ -19,6 +20,7 @@ export default () => (
       <AuthRoute exact path="/" component={Hero} />
       <Route path="/" component={HeaderContainer} />
     </Switch>
+    <Route exact path="/" component={RootPageContent} />
     <div className="main-content-wrapper">
       <Route path="/upload" component={UploadPage} />
       <Switch>

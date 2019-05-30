@@ -1,0 +1,19 @@
+.root-page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding-top: 50px;
+  h2 {
+    margin: 0 auto;
+    font-weight: 200;
+    padding-bottom: 15px;
+  }
+  .root-songs-container {
+    max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+}
