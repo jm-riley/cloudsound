@@ -48,7 +48,10 @@ class SongShow extends React.Component {
         </div>
       );
     }
-    let userAvatar = currentUser.avatarUrl ? <img src={currentUser.avatarUrl} /> : null;
+    let userAvatar;
+    if (currentUser) {
+      userAvatar = currentUser.avatarUrl ? <img src={currentUser.avatarUrl} /> : null;
+    }
     return (
       <div className="song-page-container">
         <div className="song-page-content">

@@ -2799,9 +2799,14 @@ function (_React$Component) {
         }), "Delete"));
       }
 
-      var userAvatar = currentUser.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: currentUser.avatarUrl
-      }) : null;
+      var userAvatar;
+
+      if (currentUser) {
+        userAvatar = currentUser.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: currentUser.avatarUrl
+        }) : null;
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
