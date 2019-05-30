@@ -62,7 +62,9 @@ class SongShow extends React.Component {
                 <span className="song-username">
                   <Link to={`/users/${user.id}`}>{user.username}</Link>
                 </span>
-                <p className="song-title">{title}</p>
+                <div className="song-title-wrapper">
+                  <span className="song-title">{title}</span>
+                </div>
               </div>
             </div>
             <div className="song-artwork">

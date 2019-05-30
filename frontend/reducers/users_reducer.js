@@ -15,10 +15,12 @@ export default (state = {}, action) => {
     case RECEIVE_USER_SONGS:
       return merge({}, state, { [action.user.id]: action.user });
     case RECEIVE_COMMENTS:
-      let users = Object.values(action.comments.users);
-      let newState = merge({}, state);
-      users.forEach(user => (newState[user.id] = user));
-      return newState;
+      if (action.comments.users) {
+        let users = Object.values(action.comments.users);
+        let newState = merge({}, state);
+        users.forEach(user => (newState[user.id] = user));
+        return newState;
+      } else return state;
     default:
       return state;
   }

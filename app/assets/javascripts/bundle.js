@@ -2823,9 +2823,11 @@ function (_React$Component) {
         className: "song-username"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Link"], {
         to: "/users/".concat(user.id)
-      }, user.username)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, user.username)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "song-title-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "song-title"
-      }, title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, title)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-artwork"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: photo,
@@ -3929,12 +3931,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, _defineProperty({}, action.user.id, action.user));
 
     case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_COMMENTS"]:
-      var users = Object.values(action.comments.users);
-      var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state);
-      users.forEach(function (user) {
-        return newState[user.id] = user;
-      });
-      return newState;
+      if (action.comments.users) {
+        var users = Object.values(action.comments.users);
+        var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state);
+        users.forEach(function (user) {
+          return newState[user.id] = user;
+        });
+        return newState;
+      } else return state;
 
     default:
       return state;
