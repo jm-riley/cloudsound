@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setActiveSongFile } from '../../actions/song_actions';
+import { pause } from '../../actions/song_actions';
 import PlayBarDetail from './playbar_detail';
 
 class Playbar extends React.Component {
@@ -38,6 +38,12 @@ class Playbar extends React.Component {
   }
 
   render() {
+    const { song } = this.state;
+    const { pause } = this.props;
+    if (!song) return null;
+    song.onended = e => {
+      pause();
+    };
     return (
       <div className="playbar-container">
         <PlayBarDetail song={this.state.song} playing={this.props.playing} />
@@ -53,4 +59,11 @@ const mstp = state => {
   };
 };
 
-export default connect(mstp)(Playbar);
+const mdtp = dispatch => ({
+  pause: () => dispatch(pause())
+});
+
+export default connect(
+  mstp,
+  mdtp
+)(Playbar);

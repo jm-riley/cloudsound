@@ -6,11 +6,12 @@ json.comments do
   end
 end
 
+
 json.users do
   @users.each do |user|
     json.extract! user, :username, :id
     if user.avatar.attached?
-      json.avatarUrl url_for(@user.avatar)
+      json.avatarUrl url_for(user.avatar)
     end
   end
 end

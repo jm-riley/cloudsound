@@ -10,31 +10,6 @@ class PlayButton extends React.Component {
   }
 
   togglePlay() {
-    // const { playing } = this.state;
-    // const { setSongFile, setSong, activeSongFile, activeSong, song } = this.props;
-    // if (activeSongFile) activeSongFile.pause();
-    // if (!activeSong || song.id !== activeSong.id) {
-    //   setSong(song);
-    //   setSongFile(new Audio(song.songUrl));
-    // }
-    // // debugger;
-    // // setSongFile(this.state.song).then(() => {
-    // // setTimeout(() => {
-    // // if (playing) {
-    // //   this.props.activeSongFile.pause();
-    // // } else {
-    // //   // debugger;
-    // //   this.props.activeSongFile.play();
-    // // }
-    // setTimeout(() => {
-    //   this.setState({ playing: !playing }, () => {
-    //     if (playing) {
-    //       this.props.activeSongFile.pause();
-    //     } else {
-    //       this.props.activeSongFile.play();
-    //     }
-    //   });
-    // }, 300);
     const { setSong, activeSong, song, play, pause } = this.props;
     const { playing } = this.state;
     if (!activeSong || song.id !== activeSong.id) {
@@ -61,21 +36,11 @@ class PlayButton extends React.Component {
 
   render() {
     const { playing } = this.state;
-    const { activeSong, song, activeSongFile } = this.props;
     let playbackIcon = playing ? (
       <i className="fas fa-pause-circle" />
     ) : (
       <i className="fas fa-play-circle" />
     );
-    // if (activeSong && song.id !== activeSong.id) {
-    //   playbackIcon = <i className="fas fa-play-circle" />;
-    //   // this.setState({ playing: false });
-    // }
-    if (activeSongFile) {
-      activeSongFile.onended = e => {
-        this.setState({ playing: false });
-      };
-    }
 
     return (
       <div className="play-button" onClick={this.togglePlay}>
@@ -87,13 +52,12 @@ class PlayButton extends React.Component {
 
 const mstp = state => {
   return {
-    activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song || {}
+    activeSong: state.ui.activeSong.song || {},
+    playing: state.ui.activeSong.playing
   };
 };
 
 const mdtp = dispatch => ({
-  setSongFile: song => dispatch(setActiveSongFile(song)),
   setSong: song => dispatch(setActiveSong(song)),
   play: () => dispatch(play()),
   pause: () => dispatch(pause())

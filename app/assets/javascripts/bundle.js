@@ -522,7 +522,9 @@ __webpack_require__.r(__webpack_exports__);
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/",
     component: _header_header_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "main-content-wrapper"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/upload",
     component: _forms_upload_upload_page__WEBPACK_IMPORTED_MODULE_10__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -534,7 +536,7 @@ __webpack_require__.r(__webpack_exports__);
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/:userId/:songId",
     component: _songs_song_show__WEBPACK_IMPORTED_MODULE_5__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forms_modal__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_playbar__WEBPACK_IMPORTED_MODULE_9__["default"], null));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_forms_modal__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_playbar__WEBPACK_IMPORTED_MODULE_9__["default"], null)));
 });
 
 /***/ }),
@@ -1839,6 +1841,14 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var song = this.state.song;
+      var pause = this.props.pause;
+      if (!song) return null;
+
+      song.onended = function (e) {
+        pause();
+      };
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "playbar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_detail__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -1858,7 +1868,15 @@ var mstp = function mstp(state) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp)(Playbar));
+var mdtp = function mdtp(dispatch) {
+  return {
+    pause: function pause() {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["pause"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mstp, mdtp)(Playbar));
 
 /***/ }),
 
@@ -2346,25 +2364,20 @@ var CommentSection = function CommentSection(_ref) {
       users = _ref.users,
       comments = _ref.comments,
       currentUser = _ref.currentUser,
-      deleteComment = _ref.deleteComment;
+      deleteComment = _ref.deleteComment,
+      song = _ref.song;
   var artistAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: user.avatarUrl,
     alt: ""
   }) : null;
-  if (!comments) return null;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "comment-section-container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "comment-section-left"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "comment-section-artist"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-    to: "/users/".concat(user.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "comment-artist-avatar"
-  }, artistAvatar), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.username)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "comment-section-right"
-  }, comments.map(function (comment, i) {
+  var commentSection;
+  if (comments) commentSection = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-section-comments"
+  }, comments.length > 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-count"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    "class": "fas fa-comment"
+  }), comments.length, " comments"), comments.map(function (comment, i) {
     var user = users[comment.user_id];
     var userAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: user.avatarUrl,
@@ -2393,7 +2406,22 @@ var CommentSection = function CommentSection(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "fas fa-trash-alt"
     })));
-  })));
+  }));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-section-container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-section-left"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-section-artist"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: "/users/".concat(user.id)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-artist-avatar"
+  }, artistAvatar), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.username)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "comment-section-right"
+  }, song.description !== '' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "song-description"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, song.description)), commentSection));
 };
 
 var mstp = function mstp(state) {
@@ -2473,31 +2501,6 @@ function (_React$Component) {
   _createClass(PlayButton, [{
     key: "togglePlay",
     value: function togglePlay() {
-      // const { playing } = this.state;
-      // const { setSongFile, setSong, activeSongFile, activeSong, song } = this.props;
-      // if (activeSongFile) activeSongFile.pause();
-      // if (!activeSong || song.id !== activeSong.id) {
-      //   setSong(song);
-      //   setSongFile(new Audio(song.songUrl));
-      // }
-      // // debugger;
-      // // setSongFile(this.state.song).then(() => {
-      // // setTimeout(() => {
-      // // if (playing) {
-      // //   this.props.activeSongFile.pause();
-      // // } else {
-      // //   // debugger;
-      // //   this.props.activeSongFile.play();
-      // // }
-      // setTimeout(() => {
-      //   this.setState({ playing: !playing }, () => {
-      //     if (playing) {
-      //       this.props.activeSongFile.pause();
-      //     } else {
-      //       this.props.activeSongFile.play();
-      //     }
-      //   });
-      // }, 300);
       var _this$props = this.props,
           setSong = _this$props.setSong,
           activeSong = _this$props.activeSong,
@@ -2536,30 +2539,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var playing = this.state.playing;
-      var _this$props3 = this.props,
-          activeSong = _this$props3.activeSong,
-          song = _this$props3.song,
-          activeSongFile = _this$props3.activeSongFile;
       var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-pause-circle"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play-circle"
-      }); // if (activeSong && song.id !== activeSong.id) {
-      //   playbackIcon = <i className="fas fa-play-circle" />;
-      //   // this.setState({ playing: false });
-      // }
-
-      if (activeSongFile) {
-        activeSongFile.onended = function (e) {
-          _this2.setState({
-            playing: false
-          });
-        };
-      }
-
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-button",
         onClick: this.togglePlay
@@ -2572,16 +2557,13 @@ function (_React$Component) {
 
 var mstp = function mstp(state) {
   return {
-    activeSongFile: state.ui.activeSong.songFile,
-    activeSong: state.ui.activeSong.song || {}
+    activeSong: state.ui.activeSong.song || {},
+    playing: state.ui.activeSong.playing
   };
 };
 
 var mdtp = function mdtp(dispatch) {
   return {
-    setSongFile: function setSongFile(song) {
-      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["setActiveSongFile"])(song));
-    },
     setSong: function setSong(song) {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["setActiveSong"])(song));
     },
@@ -2788,7 +2770,7 @@ function (_React$Component) {
           openModal = _this$props2.openModal,
           createComment = _this$props2.createComment; // if (!this.state.song) return null;
 
-      if (!this.props.song) return null;
+      if (!song || !user) return null;
       var photoUrl = song.photoUrl,
           title = song.title;
       var photo = photoUrl ? photoUrl : window.songPlaceholderPhoto;
@@ -2852,7 +2834,8 @@ function (_React$Component) {
         createComment: createComment,
         songId: song.id
       })), editButtons), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_section__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        user: user
+        user: user,
+        song: song
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-right"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_song_update_modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -3533,19 +3516,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
 
 
+var preloadedState = {
+  song: {
+    description: '',
+    id: 52,
+    photoUrl: '/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBWHM9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ca3ee7f83d24b4c4f4c96bea78ff529972ba3b8a/1.300.jpg',
+    songUrl: '/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBmdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--1736dcb18161f1c00da2c4bf3109070236c74d0d/Banana_Cream_-_We_ll_Shine.mp3',
+    title: "We'll Shine",
+    user_id: 11,
+    username: 'Banana Cream'
+  },
+  playing: false
+};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    playing: false,
-    song: {
-      description: '',
-      id: 52,
-      photoUrl: '/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBWHM9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ca3ee7f83d24b4c4f4c96bea78ff529972ba3b8a/1.300.jpg',
-      songUrl: '/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBmdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--1736dcb18161f1c00da2c4bf3109070236c74d0d/Banana_Cream_-_We_ll_Shine.mp3',
-      title: "We'll Shine",
-      user_id: 11,
-      username: 'Banana Cream'
-    }
-  };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : preloadedState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
 

@@ -28,7 +28,7 @@ class SongShow extends React.Component {
   render() {
     const { song, user, currentUserId, currentUser, openModal, createComment } = this.props;
     // if (!this.state.song) return null;
-    if (!this.props.song) return null;
+    if (!song || !user) return null;
     const { photoUrl, title } = song;
 
     let photo = photoUrl ? photoUrl : window.songPlaceholderPhoto;
@@ -77,7 +77,7 @@ class SongShow extends React.Component {
               )}
               {editButtons}
             </div>
-            <CommentSection user={user} />
+            <CommentSection user={user} song={song} />
           </div>
           <div className="song-page-right" />
         </div>

@@ -19,15 +19,17 @@ export default () => (
       <AuthRoute exact path="/" component={Hero} />
       <Route path="/" component={HeaderContainer} />
     </Switch>
-    <Route path="/upload" component={UploadPage} />
-    <Switch>
-      <Route path="/discover" component={Discover} />
-      <Route path="/users/:userId" component={UserDetail} />
-      <Route path="/:userId/:songId" component={SongShow} />
-    </Switch>
-    {/* <AuthRoute path="/login" component={LoginForm} />
+    <div className="main-content-wrapper">
+      <Route path="/upload" component={UploadPage} />
+      <Switch>
+        <Route path="/discover" component={Discover} />
+        <Route path="/users/:userId" component={UserDetail} />
+        <Route path="/:userId/:songId" component={SongShow} />
+      </Switch>
+      {/* <AuthRoute path="/login" component={LoginForm} />
     <AuthRoute path="/signup" component={SignupForm} /> */}
-    <Modal />
-    <Playbar />
+      <Modal />
+      <Playbar />
+    </div>
   </div>
 );

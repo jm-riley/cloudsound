@@ -30,6 +30,15 @@
   width: 80%;
 }
 
+.comment-count {
+  color: #999;
+  border-bottom: 1px solid rgba(224, 223, 223, 0.3);
+  padding-bottom: 5px;
+  i {
+    padding: 0 10px 0 20px;
+  }
+}
+
 .comment-container {
   padding: 15px 0;
   display: flex;
@@ -44,7 +53,7 @@
 .comment-detail {
   padding-left: 10px;
   .comment-username {
-    color: #ccc;
+    color: #999;
     font-size: 14px;
   }
   p {
@@ -72,4 +81,9 @@
 
 .comment-delete:hover {
   cursor: pointer;
+}
+
+.song-description {
+  padding-bottom: 15px;
+  font-weight: 200;
 }
