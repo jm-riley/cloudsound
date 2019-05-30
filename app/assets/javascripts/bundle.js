@@ -1811,18 +1811,25 @@ function (_React$Component) {
   _createClass(Playbar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var activeSong = this.props.activeSong;
-      var audio = new Audio(activeSong.songUrl);
-      this.setState({
-        song: audio
+      var _this2 = this;
+
+      var _this$props = this.props,
+          activeSong = _this$props.activeSong,
+          fetchSong = _this$props.fetchSong;
+      fetchSong(52).then(function () {
+        var audio = new Audio(activeSong.songUrl);
+
+        _this2.setState({
+          song: audio
+        });
       });
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      var _this$props = this.props,
-          playing = _this$props.playing,
-          activeSong = _this$props.activeSong;
+      var _this$props2 = this.props,
+          playing = _this$props2.playing,
+          activeSong = _this$props2.activeSong;
 
       if (activeSong.id !== prevProps.activeSong.id) {
         if (prevState.song) {
@@ -1880,6 +1887,9 @@ var mdtp = function mdtp(dispatch) {
   return {
     pause: function pause() {
       return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["pause"])());
+    },
+    fetchSong: function fetchSong(id) {
+      return dispatch(Object(_actions_song_actions__WEBPACK_IMPORTED_MODULE_2__["fetchSong"])(id));
     }
   };
 };

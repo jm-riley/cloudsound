@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { pause } from '../../actions/song_actions';
+import { pause, fetchSong } from '../../actions/song_actions';
 import PlayBarDetail from './playbar_detail';
 
 class Playbar extends React.Component {
@@ -10,9 +10,11 @@ class Playbar extends React.Component {
   }
 
   componentDidMount() {
-    const { activeSong } = this.props;
-    const audio = new Audio(activeSong.songUrl);
-    this.setState({ song: audio });
+    const { activeSong, fetchSong } = this.props;
+    fetchSong(52).then(() => {
+      const audio = new Audio(activeSong.songUrl);
+      this.setState({ song: audio });
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -60,7 +62,8 @@ const mstp = state => {
 };
 
 const mdtp = dispatch => ({
-  pause: () => dispatch(pause())
+  pause: () => dispatch(pause()),
+  fetchSong: id => dispatch(fetchSong(id))
 });
 
 export default connect(
