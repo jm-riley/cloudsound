@@ -22,4 +22,5 @@ class Song < ApplicationRecord
 
   has_one_attached :song_file
   has_one_attached :song_photo
+  has_many :listeneds, dependent: :destroy
 end
