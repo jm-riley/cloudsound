@@ -65,18 +65,20 @@ class SongShow extends React.Component {
       <div className="song-page-container">
         <div className="song-page-hero">
           <div className="play-section">
-            <PlayButton song={this.props.song} />
-            <div className="song-page-song-info">
-              <span className="song-username">
-                <Link to={`/users/${user.id}`}>{user.username}</Link>
-              </span>
-              <div className="song-title-wrapper">
-                <span className="song-title">{title}</span>
+            <div className="play-section-left">
+              <PlayButton song={this.props.song} />
+              <div className="song-page-song-info">
+                <span className="song-username">
+                  <Link to={`/users/${user.id}`}>{user.username}</Link>
+                </span>
+                <div className="song-title-wrapper">
+                  <span className="song-title">{title}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="song-artwork">
-            <img src={photo} alt="song-artwork" />
+            <div className="song-artwork">
+              <img src={photo} alt="song-artwork" />
+            </div>
           </div>
           <div className="waveform" />
         </div>

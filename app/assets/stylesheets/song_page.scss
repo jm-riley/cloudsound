@@ -35,8 +35,18 @@
 
 .play-section {
   display: flex;
-  width: 60%;
-  align-items: center;
+  width: 100%;
+  // align-items: center;
+  justify-content: space-between;
+}
+
+.song-page-song-info {
+  padding-top: 25px;
+}
+
+.play-section-left {
+  display: flex;
+  padding-top: 10px;
 }
 
 .play-button {
@@ -67,11 +77,10 @@
 .song-artwork {
   width: 340px;
   height: 340px;
-  float: right;
-  text-align: center;
-  position: relative;
-  bottom: 102px;
-  right: 30px;
+  padding: 28px;
+  // position: relative;
+  // bottom: 102px;
+  // right: 30px;
 }
 
 .song-artwork img {
@@ -84,8 +93,9 @@
   height: 150px;
   background-image: image-url('audio-waveform-icon-17.jpg');
   background-position: center;
-  margin-top: 80px;
-  margin-left: 60px;
+  position: relative;
+  bottom: 205px;
+  left: 80px;
 }
 
 .edit-button {
@@ -147,6 +157,7 @@
 
 .song-page-interaction {
   border-bottom: 1px solid rgba(224, 223, 223, 0.3);
+  padding-top: 20px;
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;

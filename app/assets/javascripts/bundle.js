@@ -3143,6 +3143,8 @@ function (_React$Component) {
         className: "song-page-hero"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "play-section"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "play-section-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_play_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         song: this.props.song
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3160,7 +3162,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: photo,
         alt: "song-artwork"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "waveform"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "song-page-content"
