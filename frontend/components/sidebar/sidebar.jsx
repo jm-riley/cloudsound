@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ListeningHistory from './listening_history';
 
 const Sidebar = ({ currentUser }) => {
   const noUserSidebar = (
@@ -21,7 +22,7 @@ const Sidebar = ({ currentUser }) => {
       </Link>
     </div>
   );
-  let sidebarContent = currentUser ? null : noUserSidebar;
+  let sidebarContent = currentUser ? <ListeningHistory /> : noUserSidebar;
 
   return <div className="sidebar-container">{sidebarContent}</div>;
 };

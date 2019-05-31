@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchUserSongs } from '../../actions/song_actions';
 import UserHeader from './user_header';
 import UserSongs from './user_songs';
+import Sidebar from '../sidebar/sidebar';
 
 class UserDetail extends React.Component {
   constructor(props) {
@@ -23,7 +24,9 @@ class UserDetail extends React.Component {
           <div className="user-detail-left">
             <UserSongs songs={songs} username={user.username} />
           </div>
-          <div className="user-detail-right" />
+          <div className="user-detail-right">
+            <Sidebar />
+          </div>
         </div>
       </div>
     );

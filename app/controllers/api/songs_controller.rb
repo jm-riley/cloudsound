@@ -47,10 +47,22 @@ def destroy
   # render :index
 end
 
+def listens
+  if params[:song_id] 
+    @listen = Listened.create(song_id: params[:song_id], user_id: current_user.id)
+  end
+ 
+  @listens = current_user.listeneds.last(10)
+  @songIds = @listens.map {|listen| listen.song_id}
+  @songs = @songIds.reverse.uniq.map {|songId| Song.find(songId)}
+  render :history
+
+end
+
 private
 
 def song_params
-  params.require(:song).permit(:title, :description, :song_file, :song_photo)
+  params.require(:song).permit(:title, :description, :song_file, :song_photo, :song_id)
 end
 
 end

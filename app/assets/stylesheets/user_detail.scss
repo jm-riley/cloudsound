@@ -3,7 +3,7 @@
   width: 95%;
   height: 100%;
   max-width: 1240px;
-  min-width: 800px;
+  min-width: 1100px;
   background-color: white;
 }
 
@@ -88,4 +88,12 @@
   border-right: 1px solid rgba(201, 200, 200, 0.6);
   margin: 30px 0;
   min-width: 700px;
+}
+
+.user-detail-right {
+  width: 30%;
+}
+
+.user-detail-content {
+  display: flex;
 }

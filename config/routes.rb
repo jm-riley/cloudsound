@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :songs, only: [:index]
     end
     resources :songs, only: [:show, :update, :destroy, :create, :index] do
+      post :listen, to: 'songs#listens'
       resources :comments, only: [:index, :create]
     end
     resources :comments, only: [:destroy]

@@ -5,6 +5,7 @@ import PlayButton from '../songs/play_button';
 export default ({ song }) => {
   if (!song) return null;
   const { photoUrl, username } = song;
+  let photo = photoUrl ? photoUrl : null;
   return (
     <div className="discover-song-item-container">
       <div className="discover-song-item-artwork">
@@ -13,9 +14,12 @@ export default ({ song }) => {
           <PlayButton song={song} />
         </div>
       </div>
-      <Link to={`/${song.user_id}/${song.id}`}>{song.title}</Link>
-      <br />
-      <Link to={`/users/${song.user_id}`}>{username}</Link>
+      <div className="discover-song-item-info">
+        <Link to={`/${song.user_id}/${song.id}`} className="discover-song-title">
+          {song.title}
+        </Link>
+        <Link to={`/users/${song.user_id}`}>{username}</Link>
+      </div>
     </div>
   );
 };

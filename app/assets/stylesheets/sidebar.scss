@@ -60,3 +60,70 @@
 .upload-audio-link:hover {
   cursor: pointer;
 }
+
+.listening-history {
+  padding: 10px 25px;
+  .discover-song-item-container {
+    display: flex;
+    padding: 0;
+  }
+  .discover-song-item-artwork {
+    width: 50px;
+    height: 50px;
+    .hidden:hover {
+      background-color: rgba(253, 253, 253, 0.712);
+      .play-button {
+        display: block;
+        padding: 0;
+        margin: 0;
+        font-size: 34px;
+        position: relative;
+        top: 7px;
+        left: 7px;
+      }
+    }
+
+    .hidden {
+      // background-color: #999;
+      width: 50px;
+      height: 50px;
+      position: relative;
+      top: -54px;
+      .play-button {
+        display: none;
+        font-size: 34px;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        // right: -8px;
+        // bottom: -6px;
+      }
+    }
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .discover-song-item-info {
+    padding: 7px 10px;
+    .discover-song-title {
+      font-size: 14px;
+    }
+  }
+}
+
+.history-song-list {
+  border-top: 1px solid rgba(143, 143, 143, 0.4);
+  padding-top: 15px;
+  margin-top: 8px;
+}
+
+.history-text {
+  color: #999;
+  font-weight: 200;
+  font-size: 14px;
+  i {
+    padding-right: 10px;
+    font-size: 16px;
+  }
+}

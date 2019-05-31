@@ -33,3 +33,11 @@ export const updateUser = ({ user, id }) => {
     processData: false
   });
 };
+
+export const fetchListeningHistory = song_id => {
+  return $.ajax({
+    method: 'POST',
+    url: `/api/songs/${song_id}/listen`,
+    data: song_id
+  });
+};
