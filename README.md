@@ -23,6 +23,6 @@ I built the play button to be as reuseable as possible. It is passed a song obje
 
 ### Continuous Playbar
 
-The playbar takes care of creating an HTML audio element, whenever state is updated with a new active song. It stores the audio element in component state and takes care of calling play/pause methods.
+The playbar handles creating an HTML audio element whenever state is updated with a new active song. It stores the audio element in component state and takes care of calling play/pause methods.
 
 ![playbar](./app/assets/images/playbar.png)
