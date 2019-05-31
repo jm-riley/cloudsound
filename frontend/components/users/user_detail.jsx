@@ -10,6 +10,12 @@ class UserDetail extends React.Component {
     super(props);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.props.fetchUserSongs(this.props.match.params.userId);
+    }
+  }
+
   componentDidMount() {
     this.props.fetchUserSongs(this.props.match.params.userId);
   }

@@ -3062,25 +3062,36 @@ function (_React$Component) {
   }
 
   _createClass(SongShow, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
       var _this2 = this;
 
+      if (this.props.match.params.songId !== prevProps.match.params.songId) {
+        this.props.fetchSong(this.props.match.params.songId).then(function () {
+          return _this2.props.fetchComments(_this2.props.match.params.songId);
+        });
+      }
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
       this.props.fetchSong(this.props.match.params.songId).then(function () {
-        return _this2.props.fetchComments(_this2.props.match.params.songId);
+        return _this3.props.fetchComments(_this3.props.match.params.songId);
       });
     }
   }, {
     key: "handleDelete",
     value: function handleDelete() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$props = this.props,
           deleteSong = _this$props.deleteSong,
           song = _this$props.song,
           user = _this$props.user;
       deleteSong(song.id).then(function () {
-        return _this3.props.history.push("/users/".concat(user.id));
+        return _this4.props.history.push("/users/".concat(user.id));
       });
     }
   }, {
@@ -3666,6 +3677,13 @@ function (_React$Component) {
   }
 
   _createClass(UserDetail, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.match.params.userId !== prevProps.match.params.userId) {
+        this.props.fetchUserSongs(this.props.match.params.userId);
+      }
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchUserSongs(this.props.match.params.userId);

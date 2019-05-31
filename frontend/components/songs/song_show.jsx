@@ -16,6 +16,14 @@ class SongShow extends React.Component {
     this.state = {};
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.songId !== prevProps.match.params.songId) {
+      this.props
+        .fetchSong(this.props.match.params.songId)
+        .then(() => this.props.fetchComments(this.props.match.params.songId));
+    }
+  }
+
   componentDidMount() {
     this.props
       .fetchSong(this.props.match.params.songId)
