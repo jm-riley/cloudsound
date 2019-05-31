@@ -44,6 +44,10 @@ end
 def destroy
   @song = current_user.songs.find(params[:id])
   @song.delete
+  rescue ActiveRecord::RecordNotFound => e
+    render json: {
+      error: e.to_s 
+    }, status: 404
   # render :index
 end
 
