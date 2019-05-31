@@ -1,0 +1,74 @@
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  .elapsed-time {
+    font-size: 12px;
+    color: #ff5500;
+    padding: 2px 15px;
+  }
+  .remaining-time {
+    font-size: 12px;
+    padding: 2px 15px;
+  }
+}
+
+.progress-container {
+  width: 450px;
+  height: 1px;
+  background-color: #ccc;
+  .progress {
+    position: relative;
+    height: 1px;
+    background-color: rgb(255, 85, 0);
+  }
+  .slider {
+    height: 20px;
+    position: relative;
+    bottom: 10px;
+  }
+  input {
+    display: none;
+    width: 100%;
+    background-color: transparent;
+    -webkit-appearance: none;
+    margin: 0;
+    position: relative;
+    top: -2px;
+    right: 3px;
+  }
+  .slider:hover {
+    input {
+      display: inline-block;
+    }
+  }
+  // input:hover {
+  //   display: inline-block;
+  // }
+}
+
+input[type='range']::-webkit-slider-thumb {
+  height: 7px;
+  width: 7px;
+  border-radius: 50px;
+  background: #ff5500;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+input[type='range']::-moz-range-thumb {
+  height: 7px;
+  width: 7px;
+  border-radius: 50px;
+  background: #ff5500;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+input[type='range']::-ms-thumb {
+  height: 7px;
+  width: 7px;
+  border-radius: 50px;
+  background: #ff5500;
+  cursor: pointer;
+  -webkit-appearance: none;
+}

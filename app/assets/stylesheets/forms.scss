@@ -58,8 +58,14 @@
   // margin: 10px;
 }
 
-.form-errors {
-  color: black;
+.session-form-errors {
+  color: #8e8a8a;
+  padding: 0;
+  font-size: 14px;
+}
+
+.session-form-errors li {
+  list-style: none;
 }
 
 input:focus {

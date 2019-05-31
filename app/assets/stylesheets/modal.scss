@@ -9,16 +9,20 @@
   animation-name: fadein;
 }
 
+.loading {
+  background: rgba(16, 16, 16, 0.61);
+}
+
 .modal-content {
   position: fixed;
   background: white;
   width: 45%;
-  height: 500px;
+  height: 450px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation-duration: 1s;
-  z-index: 100;
+  z-index: 103;
   animation-name: slidedown;
 }
 
@@ -36,13 +40,66 @@
 }
 
 .fadeout {
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-name: fadeout;
 }
 
 .slideup {
   animation-duration: 1s;
   animation-name: slideup;
+}
+
+.update-form-content {
+  position: relative;
+  width: 800px;
+  left: 20%;
+  top: 100px;
+  // box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
+  background-color: transparent;
+}
+
+.update-form-errors {
+  color: #8e8a8a;
+  position: relative;
+  top: 118px;
+  right: -55%;
+  z-index: 105;
+  font-size: 14px;
+}
+
+.update-form-errors li {
+  list-style: none;
+}
+
+.song-upload-form-modal {
+  width: 800px;
+
+  box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
+  background-color: white;
+}
+
+// .update-form-container {
+//   position: relative;
+//   width: 800px;
+//   left: 15%;
+//   top: 100px;
+//   box-shadow: 9px 10px 24px -5px rgba(105, 105, 105, 1);
+//   background-color: white;
+// }
+
+.updateModalButton {
+  position: relative;
+  top: -20px;
+  left: 715px;
+  padding: 2px 8px;
+  background-color: #ff5500;
+  border-radius: 5px;
+  font-size: 14px;
+  color: white;
+}
+
+.updateModalButton:hover {
+  cursor: pointer;
 }
 
 @keyframes fadein {

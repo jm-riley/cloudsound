@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
+import { clearUserErrors } from '../../actions/user_actions';
 import LoginForm from './session/login_form_container';
 import SignupForm from './session/signup_form_container';
+import SongUpdateForm from '../songs/song_update_form_container';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -12,12 +14,12 @@ class Modal extends React.Component {
   }
 
   handleClick(e) {
-    // debugger;
     if (e.target.classList[0] === 'modal-container' || e.target.classList[0] === 'far') {
       e.stopPropagation();
       this.setState({ closing: true });
       setTimeout(() => {
         this.props.closeModal();
+        this.props.clearErrors();
         this.setState({ closing: false });
       }, 300);
     }
@@ -27,15 +29,25 @@ class Modal extends React.Component {
     const { type } = this.props;
     let fadeout;
     let slideup;
-
     if (!type) return null;
 
     if (this.state.closing) {
       fadeout = 'fadeout';
       slideup = 'slideup';
     }
+    let form;
+    // form = type === 'signup' ? <SignupForm /> : <LoginForm />;
+    switch (type) {
+      case 'signup':
+        form = <SignupForm />;
+        break;
+      case 'login':
+        form = <LoginForm />;
+        break;
+      default:
+        return null;
+    }
 
-    const form = type === 'signup' ? <SignupForm /> : <LoginForm />;
     return (
       <div className={`modal-container ${fadeout}`} onClick={this.handleClick}>
         <button onClick={this.handleClick} className={`modal-close ${fadeout}`}>
@@ -52,7 +64,8 @@ const mstp = state => ({
 });
 
 const mdtp = dispatch => ({
-  closeModal: () => dispatch(closeModal())
+  closeModal: () => dispatch(closeModal()),
+  clearErrors: () => dispatch(clearUserErrors())
 });
 
 export default connect(

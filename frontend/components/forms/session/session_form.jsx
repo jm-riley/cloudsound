@@ -12,11 +12,16 @@ class SessionForm extends React.Component {
   handleSumbit(e) {
     e.preventDefault();
     // debugger;
-    if (!this.props.errors.length) {
-      // debugger;
-      this.props.closeModal();
-    }
-    this.props.action(this.state).then(user => this.props.history.push('/discover'));
+    // if (!this.props.errors.length) {
+    //   this.props.closeModal();
+    // }
+    // this.props.action(this.state).then(user => this.props.history.push('/discover'));
+    this.props.action(this.state).then(() => {
+      if (!this.props.errors.length) {
+        this.props.closeModal();
+        this.props.history.push('/discover');
+      }
+    });
   }
 
   loginDemoUser(e) {
@@ -35,7 +40,7 @@ class SessionForm extends React.Component {
     return (
       <div className="form-container">
         {errors && (
-          <ul className="form-errors">
+          <ul className="session-form-errors">
             {errors.map((error, i) => (
               <li key={i}>{error}</li>
             ))}
@@ -63,7 +68,9 @@ class SessionForm extends React.Component {
           <button onClick={this.handleSumbit} className="signupButton">
             {submitText}
           </button>
-          <button onClick={this.loginDemoUser} className="demoButton">Demo</button>
+          <button onClick={this.loginDemoUser} className="demoButton">
+            Demo
+          </button>
         </form>
         <div>
           <p>

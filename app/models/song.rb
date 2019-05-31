@@ -2,11 +2,12 @@
 #
 # Table name: songs
 #
-#  id         :bigint           not null, primary key
-#  title      :string           not null
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  title       :string           not null
+#  user_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  description :string
 #
 
 class Song < ApplicationRecord
@@ -14,4 +15,11 @@ class Song < ApplicationRecord
 
   belongs_to :user
   has_many :comments
+
+  def username
+    self.user.username
+  end
+
+  has_one_attached :song_file
+  has_one_attached :song_photo
 end

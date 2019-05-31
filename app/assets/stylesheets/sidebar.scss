@@ -1,0 +1,129 @@
+.sidebar-container {
+  width: 100%;
+  min-width: 300px;
+  padding-top: 20px;
+  position: sticky;
+  top: 50px;
+}
+
+.no-user-sidebar {
+  width: 70%;
+  height: 170px;
+  padding: 20px;
+  padding-bottom: 30px;
+  margin: 0 auto;
+  background-color: #f2f2f2;
+}
+
+.no-user-flex {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  align-items: center;
+}
+
+.hey-hey {
+  font-size: 32px;
+  color: #ff5500;
+  padding-right: 10px;
+  font-weight: 600;
+}
+
+.no-user-sidebar-text {
+  height: 100px;
+  padding: 5px;
+  h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+  }
+  p {
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 200;
+    color: #999;
+  }
+}
+
+.upload-audio-link {
+  text-align: center;
+  margin: 0 auto;
+  padding: 5px 10px;
+  background-color: #ff5500;
+  border-radius: 5px;
+  color: white;
+  font-weight: 200;
+  font-size: 14px;
+  width: 120px;
+}
+
+.upload-audio-link:hover {
+  cursor: pointer;
+}
+
+.listening-history {
+  padding: 10px 25px;
+  .discover-song-item-container {
+    display: flex;
+    padding: 0;
+  }
+  .discover-song-item-artwork {
+    width: 50px;
+    height: 50px;
+    .hidden:hover {
+      background-color: rgba(253, 253, 253, 0.712);
+      .play-button {
+        display: block;
+        padding: 0;
+        margin: 0;
+        font-size: 34px;
+        position: relative;
+        top: 7px;
+        left: 7px;
+      }
+    }
+
+    .hidden {
+      // background-color: #999;
+      width: 50px;
+      height: 50px;
+      position: relative;
+      top: -54px;
+      .play-button {
+        display: none;
+        font-size: 34px;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        // right: -8px;
+        // bottom: -6px;
+      }
+    }
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .discover-song-item-info {
+    padding: 7px 10px;
+    .discover-song-title {
+      font-size: 14px;
+    }
+  }
+}
+
+.history-song-list {
+  border-top: 1px solid rgba(143, 143, 143, 0.4);
+  padding-top: 15px;
+  margin-top: 8px;
+}
+
+.history-text {
+  color: #999;
+  font-weight: 200;
+  font-size: 14px;
+  i {
+    padding-right: 10px;
+    font-size: 16px;
+  }
+}

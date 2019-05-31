@@ -1,0 +1,97 @@
+.discover-container {
+  margin: 0 auto;
+  width: 95%;
+  height: 100%;
+  max-width: 1240px;
+  min-width: 1150px;
+  background-color: white;
+  display: flex;
+
+  h3 {
+    margin: 0;
+    font-weight: 200;
+    font-size: 1.4em;
+  }
+
+  p {
+    font-weight: 100;
+    color: #999;
+    margin: 0;
+    padding: 6px 0;
+  }
+}
+
+.discover-left {
+  padding: 0 25px;
+  width: 70%;
+  border-right: 1px solid rgba(143, 143, 143, 0.4);
+  min-width: 800px;
+  padding-bottom: 60px;
+}
+
+.discover-right {
+  width: 30%;
+}
+
+.discover-group-container {
+  padding-top: 25px;
+  border-bottom: 1px solid rgba(143, 143, 143, 0.4);
+  margin-bottom: 15px;
+}
+
+.discover-group-container:last-of-type {
+  border: none;
+}
+
+.discover-songs-container {
+  display: flex;
+  padding-bottom: 15px;
+}
+
+.discover-song-item-container {
+  padding: 20px 20px 15px 0;
+  a:first-of-type {
+    color: #333;
+  }
+  a:last-of-type {
+    color: #999;
+    font-size: 14px;
+  }
+}
+
+.discover-song-item-artwork {
+  width: 180px;
+  height: 180px;
+  margin-bottom: 10px;
+  background-image: linear-gradient(135deg, #458ba0, #6b6697);
+  img {
+    height: 180px;
+    width: 180px;
+  }
+  .play-button {
+    display: none;
+  }
+
+  .hidden:hover {
+    background-color: rgba(253, 253, 253, 0.712);
+    .play-button {
+      display: block;
+      position: relative;
+      font-size: 72px;
+      top: 25px;
+      left: 25px;
+    }
+  }
+}
+
+.hidden {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  top: -184px;
+}
+
+.discover-song-item-info {
+  display: flex;
+  flex-direction: column;
+}

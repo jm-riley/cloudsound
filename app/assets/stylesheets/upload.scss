@@ -1,53 +1,203 @@
-.new-user-upload-hero {
-  background-image: image-url('yannis-papanastasopoulos-327476-unsplash.jpg');
-  color: white;
-  height: 400px;
+.upload-main-container {
+  height: 900px;
+  background-image: image-url('vishnu-r-nair-639172-unsplash.jpg');
   background-size: cover;
-  padding: 50px 620px 0 85px;
-  font-weight: 200;
+  padding-top: 70px;
 }
 
-.new-user-upload-hero h1 {
-  // font-weight: 200;
-
-  width: 400px;
-}
-.new-user-upload-hero p {
-  width: 400px;
-  font-size: 18px;
+.song-upload-container {
+  width: 800px;
+  height: 400px;
+  // background-color: white;
+  margin: 0 auto;
 }
 
-.new-user-upload-hero button {
-  margin-top: 25px;
-  padding: 15px 15px;
-  font-size: 16px;
-  min-width: 200px;
-}
-
-.new-user-upload-info {
+.song-file-upload {
+  background-color: white;
+  // border: 2px dashed rgb(184, 183, 183);
   display: flex;
-  justify-content: space-around;
-  padding: 15px 25px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
   font-weight: 200;
 }
 
-.new-user-upload-info h2 {
+.song-file-upload h2 {
+  padding-top: 15px;
   font-weight: 200;
-  margin-bottom: 10px;
 }
 
-.new-user-upload-info div {
-  padding: 0 15px;
-  max-width: 300px;
+.song-file-upload p {
+  padding: 20px 15px 0 15px;
+  font-size: 14px;
 }
 
-.new-user-upload-info p {
-  margin-top: 8px;
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
 }
 
-.upload-info-first {
-  margin-top: 50px;
+.inputfile + label {
+  font-size: 16px;
+  font-weight: 200;
+  color: white;
+  background-color: rgb(255, 85, 0);
+  padding: 5px 25px;
+  border-radius: 5px;
+  // display: inline-block;
 }
-.upload-info-second {
-  margin-top: 25px;
+
+.inputfile + label:hover {
+  cursor: pointer;
+}
+
+.additional-form-container {
+  background-color: white;
+  height: 450px;
+  top: 30px;
+  position: relative;
+}
+
+.additional-form {
+  width: 770px;
+  display: flex;
+  font-size: 14px;
+}
+
+.song-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 30px 0;
+}
+
+.song-info input {
+  width: 95%;
+  padding: 5px;
+  // margin-bottom: 30px;
+  // margin-top: 10px;
+  margin: 10px 10px 30px 0;
+}
+
+.song-info textarea {
+  width: 95%;
+  padding: 5px;
+  height: 200px;
+  // margin-bottom: 30px;
+  // margin-top: 10px;
+  margin: 10px 10px 30px 0;
+  border: 1px solid rgb(184, 182, 182);
+}
+
+.song-info label {
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.song-photo-container {
+  padding: 30px;
+}
+
+.photo-container {
+  width: 260px;
+  height: 260px;
+}
+
+.photo-container img {
+  width: 100%;
+}
+
+.empty-photo {
+  background-image: linear-gradient(135deg, #846170, #70929c);
+  width: 260px;
+  height: 260px;
+}
+
+.inputfile + .photo-button {
+  position: relative;
+  font-size: 14px;
+  font-weight: 200;
+  color: black;
+  background-color: #efefef;
+  padding: 5px 15px;
+  bottom: 50px;
+  left: 50px;
+  // border-radius: 5px;
+  // display: inline-block;
+}
+
+.photo-button i {
+  padding-right: 10px;
+}
+
+.additional-form-container .signupButton {
+  padding: 3px 10px;
+  position: relative;
+  bottom: 10px;
+  right: -645px;
+}
+
+.signupButton:hover {
+  cursor: pointer;
+}
+
+.additional-form-container .loginButton {
+  color: black;
+  border: none;
+  font-weight: 200;
+  position: relative;
+  left: 640px;
+  bottom: 10px;
+  padding: 10px;
+  margin: 0;
+}
+
+.form-errors {
+  color: #8e8a8a;
+  position: relative;
+  top: 87%;
+  left: 55%;
+  z-index: 105;
+  font-size: 14px;
+}
+
+.form-errors li {
+  list-style: none;
+}
+
+@keyframes form-slidedown {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(0, 500%);
+  }
+}
+
+@keyframes form-slideup {
+  from {
+    // transform: opacity(0);
+    transform: translate(0, 500%);
+  }
+
+  to {
+    // transform: translateY(0%);
+    transform: translate(0, 0);
+  }
+}
+
+.form-slideup {
+  animation-duration: 1s;
+  animation-name: form-slideup;
+}
+
+.form-slidedown {
+  animation-duration: 1s;
+  animation-name: form-slidedown;
 }

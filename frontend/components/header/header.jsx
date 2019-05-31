@@ -31,6 +31,10 @@ class Header extends React.Component {
     if (this.state.dropdownOpen) {
       dropdownBG = 'dropdown-open';
     }
+    let photoUrl;
+    if (currentUser) {
+      photoUrl = currentUser.avatarUrl ? currentUser.avatarUrl : window.userArtworkURL;
+    }
     return (
       <div className="header-container">
         <div className="header">
@@ -62,29 +66,30 @@ class Header extends React.Component {
             </div>
             {!!currentUser && (
               <div className="user-artwork">
-                <img src={window.userArtworkURL} alt="" />
+                <img src={photoUrl} alt="" />
               </div>
             )}
-            <div className="header-content username">{currentUser && currentUser.username}</div>
+            <div className="header-content username">
+              {currentUser && <Link to={`/users/${currentUser.id}`}>{currentUser.username}</Link>}
+            </div>
 
             <div
               className={`header-content header-dropdown ${dropdownBG}`}
               onClick={this.toggleDropdown}
             >
+              {this.state.dropdownOpen && <div>{dropdownList}</div>}
               <div className="dropdown-toggle">
                 <i className="fas fa-ellipsis-h" />
               </div>
-              {this.state.dropdownOpen && (
-                <div className="dropdown-modal" onClick={this.toggleDropdown}>
-                  {dropdownList}
-                </div>
-              )}
             </div>
             {/* <Link to="/">
           <button onClick={logout}>Logout</button>
         </Link> */}
           </div>
         </div>
+        {this.state.dropdownOpen && (
+          <div className="dropdown-modal" onClick={this.toggleDropdown} />
+        )}
       </div>
     );
   }

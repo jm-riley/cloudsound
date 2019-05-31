@@ -1,25 +1,28 @@
-# README
+# CloudSound
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> A SoundCloud clone for audio creators to share and experience music.
 
-Things you may want to cover:
+[CloudSound](https://cloudsound-app.herokuapp.com/#/)
 
-* Ruby version
+CloudSound was developed as part of the App Academy curriculum. It is meant to mimic as closely as possible the functionality of SoundCloud. Users can upload songs, comment on, and listen to the library.
 
-* System dependencies
+![main_page](./app/assets/images/main_page.png)
 
-* Configuration
+## Technologies Used
 
-* Database creation
+- Ruby on Rails
+- Postgresql
+- React
+- Redux
 
-* Database initialization
+### Play Button
 
-* How to run the test suite
+I built the play button to be as reuseable as possible. It is passed a song object as a prop, and depending on the play status, will dispatch an action to set the current active song, and an action to set the playing boolean to true/false
 
-* Services (job queues, cache servers, search engines, etc.)
+![play_button](./app/assets/images/play_button_gif.gif)
 
-* Deployment instructions
+### Continuous Playbar
 
-* ...
-# cloudsound
+The playbar handles creating an HTML audio element whenever state is updated with a new active song. It stores the audio element in component state and takes care of calling play/pause methods.
+
+![playbar](./app/assets/images/playbar.png)
