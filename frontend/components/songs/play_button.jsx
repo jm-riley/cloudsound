@@ -22,10 +22,8 @@ class PlayButton extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // debugger;
     const { activeSong, song } = this.props;
     if (!activeSong) return;
-    // debugger;
     if (
       this.props.activeSong.id !== prevProps.activeSong.id &&
       this.props.song.id !== this.props.activeSong.id

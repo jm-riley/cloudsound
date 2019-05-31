@@ -1005,12 +1005,7 @@ function (_React$Component) {
     value: function handleSumbit(e) {
       var _this2 = this;
 
-      e.preventDefault(); // debugger;
-      // if (!this.props.errors.length) {
-      //   this.props.closeModal();
-      // }
-      // this.props.action(this.state).then(user => this.props.history.push('/discover'));
-
+      e.preventDefault();
       this.props.action(this.state).then(function () {
         if (!_this2.props.errors.length) {
           _this2.props.closeModal();
@@ -2208,7 +2203,6 @@ function (_React$Component) {
       this.setState({
         progress: progressWidth
       });
-      console.log('time');
     }
   }, {
     key: "getTime",
@@ -2232,18 +2226,12 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var song = this.state.song;
-      var playing = this.props.playing; // debugger;
-      // if (playing) {
-      //   setInterval(this.changeTime, 1000);
-      // } else clearInterval();
-
       if (!song) return null;
       var elapsedTime = Math.floor(song.currentTime);
       var duration = Math.floor(song.duration);
       var remainingTime = duration - elapsedTime;
       var elapsedTimeDisplay = this.getTime(elapsedTime);
-      var remainingTimeDisplay = this.getTime(remainingTime); // debugger;
-
+      var remainingTimeDisplay = this.getTime(remainingTime);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "progress-bar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2270,9 +2258,7 @@ function (_React$Component) {
   return ProgressBar;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (ProgressBar); // const mstp = state => ({
-//   song: state.ui.
-// })
+/* harmony default export */ __webpack_exports__["default"] = (ProgressBar);
 
 /***/ }),
 
@@ -2576,10 +2562,8 @@ var CommentSection = function CommentSection(_ref) {
   var artistAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: user.avatarUrl,
     alt: ""
-  }) : null; // if (!comments.length) return null;
-
-  var commentSection; // debugger;
-
+  }) : null;
+  var commentSection;
   if (comments) commentSection = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "comment-section-comments"
   }, comments.length > 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2587,7 +2571,6 @@ var CommentSection = function CommentSection(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-comment"
   }), comments.length, " comments"), comments.map(function (comment, i) {
-    // debugger;
     var user = users[comment.user_id];
     var userAvatar = user.avatarUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: user.avatarUrl,
@@ -2734,11 +2717,10 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
-      // debugger;
       var _this$props2 = this.props,
           activeSong = _this$props2.activeSong,
           song = _this$props2.song;
-      if (!activeSong) return; // debugger;
+      if (!activeSong) return;
 
       if (this.props.activeSong.id !== prevProps.activeSong.id && this.props.song.id !== this.props.activeSong.id) {
         this.setState({

@@ -35,7 +35,6 @@ class ProgressBar extends React.Component {
       };
     } else progressWidth = { width: 0 };
     this.setState({ progress: progressWidth });
-    console.log('time');
   }
 
   getTime(time) {
@@ -55,11 +54,6 @@ class ProgressBar extends React.Component {
 
   render() {
     const { song } = this.state;
-    const { playing } = this.props;
-    // debugger;
-    // if (playing) {
-    //   setInterval(this.changeTime, 1000);
-    // } else clearInterval();
 
     if (!song) return null;
     let elapsedTime = Math.floor(song.currentTime);
@@ -68,7 +62,6 @@ class ProgressBar extends React.Component {
     let elapsedTimeDisplay = this.getTime(elapsedTime);
     let remainingTimeDisplay = this.getTime(remainingTime);
 
-    // debugger;
     return (
       <div className="progress-bar-container">
         <div className="elapsed-time">{elapsedTimeDisplay}</div>
@@ -91,6 +84,3 @@ class ProgressBar extends React.Component {
 }
 
 export default ProgressBar;
-// const mstp = state => ({
-//   song: state.ui.
-// })
