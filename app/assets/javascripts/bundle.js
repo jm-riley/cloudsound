@@ -1943,48 +1943,135 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
-var PlaybarControls = function PlaybarControls(_ref) {
-  var playing = _ref.playing,
-      play = _ref.play,
-      pause = _ref.pause,
-      fetchSong = _ref.fetchSong,
-      setActiveSong = _ref.setActiveSong,
-      activeSong = _ref.activeSong;
-  var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-pause"
-  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-play"
-  });
-  var action = playing ? pause : play;
 
-  var handleNext = function handleNext() {
-    var randomId = activeSong.id;
+var PlaybarControls =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(PlaybarControls, _React$Component);
 
-    while (randomId === activeSong.id) {
-      randomId = Math.floor(Math.random() * 12 + 1) + 50;
+  function PlaybarControls(props) {
+    var _this;
+
+    _classCallCheck(this, PlaybarControls);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PlaybarControls).call(this, props));
+    _this.state = {
+      songVolume: 0.75
+    };
+    _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handleVolume = _this.handleVolume.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(PlaybarControls, [{
+    key: "handleNext",
+    value: function handleNext() {
+      var _this$props = this.props,
+          activeSong = _this$props.activeSong,
+          setActiveSong = _this$props.setActiveSong,
+          fetchSong = _this$props.fetchSong;
+      var randomId = activeSong.id;
+
+      while (randomId === activeSong.id) {
+        randomId = Math.floor(Math.random() * 12 + 1) + 50;
+      }
+
+      fetchSong(randomId).then(function (song) {
+        setActiveSong(song.song);
+      });
     }
+  }, {
+    key: "handleVolume",
+    value: function handleVolume(e) {
+      this.props.song.volume = e.target.value;
+      this.setState({
+        songVolume: e.target.value
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-    fetchSong(randomId).then(function (song) {
-      setActiveSong(song.song);
-    });
-  };
+      var _this$props2 = this.props,
+          play = _this$props2.play,
+          pause = _this$props2.pause,
+          playing = _this$props2.playing,
+          song = _this$props2.song;
+      var playbackIcon = playing ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pause"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play"
+      });
+      var action = playing ? pause : play;
+      var volumeIcon;
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "playbar-controls"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "play-pause",
-    onClick: action
-  }, playbackIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "next",
-    onClick: handleNext
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-step-forward"
-  })));
-};
+      if (song.volume > 0.5) {
+        volumeIcon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      } else if (song.volume > 0) {
+        volumeIcon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-down"
+        });
+      } else {
+        volumeIcon = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-off"
+        });
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "playbar-controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "play-pause",
+        onClick: action
+      }, playbackIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "next",
+        onClick: this.handleNext
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-step-forward"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "volume"
+      }, volumeIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "range-slider"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "input-range",
+        orient: "vertical",
+        type: "range",
+        step: "0.05",
+        value: this.state.songVolume,
+        min: "0",
+        max: "1",
+        onChange: function onChange(e) {
+          return _this2.handleVolume(e);
+        }
+      }))));
+    }
+  }]);
+
+  return PlaybarControls;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var mstp = function mstp(state) {
   return {
@@ -2038,7 +2125,9 @@ var PlaybarDetail = function PlaybarDetail(_ref) {
       playing = _ref.playing;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "playbar-inner"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_controls__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_progress_bar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_controls__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    song: song
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_progress_bar__WEBPACK_IMPORTED_MODULE_3__["default"], {
     song: song,
     playing: playing
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_playbar_song_detail__WEBPACK_IMPORTED_MODULE_1__["default"], null));
@@ -6905,8 +6994,8 @@ function baseMerge(object, source, srcIndex, customizer, stack) {
     return;
   }
   baseFor(source, function(srcValue, key) {
+    stack || (stack = new Stack);
     if (isObject(srcValue)) {
-      stack || (stack = new Stack);
       baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
     }
     else {
@@ -8517,7 +8606,7 @@ module.exports = root;
 /***/ (function(module, exports) {
 
 /**
- * Gets the value at `key`, unless `key` is "__proto__".
+ * Gets the value at `key`, unless `key` is "__proto__" or "constructor".
  *
  * @private
  * @param {Object} object The object to query.
@@ -8525,6 +8614,10 @@ module.exports = root;
  * @returns {*} Returns the property value.
  */
 function safeGet(object, key) {
+  if (key === 'constructor' && typeof object[key] === 'function') {
+    return;
+  }
+
   if (key == '__proto__') {
     return;
   }
@@ -33765,7 +33858,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

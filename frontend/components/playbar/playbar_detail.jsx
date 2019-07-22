@@ -6,7 +6,7 @@ import ProgressBar from './progress_bar';
 const PlaybarDetail = ({ song, playing }) => {
   return (
     <div className="playbar-inner">
-      <PlaybarControls />
+      <PlaybarControls song={song} />
       <ProgressBar song={song} playing={playing} />
       <PlaybarSongDetail />
     </div>
